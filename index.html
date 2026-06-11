@@ -415,8 +415,7 @@
       <select id="filter-status" onchange="renderMatches()"
         style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--text);font-family:Tajawal;font-size:13px;outline:none;flex:1;min-width:130px;">
         <option value="">كل الحالات</option>
-        <option value="open">مفتوحة الآن</option>
-        <option value="soon">قادمة</option>
+        <option value="open">مفتوحة للتوقع</option>
         <option value="closed">انتهت</option>
       </select>
     </div>
@@ -611,14 +610,11 @@ function saveState() {
 function getMatchStatus(kickoffISO) {
   const now = Date.now();
   const kick = new Date(kickoffISO).getTime();
-  const diff = kick - now; // ms until kickoff
-  const hours4 = 4 * 60 * 60 * 1000;
-  const hours1 = 1 * 60 * 60 * 1000;
+  const diff = kick - now;
+  const hour = 60 * 60 * 1000;
 
-  if (diff > hours4) return 'soon';         // Not open yet (> 4h away)
-  if (diff > hours1) return 'open';         // Open for predictions (1–4h window)
-  if (diff > 0) return 'locked';            // < 1h, locked
-  return 'closed';                          // Match started or past
+  if (diff > hour) return 'open';    // Open until 1h before kickoff
+  return 'closed';                   // Locked 1h before kickoff
 }
 
 function formatKickoff(iso) {
@@ -627,7 +623,8 @@ function formatKickoff(iso) {
 }
 
 function formatCountdown(kickoffISO) {
-  const diff = new Date(kickoffISO).getTime() - Date.now();
+  const lockout = new Date(kickoffISO).getTime() - 60 * 60 * 1000; // 1h before kickoff
+  const diff = lockout - Date.now();
   if (diff <= 0) return '';
   const h = Math.floor(diff / 3600000);
   const m = Math.floor((diff % 3600000) / 60000);
@@ -637,8 +634,6 @@ function formatCountdown(kickoffISO) {
 
 function statusLabel(status) {
   if (status === 'open') return '<span class="status-badge status-open">مفتوح للتوقع ✓</span>';
-  if (status === 'locked') return '<span class="status-badge status-locked">مغلق ✗</span>';
-  if (status === 'soon') return '<span class="status-badge status-soon">يفتح قريباً</span>';
   return '<span class="status-badge status-closed">انتهت</span>';
 }
 
@@ -701,8 +696,8 @@ function renderMatches() {
     const awayCount = allPreds.filter(p => p.pred === 'away').length;
 
     const isOpen = status === 'open';
-    const countdown = (status === 'soon' || status === 'open' || status === 'locked') ? formatCountdown(match.kickoff) : '';
-    const countdownLabel = status === 'soon' ? 'يفتح بعد' : status === 'locked' ? 'تبدأ بعد' : status === 'open' ? 'تغلق بعد' : '';
+    const countdown = status === 'open' ? formatCountdown(match.kickoff) : '';
+    const countdownLabel = status === 'open' ? 'يغلق بعد ' : '';
 
     const homeSelected = userPred === 'home' ? 'selected-home' : '';
     const drawSelected = userPred === 'draw' ? 'selected-draw' : '';
@@ -922,7 +917,7 @@ function tickCountdowns() {
     if (!el) return;
     const status = getMatchStatus(m.kickoff);
     const cd = formatCountdown(m.kickoff);
-    const label = status === 'soon' ? 'يفتح بعد ' : status === 'locked' ? 'تبدأ بعد ' : status === 'open' ? 'تغلق بعد ' : '';
+    const label = status === 'open' ? 'يغلق بعد ' : '';
     if (cd) el.textContent = label + cd;
 
     // Re-render if status changed
