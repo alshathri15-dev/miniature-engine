@@ -167,7 +167,7 @@
     display:flex; flex-wrap:wrap; gap:5px; align-items:center;
   }
   .pred-label { font-size:11px; color:var(--muted); margin-left:2px; }
-  .pred-chip { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; }
+  .pred-chip { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; max-width:100%; white-space:normal; line-height:1.6; }
   .chip-home { background:rgba(46,204,113,0.12); color:var(--green); }
   .chip-draw { background:rgba(243,156,18,0.12); color:var(--draw); }
   .chip-away { background:rgba(231,76,60,0.12); color:var(--red); }
@@ -767,6 +767,10 @@ function renderMatches() {
     const awayCount = Object.values(matchPreds).filter(p => p==='away').length;
     const total = homeCount + drawCount + awayCount;
 
+    const homeNames = Object.entries(matchPreds).filter(([,p]) => p==='home').map(([n]) => n);
+    const drawNames = Object.entries(matchPreds).filter(([,p]) => p==='draw').map(([n]) => n);
+    const awayNames = Object.entries(matchPreds).filter(([,p]) => p==='away').map(([n]) => n);
+
     const cd = isOpen ? formatCountdown(match.kickoff) : '';
     const homeSelected = userPred==='home' ? 'selected-home' : '';
     const drawSelected = userPred==='draw' ? 'selected-draw' : '';
@@ -780,10 +784,16 @@ function renderMatches() {
 
     const predsSection = total > 0 ? `
       <div class="predictions-preview">
-        <span class="pred-label">توقعات (${total}):</span>
-        ${homeCount > 0 ? `<span class="pred-chip chip-home">${match.team1.flag} ${homeCount}</span>` : ''}
-        ${drawCount > 0 ? `<span class="pred-chip chip-draw">🤝 ${drawCount}</span>` : ''}
-        ${awayCount > 0 ? `<span class="pred-chip chip-away">${match.team2.flag} ${awayCount}</span>` : ''}
+        ${isOpen ? `
+          <span class="pred-label">توقعات (${total}):</span>
+          ${homeCount > 0 ? `<span class="pred-chip chip-home">${match.team1.flag} ${homeCount}</span>` : ''}
+          ${drawCount > 0 ? `<span class="pred-chip chip-draw">🤝 ${drawCount}</span>` : ''}
+          ${awayCount > 0 ? `<span class="pred-chip chip-away">${match.team2.flag} ${awayCount}</span>` : ''}
+        ` : `
+          ${homeNames.length > 0 ? `<span class="pred-chip chip-home">${match.team1.flag} ${homeNames.join('، ')}</span>` : ''}
+          ${drawNames.length > 0 ? `<span class="pred-chip chip-draw">🤝 ${drawNames.join('، ')}</span>` : ''}
+          ${awayNames.length > 0 ? `<span class="pred-chip chip-away">${match.team2.flag} ${awayNames.join('، ')}</span>` : ''}
+        `}
       </div>` : '';
 
     return `
