@@ -879,14 +879,17 @@ function fetchData() {
       clearTimeout(timeout);
       delete window[cbName];
       script.remove();
-      remoteData.predictions = json.predictions || {};
-      remoteData.results = json.results || {};
+      remoteData.predictions   = json.predictions   || {};
+      remoteData.results       = json.results       || {};
+      remoteData.koMatches     = json.koMatches     || [];
+      remoteData.knockoutPreds = json.knockoutPreds || {};
       MATCHES.forEach(m => {
         if (remoteData.results[m.id]) m.result = remoteData.results[m.id];
         else m.result = null;
       });
       renderMatches();
       renderLeaderboard();
+      renderKnockout();
       updatePointsBadge();
       resolve();
     };
