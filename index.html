@@ -80,12 +80,13 @@
   .pred-btn.selected-draw { border-color:var(--draw); background:rgba(243,156,18,0.1); color:var(--draw); }
   .pred-btn.selected-away { border-color:var(--red); background:rgba(231,76,60,0.1); color:var(--red); }
 
-  .predictions-preview { padding:9px 14px 12px; border-top:1px solid rgba(255,255,255,0.04); display:flex; flex-wrap:wrap; gap:5px; }
-  .pred-label { font-size:11px; color:var(--muted); }
-  .pred-chip { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; }
-  .chip-home { background:rgba(46,204,113,0.12); color:var(--green); }
-  .chip-draw { background:rgba(243,156,18,0.12); color:var(--draw); }
-  .chip-away { background:rgba(231,76,60,0.12); color:var(--red); }
+  /* استعادة تنسيق شرائح الأسماء المستخلصة */
+  .predictions-preview { padding:9px 14px 12px; border-top:1px solid rgba(255,255,255,0.05); display:flex; flex-wrap:wrap; gap:6px; align-items:center; background: rgba(0,0,0,0.15); }
+  .pred-label { font-size:11px; color:var(--muted); font-weight:bold; margin-left:4px; }
+  .pred-chip { font-size:11px; padding:4px 10px; border-radius:20px; font-weight:600; line-height:1.4; }
+  .chip-home { background:rgba(46,204,113,0.15); color:var(--green); border: 1px solid rgba(46,204,113,0.3); }
+  .chip-draw { background:rgba(243,156,18,0.15); color:var(--draw); border: 1px solid rgba(243,156,18,0.3); }
+  .chip-away { background:rgba(231,76,60,0.15); color:var(--red); border: 1px solid rgba(231,76,60,0.3); }
 
   .lb-row { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:8px; }
   .lb-rank { font-size:18px; font-weight:900; width:28px; text-align:center; color:var(--muted); }
@@ -362,7 +363,6 @@ async function apiPost(payload) {
   }).then(async res => { if(res) await fetchData(); return res; });
 }
 
-// التوقيت الموحد للقفل (قبل ساعة كاملة)
 function getMatchStatus(iso) { return (new Date(iso).getTime() - 3600000 - Date.now() > 0) ? 'open' : 'closed'; }
 function formatCountdown(iso) {
   const diff = new Date(iso).getTime() - 3600000 - Date.now();
@@ -385,11 +385,49 @@ async function predict(matchId, choice) {
   await apiPost({ action:'predict', matchId, user:currentUser, prediction:choice }); showToast('تم الحفظ ✓');
 }
 
+// ============================================================
+// دالة المجموعات (مع استعادة جزئية عدد الأصوات وكشف الأسماء)
+// ============================================================
 function renderMatches() {
   const c = document.getElementById('matches-list'); if(!c) return;
   c.innerHTML = MATCHES.map(m => {
     const isOpen = getMatchStatus(m.kickoff) === 'open'; const preds = remoteData.predictions[m.id] || {};
-    return `<div class="match-card"><div class="match-header"><span class="group">${m.group}</span>${statusLabel(getMatchStatus(m.kickoff))}</div><div class="match-body"><div class="teams-row"><div class="team"><div class="team-flag">${m.team1.flag}</div><div class="team-name">${m.team1.name}</div></div><div class="vs-text">VS</div><div class="team"><div class="team-flag">${m.team2.flag}</div><div class="team-name">${m.team2.name}</div></div></div><div class="predict-row"><button class="pred-btn ${preds[currentUser]==='home'?'selected-home':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','home')">${m.team1.name}</button><button class="pred-btn ${preds[currentUser]==='draw'?'selected-draw':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','draw')">تعادل</button><button class="pred-btn ${preds[currentUser]==='away'?'selected-away':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','away')">${m.team2.name}</button></div></div></div>`;
+    
+    const hNames = Object.entries(preds).filter(([,p])=>p==='home').map(([n])=>n);
+    const dNames = Object.entries(preds).filter(([,p])=>p==='draw').map(([n])=>n);
+    const aNames = Object.entries(preds).filter(([,p])=>p==='away').map(([n])=>n);
+    const tot = hNames.length + dNames.length + aNames.length;
+
+    const predsBox = tot > 0 ? `
+      <div class="predictions-preview">
+        ${isOpen ? `
+          <span class="pred-label">توقعات (${tot}):</span>
+          ${hNames.length ? `<span class="pred-chip chip-home">${m.team1.flag} ${hNames.length}</span>` : ''}
+          ${dNames.length ? `<span class="pred-chip chip-draw">🤝 ${dNames.length}</span>` : ''}
+          ${aNames.length ? `<span class="pred-chip chip-away">${m.team2.flag} ${aNames.length}</span>` : ''}
+        ` : `
+          ${hNames.length ? `<span class="pred-chip chip-home">${m.team1.flag} ${hNames.join('، ')}</span>` : ''}
+          ${dNames.length ? `<span class="pred-chip chip-draw">🤝 ${dNames.join('، ')}</span>` : ''}
+          ${aNames.length ? `<span class="pred-chip chip-away">${m.team2.flag} ${aNames.join('، ')}</span>` : ''}
+        `}
+      </div>` : '';
+
+    return `<div class="match-card">
+      <div class="match-header"><span class="group">${m.group}</span>${statusLabel(getMatchStatus(m.kickoff))}</div>
+      <div class="match-body">
+        <div class="teams-row">
+          <div class="team"><div class="team-flag">${m.team1.flag}</div><div class="team-name">${m.team1.name}</div></div>
+          <div class="vs-text">VS</div>
+          <div class="team"><div class="team-flag">${m.team2.flag}</div><div class="team-name">${m.team2.name}</div></div>
+        </div>
+        <div class="predict-row">
+          <button class="pred-btn ${preds[currentUser]==='home'?'selected-home':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','home')">${m.team1.name}</button>
+          <button class="pred-btn ${preds[currentUser]==='draw'?'selected-draw':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','draw')">تعادل</button>
+          <button class="pred-btn ${preds[currentUser]==='away'?'selected-away':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','away')">${m.team2.name}</button>
+        </div>
+      </div>
+      ${predsBox}
+    </div>`;
   }).join('');
 }
 
@@ -413,12 +451,19 @@ function renderKnockout() {
   renderKODetail();
 }
 
+// ============================================================
+// دالة تفاصيل الإقصاء (مع استعادة كشف المصوتين بعد القفل)
+// ============================================================
 function renderKODetail() {
   const mount = document.getElementById('ko-detail-mount'); if(!mount||!activeKOMatch) return;
   const bm = BRACKET_BY_ID[activeKOMatch]; const m = (remoteData.koMatches||[]).find(x => x.id === activeKOMatch) || {}; 
   const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open'; const cd = isOpen ? formatCountdown(kickoff) : ''; const res = String(m.result||'');
   const t1 = m.team1 || bm.t1, t2 = m.team2 || bm.t2;
   const kPreds = (remoteData.knockoutPreds||{})[activeKOMatch] || {}; const uPick = currentUser ? String(kPreds[currentUser]||'') : '';
+
+  const team1names = Object.entries(kPreds).filter(([,p])=>String(p)==='1').map(([n])=>n);
+  const team2names = Object.entries(kPreds).filter(([,p])=>String(p)==='2').map(([n])=>n);
+  const tot = team1names.length + team2names.length;
 
   mount.innerHTML = `<div class="ko-detail-panel">
     <div class="ko-detail-title">${bm.id} <span style="font-size:12px;color:var(--muted);display:block">${fmtArabicDate(kickoff)} بتوقيتنا</span></div>
@@ -431,6 +476,12 @@ function renderKODetail() {
       <button class="ko-pred-btn ${uPick==='1'?'sel-1':''}" onclick="predictKO('${activeKOMatch}','1')">${t1} <span class="label">يفوز</span></button>
       <button class="ko-pred-btn ${uPick==='2'?'sel-2':''}" onclick="predictKO('${activeKOMatch}','2')">${t2} <span class="label">يفوز</span></button>
     </div>` : ''}
+    ${tot > 0 ? (
+      !isOpen ? `<div class="predictions-preview" style="margin-top:14px;border-radius:12px">
+        ${team1names.length ? `<span class="pred-chip chip-home">${t1}: ${team1names.join('، ')}</span>` : ''}
+        ${team2names.length ? `<span class="pred-chip chip-away">${t2}: ${team2names.join('، ')}</span>` : ''}
+      </div>` : `<div style="font-size:11px;color:var(--muted);margin-top:10px;text-align:center">توقعات مسجلة: ${tot} (تظهر الأسماء فور الإغلاق)</div>`
+    ) : ''}
   </div>`;
 }
 
@@ -470,7 +521,6 @@ function updateUI() {
   if (loggedIn) { document.getElementById('display-name').textContent = currentUser; document.getElementById('avatar-letter').textContent = currentUser[0]; switchTab('matches'); }
 }
 
-// العدادات التنازلية الصامتة
 let prevStats = {};
 setInterval(() => {
   BRACKET.forEach(bm => {
@@ -478,7 +528,7 @@ setInterval(() => {
     const cd = getMatchStatus(koTime)==='open' ? formatCountdown(koTime) : '';
     const mini = document.getElementById('kocd_'+bm.id); if(mini) mini.textContent = cd;
     if(activeKOMatch === bm.id) { const big = document.getElementById('kodet_'+bm.id); if(big) big.textContent = cd; }
-    const st = getMatchStatus(koTime); if(prevStats[bm.id] && prevStats[bm.id] !== st) renderKnockout(); prevStats[bm.id] = st;
+    const st = getMatchStatus(koTime); if(prevStats[bm.id] && prevStats[bm.id] !== st) { renderMatches(); renderKnockout(); } prevStats[bm.id] = st;
   });
 }, 1000);
 
