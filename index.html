@@ -199,9 +199,6 @@
 <div id="toast"></div>
 
 <script>
-// ============================================================
-// CONFIG & BRACKET DATA
-// ============================================================
 const ALL_TEAMS = ['أستراليا', 'ألمانيا', 'أمريكا', 'أوروغواي', 'أوزبكستان', 'إسبانيا', 'إنجلترا', 'إيران', 'اسكتلندا', 'الأرجنتين', 'الأردن', 'الإكوادور', 'البرازيل', 'البرتغال', 'البوسنة والهرسك', 'التشيك', 'الجزائر', 'الرأس الأخضر', 'السعودية', 'السنغال', 'السويد', 'العراق', 'الكونغو الديمقراطية', 'المغرب', 'المكسيك', 'النرويج', 'النمسا', 'اليابان', 'باراغواي', 'بلجيكا', 'بنما', 'تركيا', 'تونس', 'جنوب أفريقيا', 'ساحل العاج', 'سويسرا', 'غانا', 'فرنسا', 'قطر', 'كرواتيا', 'كندا', 'كوراساو', 'كوريا الجنوبية', 'كولومبيا', 'مصر', 'نيوزيلندا', 'هايتي', 'هولندا'];
 
 const BRACKET = [
@@ -361,6 +358,7 @@ function fetchData() {
     remoteData.predictions = json.predictions || {}; remoteData.results = json.results || {}; remoteData.koMatches = json.koMatches || []; remoteData.knockoutPreds = json.knockoutPreds || {};
     MATCHES.forEach(m => { m.result = remoteData.results[m.id] || null; });
     renderMatches(); renderLeaderboard(); renderKnockout(); if(document.getElementById('tab-admin').style.display === 'block') { renderResultsAdmin(); renderKnockoutAdmin(); }
+    updatePointsBadge();
   };
   script.src = API_URL + '?callback=' + cbName + '&t=' + Date.now(); document.head.appendChild(script);
 }
@@ -396,6 +394,9 @@ async function predict(matchId, choice) {
   await apiPost({ action:'predict', matchId, user:currentUser, prediction:choice }); showToast('تم الحفظ ✓');
 }
 
+// ============================================================
+// دالة المجموعات (تم تصحيح عرض النتيجة تحت الأزرار بوضوح تام)
+// ============================================================
 function renderMatches() {
   const c = document.getElementById('matches-list'); if(!c) return;
   c.innerHTML = MATCHES.map(m => {
@@ -404,6 +405,11 @@ function renderMatches() {
     const dNames = Object.entries(preds).filter(([,p])=>p==='draw').map(([n])=>n);
     const aNames = Object.entries(preds).filter(([,p])=>p==='away').map(([n])=>n);
     const tot = hNames.length + dNames.length + aNames.length;
+
+    const resBanner = m.result ? `
+      <div style="margin-top:12px;padding:8px;background:rgba(46,204,113,0.15);border:1px solid rgba(46,204,113,0.4);border-radius:10px;text-align:center;color:var(--green);font-size:13px;font-weight:bold">
+        ✓ النتيجة الحقيقية: ${m.result==='home' ? 'فاز منتخب ' + m.team1.name : m.result==='away' ? 'فاز منتخب ' + m.team2.name : 'تعادل المنتخبان'}
+      </div>` : '';
 
     const predsBox = tot > 0 ? `
       <div class="predictions-preview">
@@ -419,7 +425,7 @@ function renderMatches() {
         `}
       </div>` : '';
 
-    return `<div class="match-card"><div class="match-header"><span class="group">${m.group}</span>${statusLabel(getMatchStatus(m.kickoff))}</div><div class="match-body"><div class="teams-row"><div class="team"><div class="team-flag">${m.team1.flag}</div><div class="team-name">${m.team1.name}</div></div><div class="vs-text">VS</div><div class="team"><div class="team-flag">${m.team2.flag}</div><div class="team-name">${m.team2.name}</div></div></div><div class="predict-row"><button class="pred-btn ${preds[currentUser]==='home'?'selected-home':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','home')">${m.team1.name}</button><button class="pred-btn ${preds[currentUser]==='draw'?'selected-draw':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','draw')">تعادل</button><button class="pred-btn ${preds[currentUser]==='away'?'selected-away':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','away')">${m.team2.name}</button></div></div>${predsBox}</div>`;
+    return `<div class="match-card"><div class="match-header"><span class="group">${m.group}</span>${statusLabel(getMatchStatus(m.kickoff))}</div><div class="match-body"><div class="teams-row"><div class="team"><div class="team-flag">${m.team1.flag}</div><div class="team-name">${m.team1.name}</div></div><div class="vs-text">VS</div><div class="team"><div class="team-flag">${m.team2.flag}</div><div class="team-name">${m.team2.name}</div></div></div><div class="predict-row"><button class="pred-btn ${preds[currentUser]==='home'?'selected-home':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','home')">${m.team1.name}</button><button class="pred-btn ${preds[currentUser]==='draw'?'selected-draw':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','draw')">تعادل</button><button class="pred-btn ${preds[currentUser]==='away'?'selected-away':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','away')">${m.team2.name}</button></div>${resBanner}</div>${predsBox}</div>`;
   }).join('');
 }
 
@@ -472,16 +478,20 @@ function renderLeaderboard() {
   c.innerHTML = users.map((u,i) => `<div class="lb-row"><div class="lb-rank">${i+1}</div><div class="lb-avatar">${u.name[0]}</div><div class="lb-name">${u.name}</div><div class="lb-pts">${u.pts} نقطة</div></div>`).join('');
 }
 
-// ============================================================
-// استعادة دوال صفحة الإدارة المحذوفة (المجموعات + المغلوب)
-// ============================================================
+function updatePointsBadge() {
+  if (currentUser) { const el = document.getElementById('points-display'); if (el) el.textContent = calcPoints(currentUser) + ' نقطة'; }
+}
+
 function renderResultsAdmin() {
   const c = document.getElementById('results-admin'); if(!c) return;
   c.innerHTML = MATCHES.map(m => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:13px;flex:1;">${m.team1.name} vs ${m.team2.name}</span><select onchange="setResult('${m.id}', this.value)" class="ko-result-select"><option value="">-- النتيجة --</option><option value="home" ${m.result==='home'?'selected':''}>فوز ${m.team1.name}</option><option value="draw" ${m.result==='draw'?'selected':''}>تعادل</option><option value="away" ${m.result==='away'?'selected':''}>فوز ${m.team2.name}</option></select></div>`).join('');
 }
 
 async function setResult(matchId, result) {
-  if (await apiPost({ action:'setResult', matchId, result })) showToast('تم تسجيل النتيجة ✓');
+  const match = MATCHES.find(m => m.id === matchId); if (match) match.result = result;
+  remoteData.results[matchId] = result;
+  renderMatches(); renderLeaderboard(); updatePointsBadge();
+  await apiPost({ action:'setResult', matchId, result }); showToast('تم تسجيل النتيجة ✓');
 }
 
 function renderKnockoutAdmin() {
