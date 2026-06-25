@@ -547,11 +547,7 @@
   <div id="tab-admin" style="display:none">
     <div class="admin-card">
       <h3>🔑 دخول الإدارة</h3>
-      <div id="admin-login-area">
-        <input class="admin-input" type="password" id="admin-pass" placeholder="كلمة السر..." />
-        <button class="btn-gold" onclick="adminLogin()" style="width:100%">دخول</button>
-      </div>
-      <div id="admin-panel" style="display:none">
+      <div id="admin-panel">
         <h3 style="margin-bottom:14px">إدخال نتائج الجولات الثلاث</h3>
         <p style="font-size:13px;color:var(--muted);margin-bottom:14px">النقاط تُحسب تلقائياً (3 نقاط للتوقع الصحيح)</p>
         <div id="results-admin"></div>
@@ -898,7 +894,16 @@ function fetchData() {
       remoteData.predictions   = json.predictions   || {};
       remoteData.results       = json.results       || {};
       remoteData.koMatches     = json.koMatches     || [];
-      remoteData.knockoutPreds = json.knockoutPreds || {};
+
+      // Migrate old R32-MXX keys → MXX
+      const rawPreds = json.knockoutPreds || {};
+      const migratedPreds = {};
+      Object.entries(rawPreds).forEach(([matchId, users]) => {
+        const cleanId = matchId.replace(/^R32-/, '');
+        if (!migratedPreds[cleanId]) migratedPreds[cleanId] = {};
+        Object.assign(migratedPreds[cleanId], users);
+      });
+      remoteData.knockoutPreds = migratedPreds;
       MATCHES.forEach(m => {
         if (remoteData.results[m.id]) m.result = remoteData.results[m.id];
         else m.result = null;
@@ -1730,17 +1735,8 @@ async function deleteKOMatch(matchId) {
 // ADMIN
 // ============================================================
 function adminLogin() {
-  const pass = document.getElementById('admin-pass').value;
-  if (pass === ADMIN_PASS) {
-    isAdmin = true;
-    document.getElementById('admin-login-area').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
-    renderResultsAdmin();
-    renderKnockoutAdmin();
-    showToast('أهلاً بك 👑', 'success');
-  } else {
-    showToast('كلمة سر خاطئة', 'error');
-  }
+  // No password required
+  isAdmin = true;
 }
 
 function renderResultsAdmin() {
@@ -1817,7 +1813,7 @@ function switchTab(tab) {
   });
   if (tab==='leaderboard') { renderLeaderboard(); fetchData(); }
   if (tab==='knockout') { renderKnockout(); fetchData(); }
-  if (tab==='admin') { renderResultsAdmin(); if(isAdmin) renderKnockoutAdmin(); }
+  if (tab==='admin') { isAdmin = true; renderResultsAdmin(); renderKnockoutAdmin(); }
 }
 
 // ============================================================
