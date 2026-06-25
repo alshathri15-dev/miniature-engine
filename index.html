@@ -918,33 +918,42 @@ function fetchData() {
 
 async function apiPost(payload) {
   if (!API_URL) { showToast('لم يتم إعداد الرابط', 'error'); return false; }
-  return new Promise((resolve) => {
+
+  // Method 1: Try JSONP GET with payload (works if Apps Script supports it)
+  const jsonpOk = await new Promise((resolve) => {
     const cbName = 'wc_post_' + Date.now();
     const script = document.createElement('script');
-    const timeout = setTimeout(() => {
-      delete window[cbName];
-      script.remove();
-      resolve(true); // assume ok on timeout (fire-and-forget)
-    }, 8000);
-
-    window[cbName] = function(json) {
-      clearTimeout(timeout);
-      delete window[cbName];
-      script.remove();
-      resolve(json && json.ok ? true : false);
+    const timer = setTimeout(() => {
+      delete window[cbName]; script.remove();
+      resolve(false); // timed out → try method 2
+    }, 6000);
+    window[cbName] = (json) => {
+      clearTimeout(timer); delete window[cbName]; script.remove();
+      resolve(!!(json && json.ok));
     };
-
-    // Encode payload as URL params + callback
     const encoded = encodeURIComponent(JSON.stringify(payload));
     script.src = API_URL + '?callback=' + cbName + '&payload=' + encoded + '&t=' + Date.now();
-    script.onerror = () => {
-      clearTimeout(timeout);
-      delete window[cbName];
-      script.remove();
-      resolve(true); // fire and forget
-    };
+    script.onerror = () => { clearTimeout(timer); delete window[cbName]; script.remove(); resolve(false); };
     document.head.appendChild(script);
   });
+
+  if (jsonpOk) return true;
+
+  // Method 2: Fallback — no-cors fetch POST (fire and forget, always arrives)
+  try {
+    fetch(API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    // Wait a moment then verify by re-fetching data
+    await new Promise(r => setTimeout(r, 1500));
+    await fetchData();
+    return true;
+  } catch(e) {
+    return false;
+  }
 }
 
 // ============================================================
@@ -1221,7 +1230,7 @@ function renderKnockout() {
     const t1 = m.team1 || '';
     const t2 = m.team2 || '';
     const result = m.result || '';
-    const isOpen = getKOStatus(m.kickoff || bm?.date);
+    const isOpen = getKOStatus(bm?.date || m.kickoff);
     const kPreds = (remoteData.knockoutPreds||{})[matchId] || {};
     const userPred = currentUser ? (kPreds[currentUser]||null) : null;
 
@@ -1232,7 +1241,7 @@ function renderKnockout() {
     const t2dot = winner&&t2===winner?'win': userPred==='2'?'my':'';
 
     const isFinal  = matchId === 'FINAL';
-    const dateStr  = fmtBracketDate(m.kickoff || bm?.date);
+    const dateStr  = fmtBracketDate(bm?.date || m.kickoff);
     const isActive = activeKOMatch === matchId;
     const bmCls    = `bm${isOpen&&!result?' open':''}${isFinal?' final-match':''}${isActive?' open':''}`;
 
@@ -1346,13 +1355,13 @@ function renderKODetail() {
   const t1 = m?.team1 || '';
   const t2 = m?.team2 || '';
   const result = m?.result || '';
-  const isOpen = getKOStatus(m?.kickoff || bm?.date);
+  const isOpen = getKOStatus(bm?.date || m?.kickoff);
   const kPreds = (remoteData.knockoutPreds||{})[activeKOMatch] || {};
   const userPred = currentUser ? (kPreds[currentUser]||null) : null;
   const team1names = Object.entries(kPreds).filter(([,p])=>p==='1').map(([n])=>n);
   const team2names = Object.entries(kPreds).filter(([,p])=>p==='2').map(([n])=>n);
   const total = team1names.length + team2names.length;
-  const dateStr = fmtBracketDate(m?.kickoff || bm?.date);
+  const dateStr = fmtBracketDate(bm?.date || m?.kickoff);
   const cd = isOpen && (m?.kickoff||bm?.date) ? formatKOCountdown(m?.kickoff||bm?.date) : '';
 
   mount.innerHTML = `<div class="ko-detail-panel">
