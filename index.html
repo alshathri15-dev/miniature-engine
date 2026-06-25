@@ -438,7 +438,6 @@
 
 <div class="container">
 
-  <!-- SETUP SCREEN (shown when no API URL configured) -->
   <div id="setup-screen" style="display:none">
     <h2>⚙️ إعداد أول مرة</h2>
     <p>المشروع يستخدم Google Sheets لحفظ البيانات. اتبع الخطوات التالية:</p>
@@ -470,7 +469,6 @@
     <button class="btn-gold" onclick="saveSetup()" style="width:100%">حفظ والبدء</button>
   </div>
 
-  <!-- REGISTER -->
   <div id="register-section" style="display:none">
     <h2>انضم للتحدي</h2>
     <p>أدخل اسمك وابدأ التوقعات</p>
@@ -480,7 +478,6 @@
     </div>
   </div>
 
-  <!-- WELCOME -->
   <div id="welcome-badge" style="display:none">
     <div class="left">
       <div class="avatar" id="avatar-letter">؟</div>
@@ -492,7 +489,6 @@
     <div class="points-pill" id="points-display">0 نقطة</div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs" id="main-tabs" style="display:none">
     <button class="tab-btn active" onclick="switchTab('matches')">المباريات</button>
     <button class="tab-btn" onclick="switchTab('knockout')">الإقصائية</button>
@@ -500,7 +496,6 @@
     <button class="tab-btn" onclick="switchTab('admin')" id="admin-tab-btn">⚙️ إدارة</button>
   </div>
 
-  <!-- MATCHES TAB -->
   <div id="tab-matches" style="display:none">
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
       <select id="filter-group" onchange="renderMatches()"
@@ -530,19 +525,16 @@
     <div id="matches-list"></div>
   </div>
 
-  <!-- LEADERBOARD TAB -->
   <div id="tab-leaderboard" style="display:none">
     <div class="section-title">لوحة الترتيب</div>
     <div id="leaderboard-list"></div>
   </div>
 
-  <!-- KNOCKOUT TAB -->
   <div id="tab-knockout" style="display:none">
     <div class="section-title">مرحلة خروج المغلوب</div>
     <div id="knockout-list"></div>
   </div>
 
-  <!-- ADMIN TAB -->
   <div id="tab-admin" style="display:none">
     <div class="admin-card">
       <h3>🔑 دخول الإدارة</h3>
@@ -684,15 +676,18 @@ const MATCHES = (function(){
 // ============================================================
 // STATE
 // ============================================================
-let API_URL = localStorage.getItem('wc_api_url') || 'https://script.google.com/macros/s/AKfycbyOFat3cggNYmR00MVm3aJL8gpZROpzOSQ1WB_cgrwgMsOM-PWRjpyQp9Wt-ygt3xZS/exec';
+
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// ضع الرابط الجديد الخاص بك مكان كلمة: رابط_السكريبت_حقك_هنا
+let API_URL = localStorage.getItem('wc_api_url') || 'رابط_السكريبت_حقك_هنا';
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+
 let ADMIN_PASS = localStorage.getItem('wc_admin_pass') || 'admin123';
 let currentUser = localStorage.getItem('wc_username') || '';
 let isAdmin = false;
 
 // Remote data (fetched from Sheets)
-let remoteData = { predictions: {}, results: {} };
-// predictions: { matchId: { userName: 'home'|'draw'|'away', ... } }
-// results: { matchId: 'home'|'draw'|'away' }
+let remoteData = { predictions: {}, results: {}, koMatches: [], knockoutPreds: {} };
 
 // ============================================================
 // APPS SCRIPT CODE (to copy)
@@ -703,20 +698,19 @@ function doPost(e) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const action = data.action;
 
+  // 1. توقعات المجموعات
   if (action === 'predict') {
     let sh = ss.getSheetByName('Predictions') || ss.insertSheet('Predictions');
     if (sh.getLastRow() === 0) sh.appendRow(['matchId','user','prediction','timestamp']);
-    // Remove old prediction for same user+match
     const rows = sh.getDataRange().getValues();
     for (let i = rows.length - 1; i >= 1; i--) {
-      if (rows[i][0] === data.matchId && rows[i][1] === data.user) {
-        sh.deleteRow(i + 1);
-      }
+      if (rows[i][0] === data.matchId && rows[i][1] === data.user) sh.deleteRow(i + 1);
     }
     sh.appendRow([data.matchId, data.user, data.prediction, new Date().toISOString()]);
     return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
 
+  // 2. نتائج المجموعات
   if (action === 'setResult') {
     let sh = ss.getSheetByName('Results') || ss.insertSheet('Results');
     if (sh.getLastRow() === 0) sh.appendRow(['matchId','result','timestamp']);
@@ -728,10 +722,10 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
 
+  // 3. إضافة مباريات الإقصائيات (لأدمن)
   if (action === 'addKOMatch') {
     let sh = ss.getSheetByName('KOMatches') || ss.insertSheet('KOMatches');
     if (sh.getLastRow() === 0) sh.appendRow(['id','round','team1','team2','date','kickoff','result','timestamp']);
-    // Update if exists, else append
     const rows = sh.getDataRange().getValues();
     let found = false;
     for (let i = 1; i < rows.length; i++) {
@@ -744,6 +738,7 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
 
+  // 4. تسجيل نتائج الإقصائيات (لأدمن)
   if (action === 'setKOResult') {
     let sh = ss.getSheetByName('KOMatches') || ss.insertSheet('KOMatches');
     const rows = sh.getDataRange().getValues();
@@ -756,6 +751,7 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
 
+  // 5. حذف مباراة إقصائية
   if (action === 'deleteKOMatch') {
     let sh = ss.getSheetByName('KOMatches');
     if (!sh) return ContentService.createTextOutput(JSON.stringify({ok:false})).setMimeType(ContentService.MimeType.JSON);
@@ -766,6 +762,7 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
 
+  // 6. توقعات الإقصائيات (للمستخدمين)
   if (action === 'predictKnockout') {
     let sh = ss.getSheetByName('KnockoutPreds') || ss.insertSheet('KnockoutPreds');
     if (sh.getLastRow() === 0) sh.appendRow(['matchId','user','prediction','timestamp']);
@@ -800,7 +797,7 @@ function doGet(e) {
     rows.forEach(r => { results[r[0]] = r[1]; });
   }
 
-  // Knockout matches list
+  // سحب بيانات الإقصائيات
   const koMatches = [];
   const kmSh = ss.getSheetByName('KOMatches');
   if (kmSh && kmSh.getLastRow() > 1) {
@@ -809,7 +806,8 @@ function doGet(e) {
       if (r[0]) koMatches.push({id:r[0], round:r[1], team1:r[2], team2:r[3], date:r[4], kickoff:r[5]||'', result:r[6]||''});
     });
   }
-  // Knockout predictions
+
+  // سحب توقعات الإقصائيات
   const knockoutPreds = {};
   const kpSh = ss.getSheetByName('KnockoutPreds');
   if (kpSh && kpSh.getLastRow() > 1) {
@@ -819,6 +817,7 @@ function doGet(e) {
       knockoutPreds[r[0]][r[1]] = r[2];
     });
   }
+
   const json = JSON.stringify({predictions, results, koMatches, knockoutPreds});
   const cb = e && e.parameter && e.parameter.callback;
   if (cb) {
@@ -879,13 +878,21 @@ function fetchData() {
       clearTimeout(timeout);
       delete window[cbName];
       script.remove();
+      
       remoteData.predictions = json.predictions || {};
       remoteData.results = json.results || {};
+      
+      // التعديل الجديد عشان يقرا الإقصائيات
+      remoteData.koMatches = json.koMatches || [];         
+      remoteData.knockoutPreds = json.knockoutPreds || {}; 
+
       MATCHES.forEach(m => {
         if (remoteData.results[m.id]) m.result = remoteData.results[m.id];
         else m.result = null;
       });
+      
       renderMatches();
+      renderKnockout(); // تحديث شاشة الإقصائيات
       renderLeaderboard();
       updatePointsBadge();
       resolve();
@@ -1289,373 +1296,4 @@ function renderKnockout() {
           </div>
         </div>
         ${isOpen && !winner ? `<div class="ko-pred-row">
-          <button class="ko-pred-btn ${userPred==='1'?'sel-1':''}" ${!currentUser?'disabled':''} onclick="predictKO('${m.id}','1')">
-            ${m.team1||'؟'}<span class="label">يفوز</span>
-          </button>
-          <button class="ko-pred-btn ${userPred==='2'?'sel-2':''}" ${!currentUser?'disabled':''} onclick="predictKO('${m.id}','2')">
-            ${m.team2||'؟'}<span class="label">يفوز</span>
-          </button>
-        </div>` : (!isOpen && !winner && !currentUser ? '' : '')}
-        ${total > 0 && !isOpen ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px;">
-          ${team1names.length>0?`<span class="pred-chip chip-home">${m.team1}: ${team1names.join('، ')}</span>`:''}
-          ${team2names.length>0?`<span class="pred-chip chip-away">${m.team2}: ${team2names.join('، ')}</span>`:''}
-        </div>` : (total > 0 && isOpen ? `<div style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">توقعات: ${total} (مخفية حتى القفل)</div>` : '')}
-      </div>`;
-    }
-  }
-
-  container.innerHTML = bracketHTML + detailHTML;
-}
-
-function toggleKODetail(matchId) {
-  activeKOMatch = activeKOMatch === matchId ? null : matchId;
-  renderKnockout();
-  // Scroll to detail panel
-  if (activeKOMatch) {
-    setTimeout(() => {
-      const panel = document.querySelector('.ko-detail-panel');
-      if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
-    }, 50);
-  }
-}
-
-function getKOStatus(kickoffOrDate) {
-  if (!kickoffOrDate) return 'open';
-  const t = new Date(kickoffOrDate).getTime();
-  const hour = 60*60*1000;
-  return (t - Date.now()) > hour ? 'open' : 'closed';
-}
-
-function formatKOCountdown(kickoffISO) {
-  const lockout = new Date(kickoffISO).getTime() - 60*60*1000;
-  const diff = lockout - Date.now();
-  if (diff <= 0) return '';
-  const h = Math.floor(diff/3600000);
-  const m = Math.floor((diff%3600000)/60000);
-  const s = Math.floor((diff%60000)/1000);
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-
-async function predictKO(matchId, choice) {
-  if (!currentUser) { showToast('سجل اسمك أول', 'error'); return; }
-  if (!remoteData.knockoutPreds) remoteData.knockoutPreds = {};
-  if (!remoteData.knockoutPreds[matchId]) remoteData.knockoutPreds[matchId] = {};
-  remoteData.knockoutPreds[matchId][currentUser] = choice;
-  renderKnockout();
-  const ok = await apiPost({ action:'predictKnockout', matchId, user:currentUser, prediction:choice });
-  if (ok) showToast('تم حفظ توقعك ✓', 'success');
-  else { showToast('خطأ في الحفظ', 'error'); }
-}
-
-// ============================================================
-// KNOCKOUT ADMIN — fixed bracket with dropdowns
-// ============================================================
-
-// All 48 WC 2026 teams for dropdown
-const ALL_TEAMS = ['أستراليا', 'ألمانيا', 'أمريكا', 'أوروغواي', 'أوزبكستان', 'إسبانيا', 'إنجلترا', 'إيران', 'اسكتلندا', 'الأرجنتين', 'الأردن', 'الإكوادور', 'البرازيل', 'البرتغال', 'البوسنة والهرسك', 'التشيك', 'الجزائر', 'الرأس الأخضر', 'السعودية', 'السنغال', 'السويد', 'العراق', 'الكونغو الديمقراطية', 'المغرب', 'المكسيك', 'النرويج', 'النمسا', 'اليابان', 'باراغواي', 'بلجيكا', 'بنما', 'تركيا', 'تونس', 'جنوب أفريقيا', 'ساحل العاج', 'سويسرا', 'غانا', 'فرنسا', 'قطر', 'كرواتيا', 'كندا', 'كوراساو', 'كوريا الجنوبية', 'كولومبيا', 'مصر', 'نيوزيلندا', 'هايتي', 'هولندا'];
-
-// Fixed bracket slots from the wall chart
-const BRACKET_SLOTS = {
-  r32: [
-    'R32-M73','R32-M74','R32-M75','R32-M77','R32-M78','R32-M79',
-    'R32-M80','R32-M81','R32-M82','R32-M83','R32-M84','R32-M85',
-    'R32-M86','R32-M87','R32-M88','R32-M89','R32-M90','R32-M91',
-    'R32-M92','R32-M93','R32-M94','R32-M95','R32-M96',
-  ],
-  r16: ['R16-1','R16-2','R16-3','R16-4','R16-5','R16-6','R16-7','R16-8'],
-  qf:  ['QF1','QF2','QF3','QF4'],
-  sf:  ['SF1','SF2'],
-  tp:  ['3RD'],
-  f:   ['FINAL'],
-};
-
-function teamsDropdown(selectedVal, inputId) {
-  const opts = ALL_TEAMS.map(t =>
-    `<option value="${t}" ${t===selectedVal?'selected':''}>${t}</option>`
-  ).join('');
-  return `<select id="${inputId}" class="ko-result-select" style="flex:1;font-size:13px">
-    <option value="">-- اختر فريق --</option>${opts}
-  </select>`;
-}
-
-function renderKnockoutAdmin() {
-  const container = document.getElementById('knockout-admin');
-  if (!container) return;
-
-  // Build lookup: slotId → existing match data
-  const slotMap = {};
-  (remoteData.koMatches||[]).forEach(m => { slotMap[m.id] = m; });
-
-  const roundInfo = [
-    {id:'r32', label:'دور الـ 32', cols:2},
-    {id:'r16', label:'دور الـ 16', cols:2},
-    {id:'qf',  label:'ربع النهائي', cols:2},
-    {id:'sf',  label:'نصف النهائي', cols:2},
-    {id:'tp',  label:'مباراة الثالث', cols:1},
-    {id:'f',   label:'النهائي 🏆', cols:1},
-  ];
-
-  let html = '';
-
-  roundInfo.forEach(round => {
-    const slots = BRACKET_SLOTS[round.id] || [];
-    html += `<div class="ko-round-title">${round.label}</div>`;
-    html += `<div style="display:grid;grid-template-columns:repeat(${round.cols},1fr);gap:10px;margin-bottom:18px;">`;
-
-    slots.forEach(slotId => {
-      const m = slotMap[slotId] || {};
-      const t1 = m.team1||'';
-      const t2 = m.team2||'';
-      const result = m.result||'';
-      const kickoff = m.kickoff||'';
-
-      // winner options depend on selected teams
-      const w1label = t1 || 'الفريق 1';
-      const w2label = t2 || 'الفريق 2';
-
-      html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px">${slotId}</div>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <select id="adm_t1_${slotId}" class="ko-result-select" style="flex:1;font-size:12px" onchange="adminKOPreview('${slotId}')">
-            <option value="">-- الفريق 1 --</option>
-            ${ALL_TEAMS.map(t=>`<option value="${t}" ${t===t1?'selected':''}>${t}</option>`).join('')}
-          </select>
-          <span style="color:var(--muted);font-size:11px">vs</span>
-          <select id="adm_t2_${slotId}" class="ko-result-select" style="flex:1;font-size:12px" onchange="adminKOPreview('${slotId}')">
-            <option value="">-- الفريق 2 --</option>
-            ${ALL_TEAMS.map(t=>`<option value="${t}" ${t===t2?'selected':''}>${t}</option>`).join('')}
-          </select>
-        </div>
-        <div style="display:flex;gap:6px;">
-          <input id="adm_ko_${slotId}" type="datetime-local" class="ko-team-input" style="flex:1;font-size:12px" value="${kickoff ? new Date(kickoff).toISOString().slice(0,16) : ''}">
-          <select id="adm_res_${slotId}" class="ko-result-select" style="flex:1;font-size:12px">
-            <option value="" ${!result?'selected':''}>-- الفائز --</option>
-            <option value="1" ${result==='1'?'selected':''}>✅ ${w1label}</option>
-            <option value="2" ${result==='2'?'selected':''}>✅ ${w2label}</option>
-          </select>
-        </div>
-        <button class="ko-save-btn" onclick="saveKOSlot('${slotId}')" style="width:100%;text-align:center">💾 حفظ</button>
-      </div>`;
-    });
-
-    html += '</div>';
-  });
-
-  container.innerHTML = html;
-}
-
-function adminKOPreview(slotId) {
-  // Update winner dropdown labels when teams change
-  const t1 = document.getElementById('adm_t1_'+slotId)?.value || 'الفريق 1';
-  const t2 = document.getElementById('adm_t2_'+slotId)?.value || 'الفريق 2';
-  const res = document.getElementById('adm_res_'+slotId);
-  if (!res) return;
-  const curVal = res.value;
-  res.innerHTML = `
-    <option value="" ${!curVal?'selected':''}>-- الفائز --</option>
-    <option value="1" ${curVal==='1'?'selected':''}>✅ ${t1}</option>
-    <option value="2" ${curVal==='2'?'selected':''}>✅ ${t2}</option>`;
-}
-
-async function saveKOSlot(slotId) {
-  const t1 = document.getElementById('adm_t1_'+slotId)?.value.trim() || '';
-  const t2 = document.getElementById('adm_t2_'+slotId)?.value.trim() || '';
-  const kickoffRaw = document.getElementById('adm_ko_'+slotId)?.value || '';
-  const result = document.getElementById('adm_res_'+slotId)?.value || '';
-
-  if (!t1 && !t2) { showToast('اختر فريقاً على الأقل', 'error'); return; }
-
-  const kickoff = kickoffRaw ? new Date(kickoffRaw).toISOString() : '';
-  const date = kickoffRaw ? kickoffRaw.split('T')[0] : '';
-
-  // Determine round from slot
-  let round = 'r32';
-  Object.entries(BRACKET_SLOTS).forEach(([r, slots]) => { if(slots.includes(slotId)) round = r; });
-
-  if (!remoteData.koMatches) remoteData.koMatches = [];
-  const existing = remoteData.koMatches.find(m => m.id === slotId);
-  if (existing) {
-    existing.team1 = t1; existing.team2 = t2;
-    existing.kickoff = kickoff; existing.date = date; existing.result = result;
-  } else {
-    remoteData.koMatches.push({id:slotId, round, team1:t1, team2:t2, date, kickoff, result});
-  }
-
-  const ok = await apiPost({action:'addKOMatch', id:slotId, round, team1:t1, team2:t2, date, kickoff});
-  if (ok) {
-    if (result) await apiPost({action:'setKOResult', matchId:slotId, result});
-    showToast('تم الحفظ ✓', 'success');
-    renderKnockout();
-    renderLeaderboard();
-    updatePointsBadge();
-  } else showToast('خطأ في الحفظ', 'error');
-}
-
-async function setKOResult(matchId, result) {
-  if (!result) return;
-  const m = (remoteData.koMatches||[]).find(x=>x.id===matchId);  if (m) m.result = result;
-  const ok = await apiPost({action:'setKOResult', matchId, result});
-  if (ok) {
-    showToast('تم تسجيل الفائز ✓', 'success');
-    renderKnockout(); renderLeaderboard(); updatePointsBadge();
-  } else showToast('خطأ في الحفظ', 'error');
-}
-
-async function deleteKOMatch(matchId) {
-  remoteData.koMatches = (remoteData.koMatches||[]).filter(m=>m.id!==matchId);
-  const ok = await apiPost({action:'deleteKOMatch', matchId});
-  if (ok) { showToast('تم الحذف', 'info'); renderKnockoutAdmin(); renderKnockout(); }
-  else showToast('خطأ في الحذف', 'error');
-}
-
-// ============================================================
-// ADMIN
-// ============================================================
-function adminLogin() {
-  const pass = document.getElementById('admin-pass').value;
-  if (pass === ADMIN_PASS) {
-    isAdmin = true;
-    document.getElementById('admin-login-area').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
-    renderResultsAdmin();
-    renderKnockoutAdmin();
-    showToast('أهلاً بك 👑', 'success');
-  } else {
-    showToast('كلمة سر خاطئة', 'error');
-  }
-}
-
-function renderResultsAdmin() {
-  const container = document.getElementById('results-admin');
-  if (!container) return;
-  container.innerHTML = MATCHES.map(m => {
-    const cur = remoteData.results[m.id] || '';
-    return `
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
-      <span style="font-size:13px;flex:1;">${m.team1.flag} ${m.team1.name} vs ${m.team2.flag} ${m.team2.name}
-        <span style="color:var(--muted);font-size:11px;display:block">${formatKickoff(m.kickoff)}</span>
-      </span>
-      <select onchange="setResult('${m.id}', this.value)"
-        style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-family:Tajawal;font-size:13px;outline:none;">
-        <option value="" ${!cur?'selected':''}>-- النتيجة --</option>
-        <option value="home" ${cur==='home'?'selected':''}>فوز ${m.team1.name}</option>
-        <option value="draw" ${cur==='draw'?'selected':''}>تعادل</option>
-        <option value="away" ${cur==='away'?'selected':''}>فوز ${m.team2.name}</option>
-      </select>
-    </div>`;
-  }).join('');
-}
-
-async function setResult(matchId, result) {
-  if (!result) return;
-  const ok = await apiPost({ action:'setResult', matchId, result });
-  if (ok) {
-    remoteData.results[matchId] = result;
-    const match = MATCHES.find(m => m.id === matchId);
-    if (match) match.result = result;
-    renderMatches();
-    renderLeaderboard();
-    updatePointsBadge();
-    showToast('تم تسجيل النتيجة ✓', 'success');
-  }
-}
-
-// ============================================================
-// UI
-// ============================================================
-function updateUI() {
-  const hasApi = !!API_URL;
-  const loggedIn = hasApi && currentUser;
-
-  document.getElementById('setup-screen').style.display = hasApi ? 'none' : 'block';
-  document.getElementById('register-section').style.display = (!hasApi || currentUser) ? 'none' : 'block';
-  document.getElementById('welcome-badge').style.display = loggedIn ? 'flex' : 'none';
-  document.getElementById('main-tabs').style.display = loggedIn ? 'flex' : 'none';
-
-  // Show matches tab by default, hide all others
-  document.getElementById('tab-matches').style.display = loggedIn ? 'block' : 'none';
-  document.getElementById('tab-knockout').style.display = 'none';
-  document.getElementById('tab-leaderboard').style.display = 'none';
-  document.getElementById('tab-admin').style.display = 'none';
-
-  // Reset active tab to matches
-  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', i === 0);
-  });
-
-  if (currentUser) {
-    document.getElementById('display-name').textContent = currentUser;
-    document.getElementById('avatar-letter').textContent = currentUser[0];
-    updatePointsBadge();
-  }
-}
-
-function switchTab(tab) {
-  ['matches','knockout','leaderboard','admin'].forEach(t => {
-    document.getElementById('tab-'+t).style.display = t===tab ? 'block' : 'none';
-  });
-  document.querySelectorAll('.tab-btn').forEach((btn,i) => {
-    btn.classList.toggle('active', ['matches','knockout','leaderboard','admin'][i]===tab);
-  });
-  if (tab==='leaderboard') { renderLeaderboard(); fetchData(); }
-  if (tab==='knockout') { renderKnockout(); fetchData(); }
-  if (tab==='admin') { renderResultsAdmin(); if(isAdmin) renderKnockoutAdmin(); }
-}
-
-// ============================================================
-// TOAST
-// ============================================================
-let toastTimer;
-function showToast(msg, type='success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = `show ${type}`;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// ============================================================
-// CLOCK + COUNTDOWN TICKER
-// ============================================================
-function updateClock() {
-  const el = document.getElementById('live-clock');
-  if (el) el.textContent = new Date().toLocaleString('ar-SA',
-    {weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}
-
-let prevStatuses = {};
-function tickCountdowns() {
-  MATCHES.forEach(m => {
-    const el = document.getElementById('cd_'+m.id);
-    if (!el) return;
-    const cd = formatCountdown(m.kickoff);
-    el.textContent = cd ? 'يغلق بعد ' + cd : '';
-    const st = getMatchStatus(m.kickoff);
-    if (prevStatuses[m.id] && prevStatuses[m.id] !== st) renderMatches();
-    prevStatuses[m.id] = st;
-  });
-  // KO countdowns
-  (remoteData.koMatches||[]).forEach(m => {
-    const el = document.getElementById('kocd_'+m.id);
-    if (!el) return;
-    const cd = m.kickoff ? formatKOCountdown(m.kickoff) : '';
-    el.textContent = cd ? 'يغلق بعد ' + cd : '';
-  });
-}
-
-// ============================================================
-// INIT
-// ============================================================
-document.getElementById('name-input')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') registerUser();
-});
-
-updateUI();
-updateClock();
-if (API_URL) fetchData();
-setInterval(updateClock, 1000);
-setInterval(tickCountdowns, 1000);
-// Refresh data every 30s to catch other users' predictions
-setInterval(() => { if (API_URL) fetchData(); }, 30000);
-</script>
-</body>
-</html>
+          <button class="ko-pred-btn ${userPred==='1'?'sel-1':''}" ${
