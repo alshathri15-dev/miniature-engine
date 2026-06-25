@@ -284,7 +284,8 @@ const MATCHES = (function(){
   ];
 })();
 
-let API_URL = localStorage.getItem('wc_api_url') || '';
+// تم استعادة الرابط المثبت هنا ليعمل مع جميع الأجهزة فوراً
+let API_URL = localStorage.getItem('wc_api_url') || 'https://script.google.com/macros/s/AKfycby6K2PvhCtnlKmN0av_wUamQXFEdC1qhRc0hB4ziTrUtQ9En4uObLdvr-2T6CIZGU6I/exec';
 let currentUser = localStorage.getItem('wc_username') || '';
 let remoteData = { predictions: {}, results: {} };
 
@@ -394,9 +395,6 @@ async function predict(matchId, choice) {
   await apiPost({ action:'predict', matchId, user:currentUser, prediction:choice }); showToast('تم الحفظ ✓');
 }
 
-// ============================================================
-// دالة المجموعات (تم تصحيح عرض النتيجة تحت الأزرار بوضوح تام)
-// ============================================================
 function renderMatches() {
   const c = document.getElementById('matches-list'); if(!c) return;
   c.innerHTML = MATCHES.map(m => {
