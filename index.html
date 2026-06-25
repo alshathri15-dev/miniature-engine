@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ر<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -13,26 +13,14 @@
 </style>
 <style>
   :root {
-    --bg: #0A0F1C;
-    --card: #111827;
-    --card2: #1A2744;
-    --gold: #C9A84C;
-    --gold-light: #E8C96E;
-    --text: #E8EDF5;
-    --muted: #8892A4;
-    --green: #2ECC71;
-    --red: #E74C3C;
-    --draw: #F39C12;
-    --border: rgba(201,168,76,0.2);
+    --bg: #0A0F1C; --card: #111827; --card2: #1A2744; --gold: #C9A84C;
+    --gold-light: #E8C96E; --text: #E8EDF5; --muted: #8892A4;
+    --green: #2ECC71; --red: #E74C3C; --draw: #F39C12; --border: rgba(201,168,76,0.2);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
-    font-family:'Tajawal',sans-serif;
-    background:var(--bg); color:var(--text);
-    min-height:100vh;
-    background-image:
-      radial-gradient(ellipse at 20% 50%,rgba(201,168,76,0.04) 0%,transparent 60%),
-      radial-gradient(ellipse at 80% 20%,rgba(26,39,68,0.8) 0%,transparent 50%);
+    font-family:'Tajawal',sans-serif; background:var(--bg); color:var(--text); min-height:100vh;
+    background-image: radial-gradient(ellipse at 20% 50%,rgba(201,168,76,0.04) 0%,transparent 60%), radial-gradient(ellipse at 80% 20%,rgba(26,39,68,0.8) 0%,transparent 50%);
   }
   header { text-align:center; padding:36px 20px 16px; }
   .trophy-row { font-size:44px; margin-bottom:6px; filter:drop-shadow(0 0 20px rgba(201,168,76,0.5)); }
@@ -43,303 +31,116 @@
   }
   header p { color:var(--muted); font-size:13px; margin-top:4px; }
   #live-clock { font-size:12px; color:var(--muted); margin-top:8px; direction:ltr; }
-
   .container { max-width:680px; margin:0 auto; padding:0 16px 80px; }
 
-  /* REGISTER */
-  #register-section {
-    background:var(--card); border:1px solid var(--border);
-    border-radius:20px; padding:30px 24px; margin:20px 0; text-align:center;
-    position:relative; overflow:hidden;
-  }
-  #register-section::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:3px;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  }
+  #register-section { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:30px 24px; margin:20px 0; text-align:center; position:relative; overflow:hidden; }
+  #register-section::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
   #register-section h2 { font-size:20px; font-weight:700; margin-bottom:4px; }
   #register-section p { color:var(--muted); font-size:13px; margin-bottom:18px; }
   .input-row { display:flex; gap:10px; max-width:360px; margin:0 auto; }
-  .input-row input {
-    flex:1; background:var(--card2); border:1px solid var(--border);
-    border-radius:12px; padding:12px 16px; color:var(--text);
-    font-family:'Tajawal',sans-serif; font-size:16px; outline:none;
-    transition:border-color 0.2s;
-  }
+  .input-row input { flex:1; background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:12px 16px; color:var(--text); font-family:'Tajawal',sans-serif; font-size:16px; outline:none; transition:border-color 0.2s; }
   .input-row input:focus { border-color:var(--gold); }
-  .input-row input::placeholder { color:var(--muted); }
-  .btn-gold {
-    background:linear-gradient(135deg,var(--gold),#a8853a);
-    color:#0A0F1C; font-family:'Tajawal',sans-serif; font-weight:700;
-    font-size:15px; border:none; border-radius:12px; padding:12px 22px;
-    cursor:pointer; transition:opacity 0.2s,transform 0.1s; white-space:nowrap;
-  }
+  .btn-gold { background:linear-gradient(135deg,var(--gold),#a8853a); color:#0A0F1C; font-family:'Tajawal',sans-serif; font-weight:700; font-size:15px; border:none; border-radius:12px; padding:12px 22px; cursor:pointer; transition:opacity 0.2s,transform 0.1s; white-space:nowrap; }
   .btn-gold:hover { opacity:0.9; transform:translateY(-1px); }
-  .btn-gold:active { transform:translateY(0); }
-  .btn-gold:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
-  /* WELCOME */
-  #welcome-badge {
-    background:var(--card); border:1px solid var(--border);
-    border-radius:14px; padding:14px 18px; margin:0 0 18px;
-    display:flex; align-items:center; gap:12px; justify-content:space-between;
-  }
+  #welcome-badge { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 18px; margin:0 0 18px; display:flex; align-items:center; justify-content:space-between; }
   #welcome-badge .left { display:flex; align-items:center; gap:10px; }
-  .avatar {
-    width:38px; height:38px;
-    background:linear-gradient(135deg,var(--gold),#a8853a);
-    border-radius:50%; display:flex; align-items:center; justify-content:center;
-    font-size:18px; font-weight:900; color:#0A0F1C;
-  }
-  .points-pill {
-    background:var(--card2); border:1px solid var(--border);
-    padding:6px 14px; border-radius:20px; font-size:14px; font-weight:700; color:var(--gold);
-  }
+  .avatar { width:38px; height:38px; background:linear-gradient(135deg,var(--gold),#a8853a); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:#0A0F1C; }
+  .points-pill { background:var(--card2); border:1px solid var(--border); padding:6px 14px; border-radius:20px; font-size:14px; font-weight:700; color:var(--gold); }
 
-  /* TABS */
-  .tabs {
-    display:flex; gap:0; background:var(--card);
-    border:1px solid var(--border); border-radius:14px; padding:4px; margin-bottom:18px;
-  }
-  .tab-btn {
-    flex:1; background:transparent; border:none;
-    font-family:'Tajawal',sans-serif; font-size:14px; font-weight:600;
-    color:var(--muted); padding:10px; border-radius:10px; cursor:pointer; transition:all 0.2s;
-  }
+  .tabs { display:flex; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:4px; margin-bottom:18px; }
+  .tab-btn { flex:1; background:transparent; border:none; font-family:'Tajawal',sans-serif; font-size:14px; font-weight:600; color:var(--muted); padding:10px; border-radius:10px; cursor:pointer; transition:all 0.2s; }
   .tab-btn.active { background:var(--card2); color:var(--gold); }
 
-  /* SECTION TITLE */
-  .section-title {
-    display:flex; align-items:center; gap:10px;
-    margin:20px 0 12px; font-size:12px; font-weight:500;
-    color:var(--muted); text-transform:uppercase; letter-spacing:2px;
-  }
+  .section-title { display:flex; align-items:center; gap:10px; margin:20px 0 12px; font-size:12px; font-weight:500; color:var(--muted); text-transform:uppercase; letter-spacing:2px; }
   .section-title::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
 
-  /* MATCH CARD */
-  .match-card {
-    background:var(--card); border:1px solid var(--border);
-    border-radius:18px; margin-bottom:12px; overflow:hidden;
-    transition:transform 0.2s,box-shadow 0.2s;
-  }
-  .match-card:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,0,0,0.4); }
-  .match-header {
-    background:var(--card2); padding:9px 14px;
-    display:flex; align-items:center; justify-content:space-between; font-size:12px;
-    flex-wrap:wrap; gap:4px;
-  }
-  .match-header .group { color:var(--gold); font-weight:700; letter-spacing:1px; }
+  .match-card { background:var(--card); border:1px solid var(--border); border-radius:18px; margin-bottom:12px; overflow:hidden; transition:transform 0.2s; }
+  .match-header { background:var(--card2); padding:9px 14px; display:flex; align-items:center; justify-content:space-between; font-size:12px; }
+  .match-header .group { color:var(--gold); font-weight:700; }
   .match-header .time { color:var(--muted); direction:ltr; }
   .status-badge { font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
   .status-open { background:rgba(46,204,113,0.15); color:var(--green); }
-  .status-closed { background:rgba(136,146,164,0.15); color:var(--muted); }
+  .status-closed { background:rgba(231,76,60,0.15); color:#E74C3C; }
 
   .match-body { padding:16px 14px; }
-  .teams-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-  .team { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; text-align:center; }
-  .team-flag { font-size:34px; line-height:1; }
+  .teams-row { display:flex; align-items:center; justify-content:space-between; }
+  .team { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; }
+  .team-flag { font-size:34px; }
   .team-name { font-size:14px; font-weight:700; }
-  .vs-box { display:flex; flex-direction:column; align-items:center; gap:3px; min-width:46px; }
+  .vs-box { display:flex; flex-direction:column; align-items:center; gap:3px; }
   .vs-text { font-size:11px; color:var(--muted); }
-  .countdown-box { font-size:11px; color:var(--draw); direction:ltr; text-align:center; font-variant-numeric:tabular-nums; }
+  .countdown-box { font-size:11px; color:var(--draw); direction:ltr; font-family:monospace; font-weight:bold; }
 
-  /* PREDICT BUTTONS */
   .predict-row { display:flex; gap:8px; margin-top:14px; }
-  .pred-btn {
-    flex:1; background:var(--card2); border:1.5px solid transparent;
-    border-radius:10px; padding:10px 4px; cursor:pointer;
-    font-family:'Tajawal',sans-serif; font-size:13px; font-weight:700;
-    color:var(--text); transition:all 0.2s; text-align:center;
-    display:flex; flex-direction:column; align-items:center; gap:2px;
-  }
+  .pred-btn { flex:1; background:var(--card2); border:1.5px solid transparent; border-radius:10px; padding:10px 4px; cursor:pointer; font-family:'Tajawal',sans-serif; font-size:13px; font-weight:700; color:var(--text); display:flex; flex-direction:column; align-items:center; }
   .pred-btn .label { font-size:11px; font-weight:400; color:var(--muted); }
-  .pred-btn:hover:not(:disabled) { border-color:var(--gold); background:rgba(201,168,76,0.08); }
   .pred-btn:disabled { opacity:0.4; cursor:not-allowed; }
   .pred-btn.selected-home { border-color:var(--green); background:rgba(46,204,113,0.1); color:var(--green); }
-  .pred-btn.selected-home .label { color:var(--green); }
   .pred-btn.selected-draw { border-color:var(--draw); background:rgba(243,156,18,0.1); color:var(--draw); }
-  .pred-btn.selected-draw .label { color:var(--draw); }
   .pred-btn.selected-away { border-color:var(--red); background:rgba(231,76,60,0.1); color:var(--red); }
-  .pred-btn.selected-away .label { color:var(--red); }
 
-  /* PREDICTIONS CHIPS */
-  .predictions-preview {
-    padding:9px 14px 12px; border-top:1px solid rgba(255,255,255,0.04);
-    display:flex; flex-wrap:wrap; gap:5px; align-items:center;
-  }
-  .pred-label { font-size:11px; color:var(--muted); margin-left:2px; }
-  .pred-chip { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; max-width:100%; white-space:normal; line-height:1.6; }
+  .predictions-preview { padding:9px 14px 12px; border-top:1px solid rgba(255,255,255,0.04); display:flex; flex-wrap:wrap; gap:5px; }
+  .pred-label { font-size:11px; color:var(--muted); }
+  .pred-chip { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; }
   .chip-home { background:rgba(46,204,113,0.12); color:var(--green); }
   .chip-draw { background:rgba(243,156,18,0.12); color:var(--draw); }
   .chip-away { background:rgba(231,76,60,0.12); color:var(--red); }
 
-  /* LEADERBOARD */
-  .lb-row {
-    display:flex; align-items:center; gap:12px;
-    background:var(--card); border:1px solid var(--border);
-    border-radius:12px; padding:12px 16px; margin-bottom:8px;
-  }
+  .lb-row { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:8px; }
   .lb-rank { font-size:18px; font-weight:900; width:28px; text-align:center; color:var(--muted); }
-  .lb-rank.gold { color:#FFD700; }
-  .lb-rank.silver { color:#C0C0C0; }
-  .lb-rank.bronze { color:#CD7F32; }
-  .lb-avatar {
-    width:36px; height:36px; background:var(--card2); border:1px solid var(--border);
-    border-radius:50%; display:flex; align-items:center; justify-content:center;
-    font-size:15px; font-weight:900; color:var(--gold);
-  }
+  .lb-avatar { width:36px; height:36px; background:var(--card2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--gold); }
   .lb-name { flex:1; font-size:15px; font-weight:600; }
   .lb-pts { font-size:18px; font-weight:900; color:var(--gold); }
-  .lb-pts-label { font-size:11px; color:var(--muted); }
 
-  /* LOADING */
-  .loading { text-align:center; padding:40px 20px; color:var(--muted); }
-  .spinner {
-    width:32px; height:32px; border:3px solid var(--border);
-    border-top-color:var(--gold); border-radius:50%;
-    animation:spin 0.8s linear infinite; margin:0 auto 12px;
-  }
-  @keyframes spin { to { transform:rotate(360deg); } }
-
-  .empty-state { text-align:center; padding:40px 20px; color:var(--muted); font-size:14px; }
-  .empty-state .emoji { font-size:38px; margin-bottom:10px; }
-
-  /* TOAST */
-  #toast {
-    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
-    background:var(--card); border:1px solid var(--border);
-    border-radius:12px; padding:12px 24px; font-size:14px; font-weight:600;
-    transition:transform 0.3s ease; z-index:999; white-space:nowrap;
-    box-shadow:0 8px 32px rgba(0,0,0,0.5);
-  }
+  #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 24px; font-size:14px; font-weight:600; transition:transform 0.3s; z-index:999; }
   #toast.show { transform:translateX(-50%) translateY(0); }
-  #toast.success { border-color:rgba(46,204,113,0.4); color:var(--green); }
-  #toast.error { border-color:rgba(231,76,60,0.4); color:var(--red); }
-  #toast.info { border-color:rgba(201,168,76,0.4); color:var(--gold); }
+  #toast.success { border-color:var(--green); color:var(--green); }
+  #toast.error { border-color:var(--red); color:var(--red); }
 
-  /* SETUP SCREEN */
-  #setup-screen {
-    background:var(--card); border:1px solid var(--border);
-    border-radius:20px; padding:28px 22px; margin:20px 0;
-  }
-  #setup-screen h2 { font-size:18px; font-weight:700; margin-bottom:6px; }
-  #setup-screen p { color:var(--muted); font-size:13px; margin-bottom:18px; line-height:1.6; }
-  .setup-input {
-    width:100%; background:var(--card2); border:1px solid var(--border);
-    border-radius:12px; padding:12px 14px; color:var(--text);
-    font-family:'Tajawal',sans-serif; font-size:14px; outline:none;
-    transition:border-color 0.2s; margin-bottom:10px; direction:ltr;
-  }
-  .setup-input:focus { border-color:var(--gold); }
-  .step-badge {
-    display:inline-flex; align-items:center; justify-content:center;
-    width:24px; height:24px; border-radius:50%;
-    background:var(--gold); color:#0A0F1C; font-size:12px; font-weight:900;
-    margin-left:8px; flex-shrink:0;
-  }
-  .step-row { display:flex; align-items:flex-start; gap:4px; margin-bottom:16px; }
-  .step-content { flex:1; }
-  .step-content label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; }
+  #setup-screen { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:28px 22px; margin:20px 0; }
+  .setup-input { width:100%; background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:12px 14px; color:var(--text); font-family:'Tajawal',sans-serif; margin-bottom:10px; direction:ltr; }
+  .step-badge { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--gold); color:#0A0F1C; font-size:12px; font-weight:900; margin-left:8px; }
+  .step-row { display:flex; margin-bottom:16px; }
 
-  /* ADMIN */
-  .admin-card {
-    background:var(--card); border:1px solid var(--border);
-    border-radius:18px; padding:22px; margin-bottom:14px;
-  }
-  .admin-card h3 { font-size:16px; font-weight:700; margin-bottom:14px; }
-  .admin-input {
-    width:100%; background:var(--card2); border:1px solid var(--border);
-    border-radius:10px; padding:9px 12px; color:var(--text);
-    font-family:'Tajawal',sans-serif; font-size:13px; outline:none; margin-bottom:8px;
-  }
-  .admin-input:focus { border-color:var(--gold); }
-
-  @media(max-width:480px) { .input-row { flex-direction:column; } }
-  ::-webkit-scrollbar { width:4px; }
-  ::-webkit-scrollbar-track { background:var(--bg); }
-  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
-
-  /* KNOCKOUT */
-  .ko-round-title {
-    font-size:13px; font-weight:700; color:var(--gold);
-    letter-spacing:1px; margin:20px 0 10px;
-    display:flex; align-items:center; gap:8px;
-  }
+  .admin-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:22px; }
+  .ko-round-title { font-size:13px; font-weight:700; color:var(--gold); margin:20px 0 10px; display:flex; align-items:center; gap:8px; }
   .ko-round-title::after { content:''; flex:1; height:1px; background:var(--border); }
-  .ko-match {
-    background:var(--card2); border:1px solid var(--border);
-    border-radius:12px; padding:12px 14px; margin-bottom:8px;
-    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-  }
-  .ko-match .ko-label { font-size:11px; color:var(--gold); font-weight:700; min-width:30px; }
-  .ko-team-input {
-    flex:1; min-width:100px; background:var(--bg); border:1px solid var(--border);
-    border-radius:8px; padding:7px 10px; color:var(--text); font-family:'Tajawal',sans-serif; font-size:13px; outline:none;
-    transition:border-color 0.2s;
-  }
-  .ko-team-input:focus { border-color:var(--gold); }
-  .ko-team-input::placeholder { color:var(--muted); }
-  .ko-vs { font-size:11px; color:var(--muted); }
-  .ko-result-select {
-    background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px;
-    color:var(--text); font-family:'Tajawal',sans-serif; font-size:12px; outline:none;
-  }
-  .ko-save-btn {
-    background:rgba(201,168,76,0.15); border:1px solid var(--border); border-radius:8px; padding:7px 12px;
-    color:var(--gold); font-family:'Tajawal',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap;
-  }
-  .ko-save-btn:hover { background:rgba(201,168,76,0.25); }
+  .ko-result-select { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-family:'Tajawal',sans-serif; font-size:12px; }
+  .ko-save-btn { background:rgba(201,168,76,0.15); border:1px solid var(--border); border-radius:8px; padding:7px 12px; color:var(--gold); font-weight:700; cursor:pointer; }
 
-  /* BRACKET DIAGRAM */
-  .bracket-wrap { overflow-x: auto; padding: 0 0 20px; -webkit-overflow-scrolling: touch; direction: ltr; }
-  .bracket { display: flex; flex-direction: row; align-items: stretch; min-width: max-content; padding: 12px 8px; gap: 0; }
-  .bracket-round-col { display: flex; flex-direction: column; min-width: 170px; }
-  .bracket-round-header {
-    font-size: 11px; font-weight: 700; color: var(--gold); text-align: center; padding: 6px 8px 10px;
-    letter-spacing: 0.5px; white-space: nowrap; border-bottom: 1px solid var(--border); margin-bottom: 8px;
-  }
+  /* BRACKET (محدث لدعم التعداد التنازلي المصغر) */
+  .bracket-wrap { overflow-x: auto; padding: 0 0 20px; direction: ltr; }
+  .bracket { display: flex; padding: 12px 8px; }
+  .bracket-round-col { display: flex; flex-direction: column; min-width: 175px; }
+  .bracket-round-header { font-size: 11px; font-weight: 700; color: var(--gold); text-align: center; padding: 6px 8px 10px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
   .bracket-round-matches { display: flex; flex-direction: column; flex: 1; justify-content: space-around; }
-  .bracket-connector-col { display: flex; flex-direction: column; width: 24px; flex-shrink: 0; padding-top: 28px; }
+  .bracket-connector-col { display: flex; flex-direction: column; width: 24px; padding-top: 28px; }
   .bracket-conn-pair { display: flex; flex-direction: column; flex: 1; justify-content: space-around; position: relative; }
   .bracket-conn-pair::before { content: ''; position: absolute; right: 0; top: 25%; bottom: 25%; width: 1px; background: var(--border); }
   .bracket-conn-line { height: 1px; background: var(--border); width: 100%; }
-  .bm {
-    background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-    margin: 3px 6px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; min-width: 155px;
-  }
-  .bm:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
-  .bm.open  { border-color: rgba(46,204,113,0.5); }
+  
+  .bm { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 3px 6px; cursor: pointer; min-width: 160px; transition:all 0.2s; }
+  .bm.open { border-color: rgba(46,204,113,0.5); }
   .bm.final-match { border-color: var(--gold); box-shadow: 0 0 16px rgba(201,168,76,0.3); }
-  .bm-date { font-size: 10px; color: var(--muted); padding: 4px 8px 2px; border-bottom: 1px solid rgba(255,255,255,0.04); direction: ltr; }
-  .bm-team {
-    display: flex; align-items: center; gap: 7px; padding: 6px 8px; font-size: 12px; font-weight: 600;
-    border-bottom: 1px solid rgba(255,255,255,0.04); min-height: 28px; direction: ltr;
-  }
-  .bm-team:last-child { border-bottom: none; }
+  
+  .bm-date { display:flex; justify-content:space-between; align-items:center; font-size: 10px; color: var(--muted); padding: 4px 8px 2px; border-bottom: 1px solid rgba(255,255,255,0.04); direction: ltr; }
+  .mini-cd { color: var(--draw); font-family: monospace; font-weight: bold; }
+  
+  .bm-team { display: flex; align-items: center; gap: 7px; padding: 6px 8px; font-size: 12px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.04); min-height: 28px; direction: ltr; }
   .bm-team.winner { background: rgba(46,204,113,0.1); color: var(--green); }
-  .bm-team.loser  { opacity: 0.4; }
+  .bm-team.loser { opacity: 0.4; }
   .bm-team.my-pick { background: rgba(201,168,76,0.07); }
-  .bm-team.tbd    { color: var(--muted); font-style: italic; font-weight: 400; font-size:11px; }
-  .bm-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+  .bm-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); }
   .bm-dot.win { background: var(--green); }
-  .bm-dot.my  { background: var(--gold); }
+  .bm-dot.my { background: var(--gold); }
   .bm-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  /* Detail panel */
-  .ko-detail-panel {
-    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px;
-    margin: 10px 0 14px; animation: slideIn 0.2s ease; direction: rtl;
-  }
+  .ko-detail-panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin: 10px 0 14px; direction: rtl; animation: slideIn 0.2s ease; }
   @keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
   .ko-detail-title { font-size:15px; font-weight:700; margin-bottom:14px; text-align:center; }
   .ko-pred-row { display:flex; gap:8px; margin-top:12px; }
-  .ko-pred-btn {
-    flex:1; background:var(--card2); border:1.5px solid transparent; border-radius:10px; padding:10px 4px; cursor:pointer;
-    font-family:'Tajawal',sans-serif; font-size:13px; font-weight:700; color:var(--text); transition:all 0.2s; text-align:center;
-    display:flex; flex-direction:column; align-items:center; gap:2px;
-  }
-  .ko-pred-btn .label { font-size:11px; font-weight:400; color:var(--muted); }
-  .ko-pred-btn:hover:not(:disabled) { border-color:var(--gold); background:rgba(201,168,76,0.08); }
-  .ko-pred-btn:disabled { opacity:0.4; cursor:not-allowed; }
+  .ko-pred-btn { flex:1; background:var(--card2); border:1.5px solid transparent; border-radius:10px; padding:10px 4px; cursor:pointer; font-family:'Tajawal'; font-size:13px; font-weight:700; color:var(--text); display:flex; flex-direction:column; align-items:center; }
   .ko-pred-btn.sel-1 { border-color:var(--green); background:rgba(46,204,113,0.1); color:var(--green); }
   .ko-pred-btn.sel-2 { border-color:var(--red); background:rgba(231,76,60,0.1); color:var(--red); }
 </style>
@@ -356,48 +157,19 @@
 <div class="container">
   <div id="setup-screen" style="display:none">
     <h2>⚙️ إعداد أول مرة</h2>
-    <p>المشروع يستخدم Google Sheets لحفظ البيانات. اتبع الخطوات التالية:</p>
-    <div class="step-row">
-      <span class="step-badge">1</span>
-      <div class="step-content">
-        <label>افتح Google Sheets جديد وانسخ الكود من الزر أدناه في Apps Script</label>
-        <button class="btn-gold" onclick="copyAppsScript()" style="width:100%;margin-bottom:6px;">نسخ كود Apps Script</button>
-      </div>
-    </div>
-    <div class="step-row">
-      <span class="step-badge">2</span>
-      <div class="step-content">
-        <label>انشر السكريبت كـ Web App (Execute as Me, Anyone can access) وانسخ الرابط هنا:</label>
-        <input class="setup-input" id="api-url-input" placeholder="https://script.google.com/macros/s/..." />
-      </div>
-    </div>
-    <div class="step-row">
-      <span class="step-badge">3</span>
-      <div class="step-content">
-        <label>كلمة سر الإدارة (اختياري)</label>
-        <input class="setup-input" id="admin-pass-input" placeholder="admin123" type="password"/>
-      </div>
-    </div>
+    <div class="step-row"><span class="step-badge">1</span><div style="flex:1"><label>انسخ الكود أدناه وضعه في Google Apps Script</label><button class="btn-gold" onclick="copyAppsScript()" style="width:100%;margin:6px 0">نسخ كود Apps Script</button></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div style="flex:1"><label>انشر السكربت كـ Web App وانسخ الرابط هنا:</label><input class="setup-input" id="api-url-input" placeholder="https://script.google.com/macros/s/..." /></div></div>
     <button class="btn-gold" onclick="saveSetup()" style="width:100%">حفظ والبدء</button>
   </div>
 
   <div id="register-section" style="display:none">
     <h2>انضم للتحدي</h2>
     <p>أدخل اسمك وابدأ التوقعات</p>
-    <div class="input-row">
-      <input type="text" id="name-input" placeholder="اسمك هنا..." maxlength="24" />
-      <button class="btn-gold" id="register-btn" onclick="registerUser()">دخول</button>
-    </div>
+    <div class="input-row"><input type="text" id="name-input" placeholder="اسمك هنا..." maxlength="24" /><button class="btn-gold" onclick="registerUser()">دخول</button></div>
   </div>
 
   <div id="welcome-badge" style="display:none">
-    <div class="left">
-      <div class="avatar" id="avatar-letter">؟</div>
-      <div>
-        <div style="font-weight:700;font-size:16px" id="display-name">-</div>
-        <div style="font-size:12px;color:var(--muted)">جاهز للتوقع؟</div>
-      </div>
-    </div>
+    <div class="left"><div class="avatar" id="avatar-letter">؟</div><div><div style="font-weight:700;font-size:16px" id="display-name">-</div><div style="font-size:12px;color:var(--muted)">جاهز للتوقع؟</div></div></div>
     <div class="points-pill" id="points-display">0 نقطة</div>
   </div>
 
@@ -405,110 +177,69 @@
     <button class="tab-btn active" onclick="switchTab('matches')">المباريات</button>
     <button class="tab-btn" onclick="switchTab('knockout')">الإقصائية</button>
     <button class="tab-btn" onclick="switchTab('leaderboard')">الترتيب</button>
-    <button class="tab-btn" onclick="switchTab('admin')" id="admin-tab-btn">⚙️ إدارة</button>
+    <button class="tab-btn" onclick="switchTab('admin')">⚙️ إدارة</button>
   </div>
 
-  <div id="tab-matches" style="display:none">
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-      <select id="filter-group" onchange="renderMatches()" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--text);font-family:Tajawal;font-size:13px;outline:none;flex:1;min-width:130px;">
-        <option value="">كل المجموعات</option>
-        <option>المجموعة 1</option><option>المجموعة 2</option><option>المجموعة 3</option><option>المجموعة 4</option><option>المجموعة 5</option><option>المجموعة 6</option><option>المجموعة 7</option><option>المجموعة 8</option><option>المجموعة 9</option><option>المجموعة 10</option><option>المجموعة 11</option><option>المجموعة 12</option>
-      </select>
-      <select id="filter-status" onchange="renderMatches()" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--text);font-family:Tajawal;font-size:13px;outline:none;flex:1;min-width:130px;">
-        <option value="">كل الحالات</option><option value="open">مفتوحة للتوقع</option><option value="closed">انتهت</option>
-      </select>
-    </div>
-    <div class="section-title">المباريات</div>
-    <div id="matches-list"></div>
-  </div>
-
-  <div id="tab-leaderboard" style="display:none">
-    <div class="section-title">لوحة الترتيب</div>
-    <div id="leaderboard-list"></div>
-  </div>
-
-  <div id="tab-knockout" style="display:none">
-    <div class="section-title">مرحلة خروج المغلوب</div>
-    <div id="knockout-list"></div>
-  </div>
-
-  <div id="tab-admin" style="display:none">
-    <div class="admin-card">
-      <h3>🔑 دخول الإدارة</h3>
-      <div id="admin-panel">
-        <h3 style="margin-bottom:14px">إدخال نتائج الجولات الثلاث</h3>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">النقاط تُحسب تلقائياً (3 نقاط للتوقع الصحيح)</p>
-        <div id="results-admin"></div>
-        <hr style="border-color:var(--border);margin:22px 0;">
-        <h3 style="margin-bottom:6px">🏆 مرحلة خروج المغلوب</h3>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">أدخل الفرق المتأهلة وحدّث النتائج</p>
-        <div id="knockout-admin"></div>
-      </div>
-    </div>
-  </div>
+  <div id="tab-matches" style="display:none"><div class="section-title">المباريات</div><div id="matches-list"></div></div>
+  <div id="tab-leaderboard" style="display:none"><div class="section-title">لوحة الترتيب</div><div id="leaderboard-list"></div></div>
+  <div id="tab-knockout" style="display:none"><div class="section-title">مرحلة خروج المغلوب</div><div id="knockout-list"></div></div>
+  <div id="tab-admin" style="display:none"><div class="admin-card"><h3>🔑 الإدارة</h3><div id="results-admin"></div><hr style="border-color:var(--border);margin:20px 0"><div id="knockout-admin"></div></div></div>
 </div>
 
 <div id="toast"></div>
 
 <script>
 // ============================================================
-// DATA & BRACKET CONFIG (Moved to top to prevent TDZ errors)
+// شجرة المواعيد السعودية الدقيقة (ISO +03:00)
 // ============================================================
 const ALL_TEAMS = ['أستراليا', 'ألمانيا', 'أمريكا', 'أوروغواي', 'أوزبكستان', 'إسبانيا', 'إنجلترا', 'إيران', 'اسكتلندا', 'الأرجنتين', 'الأردن', 'الإكوادور', 'البرازيل', 'البرتغال', 'البوسنة والهرسك', 'التشيك', 'الجزائر', 'الرأس الأخضر', 'السعودية', 'السنغال', 'السويد', 'العراق', 'الكونغو الديمقراطية', 'المغرب', 'المكسيك', 'النرويج', 'النمسا', 'اليابان', 'باراغواي', 'بلجيكا', 'بنما', 'تركيا', 'تونس', 'جنوب أفريقيا', 'ساحل العاج', 'سويسرا', 'غانا', 'فرنسا', 'قطر', 'كرواتيا', 'كندا', 'كوراساو', 'كوريا الجنوبية', 'كولومبيا', 'مصر', 'نيوزيلندا', 'هايتي', 'هولندا'];
 
 const BRACKET = [
-  {id:'M73', round:'r32', label:'South Africa vs Canada',          date:'2026-06-28T22:00', feeds:'M90', slot:1},
-  {id:'M74', round:'r32', label:'Germany vs 3rd A/B/C/D/F',       date:'2026-06-29T23:30', feeds:'M89', slot:2},
-  {id:'M75', round:'r32', label:'Winner F vs Morocco',             date:'2026-06-30T04:00', feeds:'M90', slot:3},
-  {id:'M76', round:'r32', label:'Brazil vs Runner-up F',          date:'2026-06-29T20:00', feeds:'M91', slot:4},
-  {id:'M77', round:'r32', label:'Winner I vs 3rd C/D/F/G/H',      date:'2026-07-01T00:00', feeds:'M89', slot:5},
-  {id:'M78', round:'r32', label:'Runner-up E vs Runner-up I',      date:'2026-06-30T20:00', feeds:'M91', slot:6},
-  {id:'M79', round:'r32', label:'Mexico vs 3rd C/E/F/H/I',        date:'2026-07-01T04:00', feeds:'M92', slot:7},
-  {id:'M80', round:'r32', label:'Winner L vs 3rd E/H/I/J/K',      date:'2026-07-01T19:00', feeds:'M92', slot:8},
-  {id:'M81', round:'r32', label:'USA vs 3rd B/E/F/I/J',           date:'2026-07-02T03:00', feeds:'M94', slot:9},
-  {id:'M82', round:'r32', label:'Winner G vs 3rd A/E/H/I/J',      date:'2026-07-01T23:00', feeds:'M94', slot:10},
-  {id:'M83', round:'r32', label:'Runner-up K vs Runner-up L',      date:'2026-07-03T02:00', feeds:'M93', slot:11},
-  {id:'M84', round:'r32', label:'Winner H vs Runner-up J',        date:'2026-07-02T22:00', feeds:'M93', slot:12},
-  {id:'M85', round:'r32', label:'Switzerland vs 3rd E/F/G/I/J',  date:'2026-07-03T06:00', feeds:'M96', slot:13},
-  {id:'M86', round:'r32', label:'Argentina vs Runner-up H',       date:'2026-07-04T01:00', feeds:'M95', slot:14},
-  {id:'M87', round:'r32', label:'Winner K vs 3rd D/E/I/J/L',      date:'2026-07-04T04:30', feeds:'M96', slot:15},
-  {id:'M88', round:'r32', label:'Runner-up D vs Runner-up G',      date:'2026-07-03T21:00', feeds:'M95', slot:16},
-  {id:'M89', round:'r16', date:'2026-07-05T00:00', feeds:'M97', slot:1},
-  {id:'M90', round:'r16', date:'2026-07-04T20:00', feeds:'M97', slot:2},
-  {id:'M91', round:'r16', date:'2026-07-05T23:00', feeds:'M99', slot:3},
-  {id:'M92', round:'r16', date:'2026-07-06T03:00', feeds:'M99', slot:4},
-  {id:'M93', round:'r16', date:'2026-07-06T22:00', feeds:'M98', slot:5},
-  {id:'M94', round:'r16', date:'2026-07-07T03:00', feeds:'M98', slot:6},
-  {id:'M95', round:'r16', date:'2026-07-07T19:00', feeds:'M100', slot:7},
-  {id:'M96', round:'r16', date:'2026-07-07T23:00', feeds:'M100', slot:8},
-  {id:'M97',  round:'qf', date:'2026-07-09T23:00', feeds:'M101', slot:1},
-  {id:'M98',  round:'qf', date:'2026-07-10T22:00', feeds:'M101', slot:2},
-  {id:'M99',  round:'qf', date:'2026-07-12T00:00', feeds:'M102', slot:3},
-  {id:'M100', round:'qf', date:'2026-07-12T04:00', feeds:'M102', slot:4},
-  {id:'M101', round:'sf', date:'2026-07-14T22:00', feeds:'M104', slot:1},
-  {id:'M102', round:'sf', date:'2026-07-15T22:00', feeds:'M104', slot:2},
-  {id:'M103', round:'tp', date:'2026-07-19T00:00', feeds:null, slot:1},
-  {id:'M104', round:'f',  date:'2026-07-19T22:00', feeds:null, slot:1},
+  // دور الـ 32 (مواعيد السعودية المستخرجة من صورك)
+  {id:'M73', round:'r32', t1:'جنوب أفريقيا', t2:'كندا',    date:'2026-06-28T22:00:00+03:00', feeds:'M89'},
+  {id:'M74', round:'r32', t1:'المغرب',       t2:'متأهل',   date:'2026-06-30T04:00:00+03:00', feeds:'M89'},
+  {id:'M75', round:'r32', t1:'ألمانيا',      t2:'متأهل',   date:'2026-06-29T23:30:00+03:00', feeds:'M90'},
+  {id:'M76', round:'r32', t1:'متأهل 1',      t2:'متأهل 2', date:'2026-07-01T00:00:00+03:00', feeds:'M90'},
+  {id:'M77', round:'r32', t1:'متأهل 3',      t2:'متأهل 4', date:'2026-07-01T23:00:00+03:00', feeds:'M91'},
+  {id:'M78', round:'r32', t1:'أمريكا',       t2:'متأهل',   date:'2026-07-02T03:00:00+03:00', feeds:'M91'},
+  {id:'M79', round:'r32', t1:'متأهل 5',      t2:'متأهل 6', date:'2026-07-02T22:00:00+03:00', feeds:'M92'},
+  {id:'M80', round:'r32', t1:'متأهل 7',      t2:'متأهل 8', date:'2026-07-03T02:00:00+03:00', feeds:'M92'},
+  {id:'M81', round:'r32', t1:'البرازيل',     t2:'متأهل',   date:'2026-06-29T20:00:00+03:00', feeds:'M93'},
+  {id:'M82', round:'r32', t1:'متأهل 9',      t2:'متأهل 10',date:'2026-06-30T20:00:00+03:00', feeds:'M93'},
+  {id:'M83', round:'r32', t1:'المكسيك',      t2:'متأهل',   date:'2026-07-01T04:00:00+03:00', feeds:'M94'},
+  {id:'M84', round:'r32', t1:'متأهل 11',     t2:'متأهل 12',date:'2026-07-01T19:00:00+03:00', feeds:'M94'},
+  {id:'M85', round:'r32', t1:'سويسرا',       t2:'متأهل',   date:'2026-07-03T06:00:00+03:00', feeds:'M95'},
+  {id:'M86', round:'r32', t1:'متأهل 13',     t2:'متأهل 14',date:'2026-07-04T04:30:00+03:00', feeds:'M95'},
+  {id:'M87', round:'r32', t1:'متأهل 15',     t2:'متأهل 16',date:'2026-07-03T21:00:00+03:00', feeds:'M96'},
+  {id:'M88', round:'r32', t1:'الأرجنتين',    t2:'متأهل',   date:'2026-07-04T01:00:00+03:00', feeds:'M96'},
+
+  // دور الـ 16
+  {id:'M89', round:'r16', t1:'الفائز M73', t2:'الفائز M74', date:'2026-07-04T20:00:00+03:00', feeds:'M97'},
+  {id:'M90', round:'r16', t1:'الفائز M75', t2:'الفائز M76', date:'2026-07-05T00:00:00+03:00', feeds:'M97'},
+  {id:'M91', round:'r16', t1:'الفائز M77', t2:'الفائز M78', date:'2026-07-07T03:00:00+03:00', feeds:'M98'},
+  {id:'M92', round:'r16', t1:'الفائز M79', t2:'الفائز M80', date:'2026-07-06T22:00:00+03:00', feeds:'M98'},
+  {id:'M93', round:'r16', t1:'الفائز M81', t2:'الفائز M82', date:'2026-07-05T23:00:00+03:00', feeds:'M99'},
+  {id:'M94', round:'r16', t1:'الفائز M83', t2:'الفائز M84', date:'2026-07-06T03:00:00+03:00', feeds:'M99'},
+  {id:'M95', round:'r16', t1:'الفائز M85', t2:'الفائز M86', date:'2026-07-07T23:00:00+03:00', feeds:'M100'},
+  {id:'M96', round:'r16', t1:'الفائز M87', t2:'الفائز M88', date:'2026-07-07T19:00:00+03:00', feeds:'M100'},
+
+  // ربع النهائي
+  {id:'M97',  round:'qf', t1:'الفائز M89', t2:'الفائز M90', date:'2026-07-09T23:00:00+03:00', feeds:'M101'},
+  {id:'M98',  round:'qf', t1:'الفائز M91', t2:'الفائز M92', date:'2026-07-10T22:00:00+03:00', feeds:'M101'},
+  {id:'M99',  round:'qf', t1:'الفائز M93', t2:'الفائز M94', date:'2026-07-12T00:00:00+03:00', feeds:'M102'},
+  {id:'M100', round:'qf', t1:'الفائز M95', t2:'الفائز M96', date:'2026-07-12T04:00:00+03:00', feeds:'M102'},
+
+  // نصف النهائي
+  {id:'M101', round:'sf', t1:'الفائز M97', t2:'الفائز M98', date:'2026-07-14T22:00:00+03:00', feeds:'M104'},
+  {id:'M102', round:'sf', t1:'الفائز M99', t2:'الفائز M100',date:'2026-07-15T22:00:00+03:00', feeds:'M104'},
+
+  // المركز الثالث والنهائي
+  {id:'M103', round:'tp', t1:'الخاسر M101',t2:'الخاسر M102',date:'2026-07-18T22:00:00+03:00', feeds:null},
+  {id:'M104', round:'f',  t1:'الفائز M101',t2:'الفائز M102',date:'2026-07-19T22:00:00+03:00', feeds:null}
 ];
 
-const BRACKET_BY_ID = {};
-BRACKET.forEach(m => BRACKET_BY_ID[m.id] = m);
-
-const FEEDERS = {};
-BRACKET.forEach(m => {
-  if (!m.feeds) return;
-  if (!FEEDERS[m.feeds]) FEEDERS[m.feeds] = [];
-  FEEDERS[m.feeds].push(m.id);
-});
-
-const BRACKET_SLOTS = {
-  r32: ['M73','M74','M75','M76','M77','M78','M79','M80','M81','M82','M83','M84','M85','M86','M87','M88'],
-  r16: ['M89','M90','M91','M92','M93','M94','M95','M96'],
-  qf:  ['M97','M98','M99','M100'],
-  sf:  ['M101','M102'],
-  tp:  ['M103'],
-  f:   ['M104'],
-};
+const BRACKET_BY_ID = {}; BRACKET.forEach(m => BRACKET_BY_ID[m.id] = m);
+const BRACKET_SLOTS = { r32:['M73','M74','M75','M76','M77','M78','M79','M80','M81','M82','M83','M84','M85','M86','M87','M88'], r16:['M89','M90','M91','M92','M93','M94','M95','M96'], qf:['M97','M98','M99','M100'], sf:['M101','M102'], tp:['M103'], f:['M104'] };
 
 const MATCHES = (function(){
   function mecca(date, hhmm) {
@@ -516,629 +247,242 @@ const MATCHES = (function(){
     return new Date(`${date}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00+03:00`).toISOString();
   }
   let mid = 1;
-  const M = (g, f1, n1, f2, n2, date, time) => ({
-    id:'m'+mid++, group:g, result:null,
-    team1:{flag:f1,name:n1}, team2:{flag:f2,name:n2},
-    kickoff:mecca(date,time)
-  });
+  const M = (g, f1, n1, f2, n2, date, time) => ({ id:'m'+mid++, group:g, result:null, team1:{flag:f1,name:n1}, team2:{flag:f2,name:n2}, kickoff:mecca(date,time) });
   return [
-    M('المجموعة 1','🇲🇽','المكسيك','🇿🇦','جنوب أفريقيا','2026-06-11','22:00'),
-    M('المجموعة 1','🇰🇷','كوريا الجنوبية','🇨🇿','التشيك','2026-06-12','05:00'),
-    M('المجموعة 2','🇨🇦','كندا','🇧🇦','البوسنة والهرسك','2026-06-12','22:00'),
-    M('المجموعة 2','🇨🇭','سويسرا','🇶🇦','قطر','2026-06-13','22:00'),
-    M('المجموعة 3','🇧🇷','البرازيل','🇲🇦','المغرب','2026-06-14','01:00'),
-    M('المجموعة 3','🏴󠁧󠁢󠁳󠁣󠁴󠁿','اسكتلندا','🇭🇹','هايتي','2026-06-14','04:00'),
-    M('المجموعة 4','🇺🇸','أمريكا','🇵🇾','باراغواي','2026-06-13','04:00'),
-    M('المجموعة 4','🇹🇷','تركيا','🇦🇺','أستراليا','2026-06-14','07:00'),
-    M('المجموعة 5','🇩🇪','ألمانيا','🇨🇼','كوراساو','2026-06-14','20:00'),
-    M('المجموعة 5','🇪🇨','الإكوادور','🇨🇮','ساحل العاج','2026-06-15','02:00'),
-    M('المجموعة 6','🇯🇵','اليابان','🇳🇱','هولندا','2026-06-14','23:00'),
-    M('المجموعة 6','🇸🇪','السويد','🇹🇳','تونس','2026-06-15','05:00'),
-    M('المجموعة 7','🇧🇪','بلجيكا','🇪🇬','مصر','2026-06-15','22:00'),
-    M('المجموعة 7','🇮🇷','إيران','🇳🇿','نيوزيلندا','2026-06-16','04:00'),
-    M('المجموعة 8','🇪🇸','إسبانيا','🇨🇻','الرأس الأخضر','2026-06-15','19:00'),
-    M('المجموعة 8','🇸🇦','السعودية','🇺🇾','أوروغواي','2026-06-16','01:00'),
-    M('المجموعة 9','🇫🇷','فرنسا','🇸🇳','السنغال','2026-06-16','22:00'),
-    M('المجموعة 9','🇳🇴','النرويج','🇮🇶','العراق','2026-06-17','01:00'),
-    M('المجموعة 10','🇩🇿','الجزائر','🇦🇷','الأرجنتين','2026-06-17','04:00'),
-    M('المجموعة 10','🇯🇴','الأردن','🇦🇹','النمسا','2026-06-17','07:00'),
-    M('المجموعة 11','🇵🇹','البرتغال','🇨🇩','الكونغو الديمقراطية','2026-06-17','20:00'),
-    M('المجموعة 12','🏴󠁧󠁢󠁥󠁮󠁧󠁿','إنجلترا','🇭🇷','كرواتيا','2026-06-17','23:00'),
-    M('المجموعة 12','🇬🇭','غانا','🇵🇦','بنما','2026-06-18','02:00'),
-    M('المجموعة 11','🇨🇴','كولومبيا','🇺🇿','أوزبكستان','2026-06-18','05:00'),
-    M('المجموعة 1','🇨🇿','التشيك','🇿🇦','جنوب أفريقيا','2026-06-18','19:00'),
-    M('المجموعة 2','🇨🇭','سويسرا','🇧🇦','البوسنة والهرسك','2026-06-18','22:00'),
-    M('المجموعة 2','🇨🇦','كندا','🇶🇦','قطر','2026-06-19','01:00'),
-    M('المجموعة 1','🇲🇽','المكسيك','🇰🇷','كوريا الجنوبية','2026-06-19','04:00'),
-    M('المجموعة 4','🇺🇸','أمريكا','🇦🇺','أستراليا','2026-06-19','22:00'),
-    M('المجموعة 3','🏴󠁧󠁢󠁳󠁣󠁴󠁿','اسكتلندا','🇲🇦','المغرب','2026-06-20','01:00'),
-    M('المجموعة 3','🇧🇷','البرازيل','🇭🇹','هايتي','2026-06-20','03:30'),
-    M('المجموعة 4','🇹🇷','تركيا','🇵🇾','باراغواي','2026-06-20','06:00'),
-    M('المجموعة 6','🇳🇱','هولندا','🇸🇪','السويد','2026-06-20','20:00'),
-    M('المجموعة 5','🇩🇪','ألمانيا','🇨🇮','ساحل العاج','2026-06-20','23:00'),
-    M('المجموعة 5','🇪🇨','الإكوادور','🇨🇼','كوراساو','2026-06-21','03:00'),
-    M('المجموعة 6','🇯🇵','اليابان','🇹🇳','تونس','2026-06-21','07:00'),
-    M('المجموعة 8','🇪🇸','إسبانيا','🇸🇦','السعودية','2026-06-21','19:00'),
-    M('المجموعة 7','🇧🇪','بلجيكا','🇮🇷','إيران','2026-06-21','22:00'),
-    M('المجموعة 8','🇺🇾','أوروغواي','🇨🇻','الرأس الأخضر','2026-06-22','01:00'),
-    M('المجموعة 7','🇪🇬','مصر','🇳🇿','نيوزيلندا','2026-06-22','04:00'),
-    M('المجموعة 10','🇦🇷','الأرجنتين','🇦🇹','النمسا','2026-06-22','20:00'),
-    M('المجموعة 9','🇫🇷','فرنسا','🇮🇶','العراق','2026-06-23','00:00'),
-    M('المجموعة 9','🇳🇴','النرويج','🇸🇳','السنغال','2026-06-23','03:00'),
-    M('المجموعة 10','🇩🇿','الجزائر','🇯🇴','الأردن','2026-06-23','06:00'),
-    M('المجموعة 11','🇵🇹','البرتغال','🇺🇿','أوزبكستان','2026-06-23','20:00'),
-    M('المجموعة 12','🏴󠁧󠁢󠁥󠁮󠁧󠁿','إنجلترا','🇬🇭','غانا','2026-06-23','23:00'),
-    M('المجموعة 12','🇭🇷','كرواتيا','🇵🇦','بنما','2026-06-24','02:00'),
-    M('المجموعة 11','🇨🇩','الكونغو الديمقراطية','🇨🇴','كولومبيا','2026-06-24','05:00'),
-    M('المجموعة 2','🇨🇦','كندا','🇨🇭','سويسرا','2026-06-24','22:00'),
-    M('المجموعة 2','🇶🇦','قطر','🇧🇦','البوسنة والهرسك','2026-06-24','22:00'),
-    M('المجموعة 3','🇲🇦','المغرب','🇭🇹','هايتي','2026-06-25','01:00'),
-    M('المجموعة 3','🇧🇷','البرازيل','🏴󠁧󠁢󠁳󠁣󠁴󠁿','اسكتلندا','2026-06-25','01:00'),
-    M('المجموعة 1','🇰🇷','كوريا الجنوبية','🇿🇦','جنوب أفريقيا','2026-06-25','04:00'),
-    M('المجموعة 1','🇲🇽','المكسيك','🇨🇿','التشيك','2026-06-25','04:00'),
-    M('المجموعة 5','🇨🇼','كوراساو','🇨🇮','ساحل العاج','2026-06-25','23:00'),
-    M('المجموعة 5','🇩🇪','ألمانيا','🇪🇨','الإكوادور','2026-06-25','23:00'),
-    M('المجموعة 6','🇹🇳','تونس','🇳🇱','هولندا','2026-06-26','02:00'),
-    M('المجموعة 6','🇸🇪','السويد','🇯🇵','اليابان','2026-06-26','02:00'),
-    M('المجموعة 4','🇹🇷','تركيا','🇺🇸','أمريكا','2026-06-26','05:00'),
-    M('المجموعة 4','🇦🇺','أستراليا','🇵🇾','باراغواي','2026-06-26','05:00'),
-    M('المجموعة 9','🇫🇷','فرنسا','🇳🇴','النرويج','2026-06-26','22:00'),
-    M('المجموعة 9','🇸🇳','السنغال','🇮🇶','العراق','2026-06-26','22:00'),
-    M('المجموعة 8','🇸🇦','السعودية','🇨🇻','الرأس الأخضر','2026-06-27','03:00'),
-    M('المجموعة 8','🇪🇸','إسبانيا','🇺🇾','أوروغواي','2026-06-27','03:00'),
-    M('المجموعة 7','🇮🇷','إيران','🇪🇬','مصر','2026-06-27','06:00'),
-    M('المجموعة 7','🇳🇿','نيوزيلندا','🇧🇪','بلجيكا','2026-06-27','06:00'),
-    M('المجموعة 12','🇵🇦','بنما','🏴󠁧󠁢󠁥󠁮󠁧󠁿','إنجلترا','2026-06-28','00:00'),
-    M('المجموعة 12','🇬🇭','غانا','🇭🇷','كرواتيا','2026-06-28','00:00'),
-    M('المجموعة 11','🇨🇴','كولومبيا','🇵🇹','البرتغال','2026-06-28','02:30'),
-    M('المجموعة 11','🇺🇿','أوزبكستان','🇨🇩','الكونغو الديمقراطية','2026-06-28','02:30'),
-    M('المجموعة 10','🇦🇹','النمسا','🇩🇿','الجزائر','2026-06-28','05:00'),
-    M('المجموعة 10','🇦🇷','الأرجنتين','🇯🇴','الأردن','2026-06-28','05:00')
+    M('المجموعة 1','🇲🇽','المكسيك','🇿🇦','جنوب أفريقيا','2026-06-11','22:00'), M('المجموعة 1','🇰🇷','كوريا الجنوبية','🇨🇿','التشيك','2026-06-12','05:00'),
+    M('المجموعة 2','🇨🇦','كندا','🇧🇦','البوسنة والهرسك','2026-06-12','22:00'), M('المجموعة 2','🇨🇭','سويسرا','🇶🇦','قطر','2026-06-13','22:00'),
+    M('المجموعة 3','🇧🇷','البرازيل','🇲🇦','المغرب','2026-06-14','01:00'), M('المجموعة 3','🏴󠁧󠁢󠁳󠁣󠁴󠁿','اسكتلندا','🇭🇹','هايتي','2026-06-14','04:00'),
+    M('المجموعة 4','🇺🇸','أمريكا','🇵🇾','باراغواي','2026-06-13','04:00'), M('المجموعة 4','🇹🇷','تركيا','🇦🇺','أستراليا','2026-06-14','07:00'),
+    M('المجموعة 5','🇩🇪','ألمانيا','🇨🇼','كوراساو','2026-06-14','20:00'), M('المجموعة 5','🇪🇨','الإكوادور','🇨🇮','ساحل العاج','2026-06-15','02:00'),
+    M('المجموعة 6','🇯🇵','اليابان','🇳🇱','هولندا','2026-06-14','23:00'), M('المجموعة 6','🇸🇪','السويد','🇹🇳','تونس','2026-06-15','05:00'),
+    M('المجموعة 7','🇧🇪','بلجيكا','🇪🇬','مصر','2026-06-15','22:00'), M('المجموعة 7','🇮🇷','إيران','🇳🇿','نيوزيلندا','2026-06-16','04:00'),
+    M('المجموعة 8','🇪🇸','إسبانيا','🇨🇻','الرأس الأخضر','2026-06-15','19:00'), M('المجموعة 8','🇸🇦','السعودية','🇺🇾','أوروغواي','2026-06-16','01:00'),
+    M('المجموعة 9','🇫🇷','فرنسا','🇸🇳','السنغال','2026-06-16','22:00'), M('المجموعة 9','🇳🇴','النرويج','🇮🇶','العراق','2026-06-17','01:00'),
+    M('المجموعة 10','🇩🇿','الجزائر','🇦🇷','الأرجنتين','2026-06-17','04:00'), M('المجموعة 10','🇯🇴','الأردن','🇦🇹','النمسا','2026-06-17','07:00'),
+    M('المجموعة 11','🇵🇹','البرتغال','🇨🇩','الكونغو الديمقراطية','2026-06-17','20:00'), M('المجموعة 12','🏴󠁧󠁢󠁥󠁮󠁧󠁿','إنجلترا','🇭🇷','كرواتيا','2026-06-17','23:00'),
+    M('المجموعة 12','🇬🇭','غانا','🇵🇦','بنما','2026-06-18','02:00'), M('المجموعة 11','🇨🇴','كولومبيا','🇺🇿','أوزبكستان','2026-06-18','05:00'),
+    M('المجموعة 1','🇨🇿','التشيك','🇿🇦','جنوب أفريقيا','2026-06-18','19:00'), M('المجموعة 2','🇨🇭','سويسرا','🇧🇦','البوسنة والهرسك','2026-06-18','22:00'),
+    M('المجموعة 2','🇨🇦','كندا','🇶🇦','قطر','2026-06-19','01:00'), M('المجموعة 1','🇲🇽','المكسيك','🇰🇷','كوريا الجنوبية','2026-06-19','04:00'),
+    M('المجموعة 4','🇺🇸','أمريكا','🇦🇺','أستراليا','2026-06-19','22:00'), M('المجموعة 3','🏴󠁧󠁢󠁳󠁣󠁴󠁿','اسكتلندا','🇲🇦','المغرب','2026-06-20','01:00'),
+    M('المجموعة 3','🇧🇷','البرازيل','🇭🇹','هايتي','2026-06-20','03:30'), M('المجموعة 4','🇹🇷','تركيا','🇵🇾','باراغواي','2026-06-20','06:00'),
+    M('المجموعة 6','🇳🇱','هولندا','🇸🇪','السويد','2026-06-20','20:00'), M('المجموعة 5','🇩🇪','ألمانيا','🇨🇮','ساحل العاج','2026-06-20','23:00'),
+    M('المجموعة 5','🇪🇨','الإكوادور','🇨🇼','كوراساو','2026-06-21','03:00'), M('المجموعة 6','🇯🇵','اليابان','🇹🇳','تونس','2026-06-21','07:00'),
+    M('المجموعة 8','🇪🇸','إسبانيا','🇸🇦','السعودية','2026-06-21','19:00'), M('المجموعة 7','🇧🇪','بلجيكا','🇮🇷','إيران','2026-06-21','22:00'),
+    M('المجموعة 8','🇺🇾','أوروغواي','🇨🇻','الرأس الأخضر','2026-06-22','01:00'), M('المجموعة 7','🇪🇬','مصر','🇳🇿','نيوزيلندا','2026-06-22','04:00'),
+    M('المجموعة 10','🇦🇷','الأرجنتين','🇦🇹','النمسا','2026-06-22','20:00'), M('المجموعة 9','🇫🇷','فرنسا','🇮🇶','العراق','2026-06-23','00:00'),
+    M('المجموعة 9','🇳🇴','النرويج','🇸🇳','السنغال','2026-06-23','03:00'), M('المجموعة 10','🇩🇿','الجزائر','🇯🇴','الأردن','2026-06-23','06:00'),
+    M('المجموعة 11','🇵🇹','البرتغال','🇺🇿','أوزبكستان','2026-06-23','20:00'), M('المجموعة 12','🏴󠁧󠁢󠁥󠁮󠁧󠁿','إنجلترا','🇬🇭','غانا','2026-06-23','23:00'),
+    M('المجموعة 12','🇭🇷','كرواتيا','🇵🇦','بنما','2026-06-24','02:00'), M('المجموعة 11','🇨🇩','الكونغو الديمقراطية','🇨🇴','كولومبيا','2026-06-24','05:00'),
+    M('المجموعة 2','🇨🇦','كندا','🇨🇭','سويسرا','2026-06-24','22:00'), M('المجموعة 2','🇶🇦','قطر','🇧🇦','البوسنة والهرسك','2026-06-24','22:00'),
+    M('المجموعة 3','🇲🇦','المغرب','🇭🇹','هايتي','2026-06-25','01:00'), M('المجموعة 3','🇧🇷','البرازيل','🏴󠁧󠁢󠁳󠁣󠁴󠁿','اسكتلندا','2026-06-25','01:00'),
+    M('المجموعة 1','🇰🇷','كوريا الجنوبية','🇿🇦','جنوب أفريقيا','2026-06-25','04:00'), M('المجموعة 1','🇲🇽','المكسيك','🇨🇿','التشيك','2026-06-25','04:00'),
+    M('المجموعة 5','🇨🇼','كوراساو','🇨🇮','ساحل العاج','2026-06-25','23:00'), M('المجموعة 5','🇩🇪','ألمانيا','🇪🇨','الإكوادور','2026-06-25','23:00'),
+    M('المجموعة 6','🇹🇳','تونس','🇳🇱','هولندا','2026-06-26','02:00'), M('المجموعة 6','🇸🇪','السويد','🇯🇵','اليابان','2026-06-26','02:00'),
+    M('المجموعة 4','🇹🇷','تركيا','🇺🇸','أمريكا','2026-06-26','05:00'), M('المجموعة 4','🇦🇺','أستراليا','🇵🇾','باراغواي','2026-06-26','05:00'),
+    M('المجموعة 9','🇫🇷','فرنسا','🇳🇴','النرويج','2026-06-26','22:00'), M('المجموعة 9','🇸🇳','السنغال','🇮🇶','العراق','2026-06-26','22:00'),
+    M('المجموعة 8','🇸🇦','السعودية','🇨🇻','الرأس الأخضر','2026-06-27','03:00'), M('المجموعة 8','🇪🇸','إسبانيا','🇺🇾','أوروغواي','2026-06-27','03:00'),
+    M('المجموعة 7','🇮🇷','إيران','🇪🇬','مصر','2026-06-27','06:00'), M('المجموعة 7','🇳🇿','نيوزيلندا','🇧🇪','بلجيكا','2026-06-27','06:00'),
+    M('المجموعة 12','🇵🇦','بنما','🏴󠁧󠁢󠁥󠁮󠁧󠁿','إنجلترا','2026-06-28','00:00'), M('المجموعة 12','🇬🇭','غانا','🇭🇷','كرواتيا','2026-06-28','00:00'),
+    M('المجموعة 11','🇨🇴','كولومبيا','🇵🇹','البرتغال','2026-06-28','02:30'), M('المجموعة 11','🇺🇿','أوزبكستان','🇨🇩','الكونغو الديمقراطية','2026-06-28','02:30'),
+    M('المجموعة 10','🇦🇹','النمسا','🇩🇿','الجزائر','2026-06-28','05:00'), M('المجموعة 10','🇦🇷','الأرجنتين','🇯🇴','الأردن','2026-06-28','05:00')
   ];
 })();
 
-// STATE
 let API_URL = localStorage.getItem('wc_api_url') || '';
-let ADMIN_PASS = localStorage.getItem('wc_admin_pass') || 'admin123';
 let currentUser = localStorage.getItem('wc_username') || '';
-let isAdmin = false;
 let remoteData = { predictions: {}, results: {} };
 
-// ============================================================
-// APPS SCRIPT CODE (Fixed types & added SpreadsheetApp.flush)
-// ============================================================
 const APPS_SCRIPT_CODE = `
 function handleAction(ss, data) {
   const action = data.action;
-
   if (action === 'predict') {
     let sh = ss.getSheetByName('Predictions') || ss.insertSheet('Predictions');
     if (sh.getLastRow() === 0) sh.appendRow(['matchId','user','prediction','timestamp']);
     const rows = sh.getDataRange().getValues();
-    for (let i = rows.length - 1; i >= 1; i--) {
-      if (String(rows[i][0]) === String(data.matchId) && String(rows[i][1]) === String(data.user)) sh.deleteRow(i + 1);
-    }
+    for (let i = rows.length - 1; i >= 1; i--) { if (String(rows[i][0]) === String(data.matchId) && String(rows[i][1]) === String(data.user)) sh.deleteRow(i + 1); }
     sh.appendRow([data.matchId, data.user, String(data.prediction), new Date().toISOString()]);
-    SpreadsheetApp.flush();
-    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+    SpreadsheetApp.flush(); return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
-
   if (action === 'setResult') {
     let sh = ss.getSheetByName('Results') || ss.insertSheet('Results');
     if (sh.getLastRow() === 0) sh.appendRow(['matchId','result','timestamp']);
     const rows = sh.getDataRange().getValues();
-    for (let i = rows.length - 1; i >= 1; i--) {
-      if (String(rows[i][0]) === String(data.matchId)) sh.deleteRow(i + 1);
-    }
+    for (let i = rows.length - 1; i >= 1; i--) { if (String(rows[i][0]) === String(data.matchId)) sh.deleteRow(i + 1); }
     sh.appendRow([data.matchId, String(data.result), new Date().toISOString()]);
-    SpreadsheetApp.flush();
-    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+    SpreadsheetApp.flush(); return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
-
   if (action === 'addKOMatch') {
     let sh = ss.getSheetByName('KOMatches') || ss.insertSheet('KOMatches');
     if (sh.getLastRow() === 0) sh.appendRow(['id','round','team1','team2','date','kickoff','result','timestamp']);
-    const rows = sh.getDataRange().getValues();
-    let found = false;
+    const rows = sh.getDataRange().getValues(); let found = false;
     for (let i = 1; i < rows.length; i++) {
-      if (String(rows[i][0]) === String(data.id)) {
-        sh.getRange(i+1,1,1,8).setValues([[data.id, data.round, data.team1, data.team2, data.date, data.kickoff||'', rows[i][6]||'', new Date().toISOString()]]);
-        found = true; break;
-      }
+      if (String(rows[i][0]) === String(data.id)) { sh.getRange(i+1,1,1,8).setValues([[data.id, data.round, data.team1, data.team2, data.date, data.kickoff||'', rows[i][6]||'', new Date().toISOString()]]); found = true; break; }
     }
     if (!found) sh.appendRow([data.id, data.round, data.team1, data.team2, data.date, data.kickoff||'', '', new Date().toISOString()]);
-    SpreadsheetApp.flush();
-    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+    SpreadsheetApp.flush(); return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
-
   if (action === 'setKOResult') {
     let sh = ss.getSheetByName('KOMatches') || ss.insertSheet('KOMatches');
     const rows = sh.getDataRange().getValues();
-    for (let i = 1; i < rows.length; i++) {
-      if (String(rows[i][0]) === String(data.matchId)) {
-        sh.getRange(i+1,7).setValue(String(data.result));
-        break;
-      }
-    }
-    SpreadsheetApp.flush();
-    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+    for (let i = 1; i < rows.length; i++) { if (String(rows[i][0]) === String(data.matchId)) { sh.getRange(i+1,7).setValue(String(data.result)); break; } }
+    SpreadsheetApp.flush(); return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
-
-  if (action === 'deleteKOMatch') {
-    let sh = ss.getSheetByName('KOMatches');
-    if (!sh) return ContentService.createTextOutput(JSON.stringify({ok:false})).setMimeType(ContentService.MimeType.JSON);
-    const rows = sh.getDataRange().getValues();
-    for (let i = rows.length - 1; i >= 1; i--) {
-      if (String(rows[i][0]) === String(data.matchId)) { sh.deleteRow(i+1); break; }
-    }
-    SpreadsheetApp.flush();
-    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
-  }
-
   if (action === 'predictKnockout') {
     let sh = ss.getSheetByName('KnockoutPreds') || ss.insertSheet('KnockoutPreds');
     if (sh.getLastRow() === 0) sh.appendRow(['matchId','user','prediction','timestamp']);
     const rows = sh.getDataRange().getValues();
-    for (let i = rows.length - 1; i >= 1; i--) {
-      if (String(rows[i][0]) === String(data.matchId) && String(rows[i][1]) === String(data.user)) sh.deleteRow(i + 1);
-    }
+    for (let i = rows.length - 1; i >= 1; i--) { if (String(rows[i][0]) === String(data.matchId) && String(rows[i][1]) === String(data.user)) sh.deleteRow(i + 1); }
     sh.appendRow([data.matchId, data.user, String(data.prediction), new Date().toISOString()]);
-    SpreadsheetApp.flush();
-    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+    SpreadsheetApp.flush(); return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
-
-  return {ok:false, error:'unknown action'};
+  return {ok:false};
 }
-
-function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const result = handleAction(ss, data);
-  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
-}
-
+function doPost(e) { return ContentService.createTextOutput(JSON.stringify(handleAction(SpreadsheetApp.getActiveSpreadsheet(), JSON.parse(e.postData.contents)))).setMimeType(ContentService.MimeType.JSON); }
 function doGet(e) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-
-  if (e && e.parameter && e.parameter.payload) {
-    const data = JSON.parse(decodeURIComponent(e.parameter.payload));
-    const cb = e.parameter.callback || 'cb';
-    const result = handleAction(ss, data);
-    return ContentService.createTextOutput(cb + '(' + JSON.stringify(result) + ')')
-      .setMimeType(ContentService.MimeType.JAVASCRIPT);
-  }
-
-  const predictions = {};
-  const results = {};
-
-  const pSh = ss.getSheetByName('Predictions');
-  if (pSh && pSh.getLastRow() > 1) {
-    const rows = pSh.getDataRange().getValues().slice(1);
-    rows.forEach(r => {
-      if (!predictions[r[0]]) predictions[r[0]] = {};
-      predictions[r[0]][r[1]] = String(r[2]);
-    });
-  }
-
-  const rSh = ss.getSheetByName('Results');
-  if (rSh && rSh.getLastRow() > 1) {
-    const rows = rSh.getDataRange().getValues().slice(1);
-    rows.forEach(r => { results[r[0]] = String(r[1]); });
-  }
-
-  const koMatches = [];
-  const kmSh = ss.getSheetByName('KOMatches');
-  if (kmSh && kmSh.getLastRow() > 1) {
-    const rows = kmSh.getDataRange().getValues().slice(1);
-    rows.forEach(r => {
-      if (r[0]) koMatches.push({id:String(r[0]), round:r[1], team1:r[2], team2:r[3], date:r[4], kickoff:r[5]||'', result:String(r[6]||'')});
-    });
-  }
-
-  const knockoutPreds = {};
-  const kpSh = ss.getSheetByName('KnockoutPreds');
-  if (kpSh && kpSh.getLastRow() > 1) {
-    const rows = kpSh.getDataRange().getValues().slice(1);
-    rows.forEach(r => {
-      if (!knockoutPreds[r[0]]) knockoutPreds[r[0]] = {};
-      knockoutPreds[r[0]][r[1]] = String(r[2]);
-    });
-  }
-
+  if (e && e.parameter && e.parameter.payload) { return ContentService.createTextOutput((e.parameter.callback||'cb') + '(' + JSON.stringify(handleAction(ss, JSON.parse(decodeURIComponent(e.parameter.payload)))) + ')').setMimeType(ContentService.MimeType.JAVASCRIPT); }
+  const predictions = {}, results = {}, koMatches = [], knockoutPreds = {};
+  const pSh = ss.getSheetByName('Predictions'); if (pSh && pSh.getLastRow() > 1) pSh.getDataRange().getValues().slice(1).forEach(r => { if(!predictions[r[0]]) predictions[r[0]]={}; predictions[r[0]][r[1]]=String(r[2]); });
+  const rSh = ss.getSheetByName('Results'); if (rSh && rSh.getLastRow() > 1) rSh.getDataRange().getValues().slice(1).forEach(r => { results[r[0]]=String(r[1]); });
+  const kmSh = ss.getSheetByName('KOMatches'); if (kmSh && kmSh.getLastRow() > 1) kmSh.getDataRange().getValues().slice(1).forEach(r => { if(r[0]) koMatches.push({id:String(r[0]), round:r[1], team1:r[2], team2:r[3], date:r[4], kickoff:r[5]||'', result:String(r[6]||'')}); });
+  const kpSh = ss.getSheetByName('KnockoutPreds'); if (kpSh && kpSh.getLastRow() > 1) kpSh.getDataRange().getValues().slice(1).forEach(r => { if(!knockoutPreds[r[0]]) knockoutPreds[r[0]]={}; knockoutPreds[r[0]][r[1]]=String(r[2]); });
   const json = JSON.stringify({predictions, results, koMatches, knockoutPreds});
-  const cb = e && e.parameter && e.parameter.callback;
-  if (cb) {
-    return ContentService.createTextOutput(cb + '(' + json + ')').setMimeType(ContentService.MimeType.JAVASCRIPT);
-  }
-  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+  return e?.parameter?.callback ? ContentService.createTextOutput(e.parameter.callback + '(' + json + ')').setMimeType(ContentService.MimeType.JAVASCRIPT) : ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
 }
 `.trim();
 
-// SETUP
-function copyAppsScript() {
-  navigator.clipboard.writeText(APPS_SCRIPT_CODE).then(() => {
-    showToast('تم نسخ الكود ✓', 'success');
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = APPS_SCRIPT_CODE;
-    document.body.appendChild(ta);
-    ta.select(); document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast('تم نسخ الكود ✓', 'success');
-  });
-}
+function copyAppsScript() { navigator.clipboard.writeText(APPS_SCRIPT_CODE); showToast('تم النسخ ✓'); }
+function saveSetup() { API_URL = document.getElementById('api-url-input').value.trim(); localStorage.setItem('wc_api_url', API_URL); location.reload(); }
 
-function saveSetup() {
-  const url = document.getElementById('api-url-input').value.trim();
-  const pass = document.getElementById('admin-pass-input').value.trim();
-  if (!url || !url.startsWith('https://script.google.com')) {
-    showToast('الرابط غير صحيح', 'error'); return;
-  }
-  API_URL = url;
-  if (pass) ADMIN_PASS = pass;
-  localStorage.setItem('wc_api_url', API_URL);
-  localStorage.setItem('wc_admin_pass', ADMIN_PASS);
-  document.getElementById('setup-screen').style.display = 'none';
-  document.getElementById('register-section').style.display = 'block';
-  showToast('تم الإعداد ✓', 'success');
-  fetchData();
-}
-
-// API
 function fetchData() {
   if (!API_URL) return;
-  return new Promise((resolve) => {
-    const cbName = 'wc_cb_' + Date.now();
-    const script = document.createElement('script');
-    const timeout = setTimeout(() => {
-      delete window[cbName]; script.remove(); resolve();
-    }, 10000);
-
-    window[cbName] = function(json) {
-      clearTimeout(timeout); delete window[cbName]; script.remove();
-      remoteData.predictions   = json.predictions   || {};
-      remoteData.results       = json.results       || {};
-      remoteData.koMatches     = json.koMatches     || [];
-
-      const rawPreds = json.knockoutPreds || {};
-      const migratedPreds = {};
-      Object.entries(rawPreds).forEach(([matchId, users]) => {
-        const cleanId = matchId.replace(/^R32-/, '');
-        if (!migratedPreds[cleanId]) migratedPreds[cleanId] = {};
-        Object.assign(migratedPreds[cleanId], users);
-      });
-      remoteData.knockoutPreds = migratedPreds;
-
-      MATCHES.forEach(m => {
-        if (remoteData.results[m.id]) m.result = remoteData.results[m.id];
-        else m.result = null;
-      });
-      renderMatches(); renderLeaderboard(); renderKnockout(); updatePointsBadge();
-      resolve();
-    };
-
-    script.src = API_URL + '?callback=' + cbName + '&t=' + Date.now();
-    script.onerror = () => { clearTimeout(timeout); delete window[cbName]; script.remove(); resolve(); };
-    document.head.appendChild(script);
-  });
+  const cbName = 'wc_cb_' + Date.now(); const script = document.createElement('script');
+  window[cbName] = function(json) {
+    delete window[cbName]; script.remove();
+    remoteData.predictions = json.predictions || {}; remoteData.results = json.results || {}; remoteData.koMatches = json.koMatches || []; remoteData.knockoutPreds = json.knockoutPreds || {};
+    MATCHES.forEach(m => { m.result = remoteData.results[m.id] || null; });
+    renderMatches(); renderLeaderboard(); renderKnockout();
+  };
+  script.src = API_URL + '?callback=' + cbName + '&t=' + Date.now(); document.head.appendChild(script);
 }
 
 async function apiPost(payload) {
-  if (!API_URL) { showToast('لم يتم إعداد الرابط', 'error'); return false; }
-  const jsonpOk = await new Promise((resolve) => {
-    const cbName = 'wc_post_' + Date.now();
-    const script = document.createElement('script');
-    const timer = setTimeout(() => { delete window[cbName]; script.remove(); resolve(false); }, 6000);
-    window[cbName] = (json) => { clearTimeout(timer); delete window[cbName]; script.remove(); resolve(!!(json && json.ok)); };
-    const encoded = encodeURIComponent(JSON.stringify(payload));
-    script.src = API_URL + '?callback=' + cbName + '&payload=' + encoded + '&t=' + Date.now();
-    script.onerror = () => { clearTimeout(timer); delete window[cbName]; script.remove(); resolve(false); };
-    document.head.appendChild(script);
-  });
-  if (jsonpOk) return true;
-
-  try {
-    fetch(API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) });
-    await new Promise(r => setTimeout(r, 1500));
-    await fetchData();
-    return true;
-  } catch(e) { return false; }
+  const cbName = 'wc_post_' + Date.now(); const script = document.createElement('script');
+  return new Promise(resolve => {
+    window[cbName] = (json) => { delete window[cbName]; script.remove(); resolve(!!json?.ok); };
+    script.src = API_URL + '?callback=' + cbName + '&payload=' + encodeURIComponent(JSON.stringify(payload)) + '&t=' + Date.now();
+    script.onerror = () => resolve(false); document.head.appendChild(script);
+  }).then(async res => { if(res) await fetchData(); return res; });
 }
 
-// TIME
-function getMatchStatus(kickoffISO) {
-  const diff = new Date(kickoffISO).getTime() - Date.now();
-  return diff > 3600000 ? 'open' : 'closed';
-}
-
-function formatKickoff(iso) {
-  return new Date(iso).toLocaleString('ar-SA', {weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-}
-
-function formatCountdown(kickoffISO) {
-  const diff = new Date(kickoffISO).getTime() - 3600000 - Date.now();
+// التوقيت الموحد للقفل (ساعة واحدة بالمللي ثانية)
+function getMatchStatus(iso) { return (new Date(iso).getTime() - 3600000 - Date.now() > 0) ? 'open' : 'closed'; }
+function formatCountdown(iso) {
+  const diff = new Date(iso).getTime() - 3600000 - Date.now();
   if (diff <= 0) return '';
-  const h = Math.floor(diff / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
+  const h = Math.floor(diff/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-function statusLabel(status) {
-  return status === 'open' ? '<span class="status-badge status-open">مفتوح للتوقع ✓</span>' : '<span class="status-badge status-closed">انتهت</span>';
+function fmtArabicDate(iso) {
+  const d = new Date(iso); const m = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][d.getMonth()];
+  let h = d.getHours(); const am = h >= 12 ? 'م' : 'ص'; h = h % 12 || 12;
+  return `${d.getDate()} ${m} · ${h}:${String(d.getMinutes()).padStart(2,'0')} ${am}`;
 }
 
-// REGISTER
-function registerUser() {
-  const name = document.getElementById('name-input').value.trim();
-  if (!name || name.length < 2) { showToast('اكتب اسمك!', 'error'); return; }
-  currentUser = name;
-  localStorage.setItem('wc_username', name);
-  updateUI();
-  showToast(`أهلاً ${name}! 🎉`, 'success');
-}
+function statusLabel(st) { return st === 'open' ? '<span class="status-badge status-open">مفتوح للتوقع ✓</span>' : '<span class="status-badge status-closed">أغلقت التوقعات 🔒</span>'; }
+function registerUser() { currentUser = document.getElementById('name-input').value.trim(); localStorage.setItem('wc_username', currentUser); location.reload(); }
 
-// PREDICT
 async function predict(matchId, choice) {
-  if (!currentUser) { showToast('سجل اسمك أول', 'error'); return; }
-  const match = MATCHES.find(m => m.id === matchId);
-  if (!match || getMatchStatus(match.kickoff) !== 'open') return;
-
-  if (!remoteData.predictions[matchId]) remoteData.predictions[matchId] = {};
-  remoteData.predictions[matchId][currentUser] = choice;
-  renderMatches(); updatePointsBadge();
-
-  const btn = event?.currentTarget;
-  if (btn) btn.disabled = true;
-
-  const ok = await apiPost({ action:'predict', matchId, user:currentUser, prediction:choice });
-  if (ok) { showToast('تم حفظ توقعك ✓', 'success'); await fetchData(); }
-  else { delete remoteData.predictions[matchId][currentUser]; renderMatches(); showToast('فشل الحفظ', 'error'); }
+  if (!currentUser) return showToast('سجل اسمك أولاً', 'error');
+  await apiPost({ action:'predict', matchId, user:currentUser, prediction:choice }); showToast('تم الحفظ ✓');
 }
 
-// RENDER MATCHES
 function renderMatches() {
-  const container = document.getElementById('matches-list');
-  if (!container) return;
-  const groupFilter = document.getElementById('filter-group')?.value || '';
-  const statusFilter = document.getElementById('filter-status')?.value || '';
-
-  let list = [...MATCHES].sort((a,b) => new Date(a.kickoff) - new Date(b.kickoff));
-  if (groupFilter) list = list.filter(m => m.group === groupFilter);
-  if (statusFilter) list = list.filter(m => getMatchStatus(m.kickoff) === statusFilter);
-
-  if (!list.length) { container.innerHTML = `<div class="empty-state"><div class="emoji">⚽</div>لا توجد مباريات</div>`; return; }
-
-  container.innerHTML = list.map(match => {
-    const isOpen = getMatchStatus(match.kickoff) === 'open';
-    const matchPreds = remoteData.predictions[match.id] || {};
-    const userPred = currentUser ? (matchPreds[currentUser] || null) : null;
-    const homeCount = Object.values(matchPreds).filter(p => p==='home').length;
-    const drawCount = Object.values(matchPreds).filter(p => p==='draw').length;
-    const awayCount = Object.values(matchPreds).filter(p => p==='away').length;
-    const total = homeCount + drawCount + awayCount;
-
-    const cd = isOpen ? formatCountdown(match.kickoff) : '';
-    const dis = (!isOpen || !currentUser) ? 'disabled' : '';
-
-    const resultBadge = match.result ? `<div style="text-align:center;margin-top:10px;font-size:13px;color:var(--muted)">النتيجة: <strong style="color:var(--gold)">${match.result==='home' ? match.team1.name+' فاز' : match.result==='away' ? match.team2.name+' فاز' : 'تعادل'}</strong></div>` : '';
-
-    const predsSection = total > 0 ? `<div class="predictions-preview">${isOpen ? `<span class="pred-label">توقعات (${total}):</span>${homeCount > 0 ? `<span class="pred-chip chip-home">${match.team1.flag} ${homeCount}</span>` : ''}${drawCount > 0 ? `<span class="pred-chip chip-draw">🤝 ${drawCount}</span>` : ''}${awayCount > 0 ? `<span class="pred-chip chip-away">${match.team2.flag} ${awayCount}</span>` : ''}` : `${Object.keys(matchPreds).map(u => `<span class="pred-chip chip-${matchPreds[u]}">${u}</span>`).join('')}`}</div>` : '';
-
-    return `
-    <div class="match-card">
-      <div class="match-header"><span class="group">${match.group}</span>${statusLabel(getMatchStatus(match.kickoff))}<span class="time">${formatKickoff(match.kickoff)}</span></div>
-      <div class="match-body">
-        <div class="teams-row">
-          <div class="team"><div class="team-flag">${match.team1.flag}</div><div class="team-name">${match.team1.name}</div></div>
-          <div class="vs-box"><div class="vs-text">VS</div>${cd ? `<div class="countdown-box" id="cd_${match.id}">يغلق بعد ${cd}</div>` : ''}</div>
-          <div class="team"><div class="team-flag">${match.team2.flag}</div><div class="team-name">${match.team2.name}</div></div>
-        </div>
-        <div class="predict-row">
-          <button class="pred-btn ${userPred==='home'?'selected-home':''}" ${dis} onclick="predict('${match.id}','home')">${match.team1.flag}<span class="label">يفوز</span></button>
-          <button class="pred-btn ${userPred==='draw'?'selected-draw':''}" ${dis} onclick="predict('${match.id}','draw')">🤝<span class="label">تعادل</span></button>
-          <button class="pred-btn ${userPred==='away'?'selected-away':''}" ${dis} onclick="predict('${match.id}','away')">${match.team2.flag}<span class="label">يفوز</span></button>
-        </div>
-        ${resultBadge}
-      </div>
-      ${predsSection}
-    </div>`;
+  const c = document.getElementById('matches-list'); if(!c) return;
+  c.innerHTML = MATCHES.map(m => {
+    const isOpen = getMatchStatus(m.kickoff) === 'open'; const preds = remoteData.predictions[m.id] || {};
+    return `<div class="match-card"><div class="match-header"><span class="group">${m.group}</span>${statusLabel(getMatchStatus(m.kickoff))}</div><div class="match-body"><div class="teams-row"><div class="team"><div class="team-flag">${m.team1.flag}</div><div class="team-name">${m.team1.name}</div></div><div class="vs-text">VS</div><div class="team"><div class="team-flag">${m.team2.flag}</div><div class="team-name">${m.team2.name}</div></div></div><div class="predict-row"><button class="pred-btn ${preds[currentUser]==='home'?'selected-home':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','home')">${m.team1.name}</button><button class="pred-btn ${preds[currentUser]==='draw'?'selected-draw':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','draw')">تعادل</button><button class="pred-btn ${preds[currentUser]==='away'?'selected-away':''}" ${!isOpen?'disabled':''} onclick="predict('${m.id}','away')">${m.team2.name}</button></div></div></div>`;
   }).join('');
 }
 
-// LEADERBOARD
-function calcPoints(userName) {
-  let pts = 0;
-  MATCHES.forEach(m => { if (m.result && (remoteData.predictions[m.id]||{})[userName] === m.result) pts += 3; });
-  (remoteData.koMatches || []).forEach(m => { if (m.result && String((remoteData.knockoutPreds||{})[m.id]?.[userName]) === String(m.result)) pts += 3; });
-  return pts;
-}
-
-function renderLeaderboard() {
-  const container = document.getElementById('leaderboard-list');
-  if (!container) return;
-  const users = [...new Set(Object.values(remoteData.predictions).flatMap(Object.keys))].map(u => ({ name: u, points: calcPoints(u), total: Object.values(remoteData.predictions).filter(mp => mp[u]).length })).sort((a,b) => b.points - a.points || b.total - a.total);
-
-  if (!users.length) { container.innerHTML = `<div class="empty-state"><div class="emoji">🏅</div>لا يوجد مشاركون بعد</div>`; return; }
-  const medals = ['🥇','🥈','🥉']; const rankClass = ['gold','silver','bronze'];
-  container.innerHTML = users.map((u,i) => `<div class="lb-row"><div class="lb-rank ${rankClass[i]||''}">${medals[i]||(i+1)}</div><div class="lb-avatar">${u.name[0]}</div><div class="lb-name">${u.name}<div style="font-size:11px;color:var(--muted);font-weight:400">${u.total} توقع</div></div><div style="text-align:center"><div class="lb-pts">${u.points}</div><div class="lb-pts-label">نقطة</div></div></div>`).join('');
-}
-
-function updatePointsBadge() {
-  if (currentUser) { const el = document.getElementById('points-display'); if (el) el.textContent = calcPoints(currentUser) + ' نقطة'; }
-}
-
-// KNOCKOUT RENDER
 let activeKOMatch = null;
-function fmtBracketDate(isoDate) {
-  if (!isoDate) return '';
-  const clean = isoDate.replace('T',' ').slice(0,16); const parts = clean.split(' ');
-  if (parts.length < 2) return clean;
-  const [y, m, d] = parts[0].split('-'); const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${parseInt(d)} ${months[parseInt(m)-1] || m} · ${parts[1]} AST`;
-}
-
 function renderKnockout() {
-  const container = document.getElementById('knockout-list');
-  if (!container) return;
+  const c = document.getElementById('knockout-list'); if(!c) return;
   const byId = Object.fromEntries((remoteData.koMatches||[]).map(m => [m.id, m]));
+  const ROUNDS = [{id:'r32',label:'دور الـ32',ids:BRACKET.filter(b=>b.round==='r32').map(b=>b.id)},{id:'r16',label:'دور الـ16',ids:BRACKET.filter(b=>b.round==='r16').map(b=>b.id)},{id:'qf',label:'ربع النهائي',ids:BRACKET.filter(b=>b.round==='qf').map(b=>b.id)},{id:'sf',label:'نصف النهائي',ids:BRACKET.filter(b=>b.round==='sf').map(b=>b.id)},{id:'tp',label:'مباراة الثالث 🥉',ids:['M103']},{id:'f',label:'النهائي الكبير 🏆',ids:['M104']}];
 
-  function matchCard(matchId) {
-    const bm = BRACKET_BY_ID[matchId]; const m = byId[matchId] || {};
-    const t1 = m.team1 || ''; const t2 = m.team2 || ''; const result = String(m.result || '');
-    const isOpen = getKOStatus(bm?.date || m.kickoff);
-    const kPreds = (remoteData.knockoutPreds||{})[matchId] || {};
-    const userPred = currentUser ? String(kPreds[currentUser]||'') : '';
+  c.innerHTML = '<div class="bracket-wrap"><div class="bracket">' + ROUNDS.map(r => `<div class="bracket-round-col"><div class="bracket-round-header">${r.label}</div><div class="bracket-round-matches">` + r.ids.map(mid => {
+    const bm = BRACKET_BY_ID[mid]; const m = byId[mid] || {}; const res = String(m.result||''); const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open'; const cd = isOpen ? formatCountdown(kickoff) : '';
+    const kPreds = (remoteData.knockoutPreds||{})[mid] || {}; const uPick = currentUser ? String(kPreds[currentUser]||'') : '';
+    const win1 = res==='1' ? 'winner' : uPick==='1' ? 'my-pick' : ''; const win2 = res==='2' ? 'winner' : uPick==='2' ? 'my-pick' : '';
 
-    const winner = result === '1' ? t1 : result === '2' ? t2 : '';
-    const t1cls = winner ? (t1===winner?'winner':'loser') : (userPred==='1'?'my-pick':'');
-    const t2cls = winner ? (t2===winner?'winner':'loser') : (userPred==='2'?'my-pick':'');
-    const t1dot = winner&&t1===winner?'win': userPred==='1'?'my':'';
-    const t2dot = winner&&t2===winner?'win': userPred==='2'?'my':'';
-
-    const f1 = FEEDERS[matchId]?.[0] || ''; const f2 = FEEDERS[matchId]?.[1] || '';
-    return `<div class="bm${isOpen&&!result?' open':''}${matchId==='FINAL'?' final-match':''}${activeKOMatch===matchId?' open':''}" onclick="toggleKODetail('${matchId}')">
-      ${bm?.date ? `<div class="bm-date">${fmtBracketDate(bm.date)}</div>` : ''}
-      <div class="bm-team ${t1cls}${!t1?' tbd':''}"><div class="bm-dot ${t1dot}"></div><span class="bm-name">${t1 || (f1?`Winner ${f1}`:'?')}</span></div>
-      <div class="bm-team ${t2cls}${!t2?' tbd':''}"><div class="bm-dot ${t2dot}"></div><span class="bm-name">${t2 || (f2?`Winner ${f2}`:'?')}</span></div>
+    return `<div class="bm ${isOpen&&!res?'open':''}${mid==='M104'?' final-match':''}" onclick="activeKOMatch='${mid}';renderKODetail()">
+      <div class="bm-date"><span>${fmtArabicDate(kickoff)}</span>${cd ? `<span class="mini-cd" id="kocd_${mid}">${cd}</span>` : (!isOpen ? '<span style="color:#E74C3C">🔒</span>' : '')}</div>
+      <div class="bm-team ${win1}"><div class="bm-dot ${res==='1'?'win':uPick==='1'?'my':''}"></div><span class="bm-name">${m.team1||bm.t1}</span></div>
+      <div class="bm-team ${win2}"><div class="bm-dot ${res==='2'?'win':uPick==='2'?'my':''}"></div><span class="bm-name">${m.team2||bm.t2}</span></div>
     </div>`;
-  }
-
-  const ROUNDS = [
-    { id:'r32', label:'Round of 32',  ids: BRACKET.filter(b=>b.round==='r32').map(b=>b.id) },
-    { id:'r16', label:'Round of 16',  ids: BRACKET.filter(b=>b.round==='r16').map(b=>b.id) },
-    { id:'qf',  label:'Quarter Finals', ids: BRACKET.filter(b=>b.round==='qf').map(b=>b.id) },
-    { id:'sf',  label:'Semi Finals',  ids: BRACKET.filter(b=>b.round==='sf').map(b=>b.id) },
-    { id:'f',   label:'Final 🏆',      ids: ['FINAL'] },
-  ];
-
-  const activeRounds = ROUNDS.filter(r => r.id === 'r32' || r.ids.some(id => byId[id]?.team1 || byId[id]?.team2));
-  if (!activeRounds.length) { container.innerHTML = `<div class="empty-state"><div class="emoji">⏳</div>لم تُحدد مباريات الإقصاء بعد</div>`; return; }
-
-  let html = '<div class="bracket-wrap"><div class="bracket">';
-  activeRounds.forEach((round, ri) => {
-    html += `<div class="bracket-round-col"><div class="bracket-round-header">${round.label}</div><div class="bracket-round-matches">` + round.ids.map(mid => `<div style="display:flex;flex-direction:column;justify-content:center;flex:1;min-height:90px">${matchCard(mid)}</div>`).join('') + '</div></div>';
-    if (ri < activeRounds.length - 1) {
-      const ratio = Math.max(1, Math.floor(round.ids.length / activeRounds[ri+1].ids.length));
-      html += `<div class="bracket-connector-col" style="padding-top:28px">` + Array(activeRounds[ri+1].ids.length).fill().map(() => `<div class="bracket-conn-pair" style="flex:${ratio};position:relative;"><div style="position:absolute;right:0;top:25%;bottom:25%;width:1px;background:var(--border)"></div><div style="height:1px;background:var(--border);width:100%;margin-top:auto"></div><div style="height:1px;background:var(--border);width:100%;margin-bottom:auto"></div></div>`).join('') + '</div>';
-    }
-  });
-  container.innerHTML = html + '</div></div><div id="ko-detail-mount"></div>';
+  }).join('') + '</div></div>').join('') + '</div></div><div id="ko-detail-mount"></div>';
   renderKODetail();
 }
 
 function renderKODetail() {
-  const mount = document.getElementById('ko-detail-mount');
-  if (!mount || !activeKOMatch) { if (mount) mount.innerHTML = ''; return; }
-  const m = (remoteData.koMatches||[]).find(x => x.id === activeKOMatch); const bm = BRACKET_BY_ID[activeKOMatch];
-  const t1 = m?.team1 || ''; const t2 = m?.team2 || ''; const result = String(m?.result || '');
-  const isOpen = getKOStatus(bm?.date || m?.kickoff);
-  const kPreds = (remoteData.knockoutPreds||{})[activeKOMatch] || {};
-  const userPred = currentUser ? String(kPreds[currentUser]||'') : '';
-  const team1names = Object.entries(kPreds).filter(([,p])=>String(p)==='1').map(([n])=>n);
-  const team2names = Object.entries(kPreds).filter(([,p])=>String(p)==='2').map(([n])=>n);
+  const mount = document.getElementById('ko-detail-mount'); if(!mount||!activeKOMatch) return;
+  const bm = BRACKET_BY_ID[activeKOMatch]; const m = (remoteData.koMatches||[]).find(x => x.id === activeKOMatch) || {}; 
+  const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open'; const cd = isOpen ? formatCountdown(kickoff) : ''; const res = String(m.result||'');
+  const t1 = m.team1 || bm.t1, t2 = m.team2 || bm.t2;
+  const kPreds = (remoteData.knockoutPreds||{})[activeKOMatch] || {}; const uPick = currentUser ? String(kPreds[currentUser]||'') : '';
 
   mount.innerHTML = `<div class="ko-detail-panel">
-    <div class="ko-detail-title">${activeKOMatch}<span style="color:var(--muted);font-size:12px;display:block">${fmtBracketDate(bm?.date || m?.kickoff)}</span></div>
+    <div class="ko-detail-title">${bm.id} <span style="font-size:12px;color:var(--muted);display:block">${fmtArabicDate(kickoff)} بتوقيتنا</span></div>
     <div style="display:flex;align-items:center;justify-content:space-around;margin-bottom:14px">
-      <div style="text-align:center;flex:1"><div style="font-size:18px;font-weight:900;${result==='1'?'color:var(--green)':''}">${t1||'؟'}</div></div>
-      <div style="text-align:center;color:var(--muted);font-size:13px">VS</div>
-      <div style="text-align:center;flex:1"><div style="font-size:18px;font-weight:900;${result==='2'?'color:var(--green)':''}">${t2||'؟'}</div></div>
+      <div style="text-align:center;flex:1"><div style="font-size:17px;font-weight:900;${res==='1'?'color:var(--green)':''}">${t1}</div></div>
+      <div style="text-align:center;min-width:90px"><span style="color:var(--muted);font-size:11px">VS</span>${cd ? `<div class="countdown-box" id="kodet_${activeKOMatch}" style="margin-top:2px">${cd}</div>` : (!isOpen ? `<div style="color:#E74C3C;font-size:11px;margin-top:2px;font-weight:bold">أغلقت 🔒</div>` : '')}</div>
+      <div style="text-align:center;flex:1"><div style="font-size:17px;font-weight:900;${res==='2'?'color:var(--green)':''}">${t2}</div></div>
     </div>
-    ${isOpen && !result && t1 && t2 ? `<div class="ko-pred-row">
-      <button class="ko-pred-btn ${userPred==='1'?'sel-1':''}" onclick="predictKO('${activeKOMatch}','1')">${t1}<span class="label">يفوز</span></button>
-      <button class="ko-pred-btn ${userPred==='2'?'sel-2':''}" onclick="predictKO('${activeKOMatch}','2')">${t2}<span class="label">يفوز</span></button>
+    ${isOpen && !res ? `<div class="ko-pred-row">
+      <button class="ko-pred-btn ${uPick==='1'?'sel-1':''}" onclick="predictKO('${activeKOMatch}','1')">${t1} <span class="label">يفوز</span></button>
+      <button class="ko-pred-btn ${uPick==='2'?'sel-2':''}" onclick="predictKO('${activeKOMatch}','2')">${t2} <span class="label">يفوز</span></button>
     </div>` : ''}
-    ${(team1names.length||team2names.length) ? `<div style="display:flex;gap:5px;margin-top:12px;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px">${team1names.length?`<span class="pred-chip chip-home">${t1}: ${team1names.join('، ')}</span>`:''}${team2names.length?`<span class="pred-chip chip-away">${t2}: ${team2names.join('، ')}</span>`:''}</div>` : ''}
   </div>`;
 }
 
-function toggleKODetail(matchId) { activeKOMatch = activeKOMatch === matchId ? null : matchId; renderKODetail(); }
-function getKOStatus(d) { return (!d || (new Date(d.replace(' ','T')+':00-04:00').getTime() - Date.now() > 3600000)) ? 'open' : 'closed'; }
-
 async function predictKO(matchId, choice) {
-  if (!currentUser) { showToast('سجل اسمك أول', 'error'); return; }
-  if (!remoteData.knockoutPreds) remoteData.knockoutPreds = {};
-  if (!remoteData.knockoutPreds[matchId]) remoteData.knockoutPreds[matchId] = {};
-  remoteData.knockoutPreds[matchId][currentUser] = String(choice);
-  renderKnockout();
-  const ok = await apiPost({ action:'predictKnockout', matchId, user:currentUser, prediction:String(choice) });
-  if (ok) { showToast('تم حفظ توقعك ✓', 'success'); await fetchData(); }
-  else { showToast('خطأ في الحفظ', 'error'); }
+  if(!currentUser) return showToast('سجل اسمك أولاً','error');
+  await apiPost({ action:'predictKnockout', matchId, user:currentUser, prediction:String(choice) }); showToast('تم الحفظ ✓');
 }
 
-// KNOCKOUT ADMIN
-function renderKnockoutAdmin() {
-  const container = document.getElementById('knockout-admin');
-  if (!container) return;
-  const slotMap = Object.fromEntries((remoteData.koMatches||[]).map(m => [m.id, m]));
-  const roundInfo = [{id:'r32',label:'دور الـ 32'},{id:'r16',label:'دور الـ 16'},{id:'qf',label:'ربع النهائي'},{id:'sf',label:'نصف النهائي'},{id:'tp',label:'مباراة الثالث'},{id:'f',label:'النهائي 🏆'}];
-
-  container.innerHTML = roundInfo.map(round => `<div class="ko-round-title">${round.label}</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;">` + (BRACKET_SLOTS[round.id]||[]).map(slotId => {
-    const m = slotMap[slotId] || {}; const bm = BRACKET_BY_ID[slotId];
-    return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;">
-      <span style="font-size:11px;font-weight:700;color:var(--gold)">${slotId}</span>
-      <select id="adm_t1_${slotId}" class="ko-result-select"><option value="">-- الفريـق 1 --</option>${ALL_TEAMS.map(t=>`<option value="${t}" ${t===m.team1?'selected':''}>${t}</option>`).join('')}</select>
-      <select id="adm_t2_${slotId}" class="ko-result-select"><option value="">-- الفريـق 2 --</option>${ALL_TEAMS.map(t=>`<option value="${t}" ${t===m.team2?'selected':''}>${t}</option>`).join('')}</select>
-      <select id="adm_res_${slotId}" class="ko-result-select"><option value="">-- الفائز؟ --</option><option value="1" ${String(m.result)==='1'?'selected':''}>الفريق 1</option><option value="2" ${String(m.result)==='2'?'selected':''}>الفريق 2</option></select>
-      <button class="ko-save-btn" onclick="saveKOSlot('${slotId}')">💾 حفظ</button>
-    </div>`;
-  }).join('') + '</div>').join('');
+function calcPoints(u) {
+  let pts = 0; MATCHES.forEach(m => { if(m.result && (remoteData.predictions[m.id]||{})[u] === m.result) pts += 3; });
+  (remoteData.koMatches||[]).forEach(m => { if(m.result && String((remoteData.knockoutPreds||{})[m.id]?.[u]) === String(m.result)) pts += 3; }); return pts;
 }
 
-async function saveKOSlot(slotId) {
-  const t1 = document.getElementById('adm_t1_'+slotId)?.value || '';
-  const t2 = document.getElementById('adm_t2_'+slotId)?.value || '';
-  const result = document.getElementById('adm_res_'+slotId)?.value || '';
-  const bm = BRACKET_BY_ID[slotId];
-
-  await apiPost({action:'addKOMatch', id:slotId, round:bm?.round||'r32', team1:t1, team2:t2, date:bm?.date?.split('T')[0]||'', kickoff:bm?.date||''});
-  if (result) await apiPost({action:'setKOResult', matchId:slotId, result});
-  showToast('تم الحفظ ✓', 'success'); await fetchData();
+function renderLeaderboard() {
+  const c = document.getElementById('leaderboard-list'); if(!c) return;
+  const users = [...new Set([...Object.values(remoteData.predictions).flatMap(Object.keys), ...Object.values(remoteData.knockoutPreds).flatMap(Object.keys)])].map(u => ({name:u, pts:calcPoints(u)})).sort((a,b)=>b.pts-a.pts);
+  c.innerHTML = users.map((u,i) => `<div class="lb-row"><div class="lb-rank">${i+1}</div><div class="lb-avatar">${u.name[0]}</div><div class="lb-name">${u.name}</div><div class="lb-pts">${u.pts} نقطة</div></div>`).join('');
 }
 
-// ADMIN GENERAL
-function renderResultsAdmin() {
-  const container = document.getElementById('results-admin');
-  if (!container) return;
-  container.innerHTML = MATCHES.map(m => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:13px;flex:1;">${m.team1.name} vs ${m.team2.name}</span><select onchange="setResult('${m.id}', this.value)" class="ko-result-select"><option value="">-- النتيجة --</option><option value="home" ${m.result==='home'?'selected':''}>فوز ${m.team1.name}</option><option value="draw" ${m.result==='draw'?'selected':''}>تعادل</option><option value="away" ${m.result==='away'?'selected':''}>فوز ${m.team2.name}</option></select></div>`).join('');
-}
+function switchTab(t) { ['matches','knockout','leaderboard','admin'].forEach(id => document.getElementById('tab-'+id).style.display = id===t?'block':'none'); if(t==='leaderboard') renderLeaderboard(); if(t==='knockout') renderKnockout(); }
+function showToast(m, type='success') { const t = document.getElementById('toast'); t.textContent = m; t.className = `show ${type}`; setTimeout(() => t.classList.remove('show'), 3000); }
 
-async function setResult(matchId, result) {
-  if (await apiPost({ action:'setResult', matchId, result })) showToast('تم الحفظ', 'success');
-}
+// محرك التكتكة الموحد
+let prevStats = {};
+setInterval(() => {
+  BRACKET.forEach(bm => {
+    const m = (remoteData.koMatches||[]).find(x => x.id === bm.id) || {}; const koTime = m.kickoff || bm.date;
+    const cd = getMatchStatus(koTime)==='open' ? formatCountdown(koTime) : '';
+    const mini = document.getElementById('kocd_'+bm.id); if(mini) mini.textContent = cd;
+    if(activeKOMatch === bm.id) { const big = document.getElementById('kodet_'+bm.id); if(big) big.textContent = cd; }
+    
+    // التحديث الصامت للشجرة لحظة القفل
+    const st = getMatchStatus(koTime);
+    if(prevStats[bm.id] && prevStats[bm.id] !== st) renderKnockout();
+    prevStats[bm.id] = st;
+  });
+}, 1000);
 
-// UI & TABS
-function updateUI() {
-  const loggedIn = !!API_URL && currentUser;
-  document.getElementById('setup-screen').style.display = API_URL ? 'none' : 'block';
-  document.getElementById('register-section').style.display = (!API_URL || currentUser) ? 'none' : 'block';
-  document.getElementById('welcome-badge').style.display = loggedIn ? 'flex' : 'none';
-  document.getElementById('main-tabs').style.display = loggedIn ? 'flex' : 'none';
-  if (loggedIn) { document.getElementById('display-name').textContent = currentUser; document.getElementById('avatar-letter').textContent = currentUser[0]; switchTab('matches'); }
-}
-
-function switchTab(tab) {
-  ['matches','knockout','leaderboard','admin'].forEach(t => document.getElementById('tab-'+t).style.display = t===tab ? 'block' : 'none');
-  document.querySelectorAll('.tab-btn').forEach((btn,i) => btn.classList.toggle('active', ['matches','knockout','leaderboard','admin'][i]===tab));
-  if (tab==='leaderboard') renderLeaderboard(); if (tab==='knockout') renderKnockout(); if (tab==='admin') { renderResultsAdmin(); renderKnockoutAdmin(); }
-}
-
-let toastTimer;
-function showToast(msg, type='success') {
-  const t = document.getElementById('toast'); t.textContent = msg; t.className = `show ${type}`;
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-function updateClock() {
-  const el = document.getElementById('live-clock'); if (el) el.textContent = new Date().toLocaleString('ar-SA', {weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
-}
-
-// INIT
-document.getElementById('name-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') registerUser(); });
-updateUI(); updateClock(); if (API_URL) fetchData();
-setInterval(updateClock, 1000);
-setInterval(() => { if (API_URL) fetchData(); }, 30000);
+if(API_URL) { document.getElementById('setup-screen').style.display='none'; if(!currentUser) document.getElementById('register-section').style.display='block'; else { document.getElementById('welcome-badge').style.display='flex'; document.getElementById('main-tabs').style.display='flex'; switchTab('matches'); fetchData(); } }
 </script>
 </body>
 </html>
