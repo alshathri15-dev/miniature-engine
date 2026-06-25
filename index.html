@@ -879,23 +879,17 @@ function fetchData() {
       clearTimeout(timeout);
       delete window[cbName];
       script.remove();
-    remoteData.predictions = json.predictions || {};
+      remoteData.predictions = json.predictions || {};
       remoteData.results = json.results || {};
-      
-      // الأسطر الجديدة عشان يقرا الإقصائيات
-      remoteData.koMatches = json.koMatches || [];         
-      remoteData.knockoutPreds = json.knockoutPreds || {}; 
-      
       MATCHES.forEach(m => {
         if (remoteData.results[m.id]) m.result = remoteData.results[m.id];
         else m.result = null;
       });
-      
       renderMatches();
-      renderKnockout(); // سطر جديد عشان يحدّث شاشة الإقصائيات
       renderLeaderboard();
       updatePointsBadge();
       resolve();
+    };
 
     script.src = API_URL + '?callback=' + cbName + '&t=' + Date.now();
     script.onerror = () => { clearTimeout(timeout); delete window[cbName]; script.remove(); resolve(); };
