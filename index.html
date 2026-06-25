@@ -1,4 +1,4 @@
-ر<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -109,7 +109,7 @@
   .ko-result-select { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-family:'Tajawal',sans-serif; font-size:12px; }
   .ko-save-btn { background:rgba(201,168,76,0.15); border:1px solid var(--border); border-radius:8px; padding:7px 12px; color:var(--gold); font-weight:700; cursor:pointer; }
 
-  /* BRACKET (محدث لدعم التعداد التنازلي المصغر) */
+  /* BRACKET */
   .bracket-wrap { overflow-x: auto; padding: 0 0 20px; direction: ltr; }
   .bracket { display: flex; padding: 12px 8px; }
   .bracket-round-col { display: flex; flex-direction: column; min-width: 175px; }
@@ -190,12 +190,11 @@
 
 <script>
 // ============================================================
-// شجرة المواعيد السعودية الدقيقة (ISO +03:00)
+// CONFIG & BRACKET DATA
 // ============================================================
 const ALL_TEAMS = ['أستراليا', 'ألمانيا', 'أمريكا', 'أوروغواي', 'أوزبكستان', 'إسبانيا', 'إنجلترا', 'إيران', 'اسكتلندا', 'الأرجنتين', 'الأردن', 'الإكوادور', 'البرازيل', 'البرتغال', 'البوسنة والهرسك', 'التشيك', 'الجزائر', 'الرأس الأخضر', 'السعودية', 'السنغال', 'السويد', 'العراق', 'الكونغو الديمقراطية', 'المغرب', 'المكسيك', 'النرويج', 'النمسا', 'اليابان', 'باراغواي', 'بلجيكا', 'بنما', 'تركيا', 'تونس', 'جنوب أفريقيا', 'ساحل العاج', 'سويسرا', 'غانا', 'فرنسا', 'قطر', 'كرواتيا', 'كندا', 'كوراساو', 'كوريا الجنوبية', 'كولومبيا', 'مصر', 'نيوزيلندا', 'هايتي', 'هولندا'];
 
 const BRACKET = [
-  // دور الـ 32 (مواعيد السعودية المستخرجة من صورك)
   {id:'M73', round:'r32', t1:'جنوب أفريقيا', t2:'كندا',    date:'2026-06-28T22:00:00+03:00', feeds:'M89'},
   {id:'M74', round:'r32', t1:'المغرب',       t2:'متأهل',   date:'2026-06-30T04:00:00+03:00', feeds:'M89'},
   {id:'M75', round:'r32', t1:'ألمانيا',      t2:'متأهل',   date:'2026-06-29T23:30:00+03:00', feeds:'M90'},
@@ -212,8 +211,6 @@ const BRACKET = [
   {id:'M86', round:'r32', t1:'متأهل 13',     t2:'متأهل 14',date:'2026-07-04T04:30:00+03:00', feeds:'M95'},
   {id:'M87', round:'r32', t1:'متأهل 15',     t2:'متأهل 16',date:'2026-07-03T21:00:00+03:00', feeds:'M96'},
   {id:'M88', round:'r32', t1:'الأرجنتين',    t2:'متأهل',   date:'2026-07-04T01:00:00+03:00', feeds:'M96'},
-
-  // دور الـ 16
   {id:'M89', round:'r16', t1:'الفائز M73', t2:'الفائز M74', date:'2026-07-04T20:00:00+03:00', feeds:'M97'},
   {id:'M90', round:'r16', t1:'الفائز M75', t2:'الفائز M76', date:'2026-07-05T00:00:00+03:00', feeds:'M97'},
   {id:'M91', round:'r16', t1:'الفائز M77', t2:'الفائز M78', date:'2026-07-07T03:00:00+03:00', feeds:'M98'},
@@ -222,30 +219,20 @@ const BRACKET = [
   {id:'M94', round:'r16', t1:'الفائز M83', t2:'الفائز M84', date:'2026-07-06T03:00:00+03:00', feeds:'M99'},
   {id:'M95', round:'r16', t1:'الفائز M85', t2:'الفائز M86', date:'2026-07-07T23:00:00+03:00', feeds:'M100'},
   {id:'M96', round:'r16', t1:'الفائز M87', t2:'الفائز M88', date:'2026-07-07T19:00:00+03:00', feeds:'M100'},
-
-  // ربع النهائي
   {id:'M97',  round:'qf', t1:'الفائز M89', t2:'الفائز M90', date:'2026-07-09T23:00:00+03:00', feeds:'M101'},
   {id:'M98',  round:'qf', t1:'الفائز M91', t2:'الفائز M92', date:'2026-07-10T22:00:00+03:00', feeds:'M101'},
   {id:'M99',  round:'qf', t1:'الفائز M93', t2:'الفائز M94', date:'2026-07-12T00:00:00+03:00', feeds:'M102'},
   {id:'M100', round:'qf', t1:'الفائز M95', t2:'الفائز M96', date:'2026-07-12T04:00:00+03:00', feeds:'M102'},
-
-  // نصف النهائي
   {id:'M101', round:'sf', t1:'الفائز M97', t2:'الفائز M98', date:'2026-07-14T22:00:00+03:00', feeds:'M104'},
   {id:'M102', round:'sf', t1:'الفائز M99', t2:'الفائز M100',date:'2026-07-15T22:00:00+03:00', feeds:'M104'},
-
-  // المركز الثالث والنهائي
   {id:'M103', round:'tp', t1:'الخاسر M101',t2:'الخاسر M102',date:'2026-07-18T22:00:00+03:00', feeds:null},
   {id:'M104', round:'f',  t1:'الفائز M101',t2:'الفائز M102',date:'2026-07-19T22:00:00+03:00', feeds:null}
 ];
 
 const BRACKET_BY_ID = {}; BRACKET.forEach(m => BRACKET_BY_ID[m.id] = m);
-const BRACKET_SLOTS = { r32:['M73','M74','M75','M76','M77','M78','M79','M80','M81','M82','M83','M84','M85','M86','M87','M88'], r16:['M89','M90','M91','M92','M93','M94','M95','M96'], qf:['M97','M98','M99','M100'], sf:['M101','M102'], tp:['M103'], f:['M104'] };
 
 const MATCHES = (function(){
-  function mecca(date, hhmm) {
-    const [h, m] = hhmm.split(':').map(Number);
-    return new Date(`${date}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00+03:00`).toISOString();
-  }
+  function mecca(date, hhmm) { return new Date(`${date}T${hhmm}:00+03:00`).toISOString(); }
   let mid = 1;
   const M = (g, f1, n1, f2, n2, date, time) => ({ id:'m'+mid++, group:g, result:null, team1:{flag:f1,name:n1}, team2:{flag:f2,name:n2}, kickoff:mecca(date,time) });
   return [
@@ -375,7 +362,7 @@ async function apiPost(payload) {
   }).then(async res => { if(res) await fetchData(); return res; });
 }
 
-// التوقيت الموحد للقفل (ساعة واحدة بالمللي ثانية)
+// التوقيت الموحد للقفل (قبل ساعة كاملة)
 function getMatchStatus(iso) { return (new Date(iso).getTime() - 3600000 - Date.now() > 0) ? 'open' : 'closed'; }
 function formatCountdown(iso) {
   const diff = new Date(iso).getTime() - 3600000 - Date.now();
@@ -463,10 +450,27 @@ function renderLeaderboard() {
   c.innerHTML = users.map((u,i) => `<div class="lb-row"><div class="lb-rank">${i+1}</div><div class="lb-avatar">${u.name[0]}</div><div class="lb-name">${u.name}</div><div class="lb-pts">${u.pts} نقطة</div></div>`).join('');
 }
 
-function switchTab(t) { ['matches','knockout','leaderboard','admin'].forEach(id => document.getElementById('tab-'+id).style.display = id===t?'block':'none'); if(t==='leaderboard') renderLeaderboard(); if(t==='knockout') renderKnockout(); }
+function switchTab(t) {
+  ['matches','knockout','leaderboard','admin'].forEach(id => {
+    const el = document.getElementById('tab-'+id); if(el) el.style.display = id===t?'block':'none';
+  });
+  const tabNames = ['matches','knockout','leaderboard','admin'];
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', tabNames[i]===t));
+  if(t==='leaderboard') renderLeaderboard(); if(t==='knockout') renderKnockout();
+}
+
 function showToast(m, type='success') { const t = document.getElementById('toast'); t.textContent = m; t.className = `show ${type}`; setTimeout(() => t.classList.remove('show'), 3000); }
 
-// محرك التكتكة الموحد
+function updateUI() {
+  const loggedIn = !!API_URL && currentUser;
+  document.getElementById('setup-screen').style.display = API_URL ? 'none' : 'block';
+  document.getElementById('register-section').style.display = (!API_URL || currentUser) ? 'none' : 'block';
+  document.getElementById('welcome-badge').style.display = loggedIn ? 'flex' : 'none';
+  document.getElementById('main-tabs').style.display = loggedIn ? 'flex' : 'none';
+  if (loggedIn) { document.getElementById('display-name').textContent = currentUser; document.getElementById('avatar-letter').textContent = currentUser[0]; switchTab('matches'); }
+}
+
+// العدادات التنازلية الصامتة
 let prevStats = {};
 setInterval(() => {
   BRACKET.forEach(bm => {
@@ -474,15 +478,12 @@ setInterval(() => {
     const cd = getMatchStatus(koTime)==='open' ? formatCountdown(koTime) : '';
     const mini = document.getElementById('kocd_'+bm.id); if(mini) mini.textContent = cd;
     if(activeKOMatch === bm.id) { const big = document.getElementById('kodet_'+bm.id); if(big) big.textContent = cd; }
-    
-    // التحديث الصامت للشجرة لحظة القفل
-    const st = getMatchStatus(koTime);
-    if(prevStats[bm.id] && prevStats[bm.id] !== st) renderKnockout();
-    prevStats[bm.id] = st;
+    const st = getMatchStatus(koTime); if(prevStats[bm.id] && prevStats[bm.id] !== st) renderKnockout(); prevStats[bm.id] = st;
   });
 }, 1000);
 
-if(API_URL) { document.getElementById('setup-screen').style.display='none'; if(!currentUser) document.getElementById('register-section').style.display='block'; else { document.getElementById('welcome-badge').style.display='flex'; document.getElementById('main-tabs').style.display='flex'; switchTab('matches'); fetchData(); } }
+updateUI();
+if(API_URL) fetchData();
 </script>
 </body>
 </html>
