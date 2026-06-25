@@ -261,6 +261,170 @@
   ::-webkit-scrollbar { width:4px; }
   ::-webkit-scrollbar-track { background:var(--bg); }
   ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
+  /* KNOCKOUT */
+  .ko-round-title {
+    font-size:13px; font-weight:700; color:var(--gold);
+    letter-spacing:1px; margin:20px 0 10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .ko-round-title::after { content:''; flex:1; height:1px; background:var(--border); }
+  .ko-match {
+    background:var(--card2); border:1px solid var(--border);
+    border-radius:12px; padding:12px 14px; margin-bottom:8px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .ko-match .ko-label { font-size:11px; color:var(--gold); font-weight:700; min-width:30px; }
+  .ko-team-input {
+    flex:1; min-width:100px;
+    background:var(--bg); border:1px solid var(--border);
+    border-radius:8px; padding:7px 10px;
+    color:var(--text); font-family:'Tajawal',sans-serif; font-size:13px; outline:none;
+    transition:border-color 0.2s;
+  }
+  .ko-team-input:focus { border-color:var(--gold); }
+  .ko-team-input::placeholder { color:var(--muted); }
+  .ko-vs { font-size:11px; color:var(--muted); }
+  .ko-result-select {
+    background:var(--bg); border:1px solid var(--border);
+    border-radius:8px; padding:7px 10px;
+    color:var(--text); font-family:'Tajawal',sans-serif; font-size:12px; outline:none;
+  }
+  .ko-save-btn {
+    background:rgba(201,168,76,0.15); border:1px solid var(--border);
+    border-radius:8px; padding:7px 12px;
+    color:var(--gold); font-family:'Tajawal',sans-serif; font-size:12px; font-weight:700;
+    cursor:pointer; transition:all 0.2s; white-space:nowrap;
+  }
+  .ko-save-btn:hover { background:rgba(201,168,76,0.25); }
+
+  /* ── BRACKET DIAGRAM ── */
+  .bracket-wrap {
+    overflow-x: auto;
+    padding-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bracket {
+    display: flex;
+    flex-direction: row-reverse; /* RTL: Final on right */
+    gap: 0;
+    min-width: max-content;
+    align-items: center;
+    padding: 12px 4px;
+  }
+  .bracket-round {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 140px;
+  }
+  .bracket-round-title {
+    font-size: 10px; font-weight: 700; color: var(--gold);
+    letter-spacing: 1px; text-align: center;
+    margin-bottom: 8px; padding: 3px 10px;
+    background: rgba(201,168,76,0.1); border-radius: 20px;
+    white-space: nowrap;
+  }
+  .bracket-matches {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+  .bracket-slot {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  /* Connector lines between rounds */
+  .bracket-connector {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 20px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .bracket-connector::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 25%; bottom: 25%;
+    border-right: 1px solid var(--border);
+  }
+  .bracket-connector-line {
+    width: 100%; height: 1px;
+    background: var(--border);
+  }
+  /* Match card inside bracket */
+  .bm {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 4px 6px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+    min-width: 128px;
+  }
+  .bm:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-1px); }
+  .bm.open { border-color: rgba(46,204,113,0.4); }
+  .bm.final-match {
+    min-width: 140px;
+    border-color: var(--gold);
+    box-shadow: 0 0 18px rgba(201,168,76,0.25);
+  }
+  .bm-team {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 10px;
+    font-size: 12px; font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s;
+    min-height: 30px;
+  }
+  .bm-team:last-child { border-bottom: none; }
+  .bm-team.winner {
+    background: rgba(46,204,113,0.1);
+    color: var(--green);
+  }
+  .bm-team.loser { opacity: 0.45; }
+  .bm-team.my-pick { background: rgba(201,168,76,0.08); }
+  .bm-team.tbd { color: var(--muted); font-style: italic; font-weight: 400; }
+  .bm-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--muted); flex-shrink: 0;
+  }
+  .bm-dot.win { background: var(--green); }
+  .bm-dot.my { background: var(--gold); }
+  .bm-badge {
+    font-size: 9px; font-weight: 700; padding: 1px 5px;
+    border-radius: 10px; margin-left: auto; flex-shrink: 0;
+  }
+  .bm-badge.open { background: rgba(46,204,113,0.15); color: var(--green); }
+  .bm-badge.closed { background: rgba(136,146,164,0.15); color: var(--muted); }
+
+  /* Detail panel that slides in when clicking a match */
+  .ko-detail-panel {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 18px; margin: 10px 0 14px;
+    animation: slideIn 0.2s ease;
+  }
+  @keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+  .ko-detail-title { font-size:15px; font-weight:700; margin-bottom:14px; text-align:center; }
+  .ko-pred-row { display:flex; gap:8px; margin-top:12px; }
+  .ko-pred-btn {
+    flex:1; background:var(--card2); border:1.5px solid transparent;
+    border-radius:10px; padding:10px 4px; cursor:pointer;
+    font-family:'Tajawal',sans-serif; font-size:13px; font-weight:700;
+    color:var(--text); transition:all 0.2s; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+  }
+  .ko-pred-btn .label { font-size:11px; font-weight:400; color:var(--muted); }
+  .ko-pred-btn:hover:not(:disabled) { border-color:var(--gold); background:rgba(201,168,76,0.08); }
+  .ko-pred-btn:disabled { opacity:0.4; cursor:not-allowed; }
+  .ko-pred-btn.sel-1 { border-color:var(--green); background:rgba(46,204,113,0.1); color:var(--green); }
+  .ko-pred-btn.sel-2 { border-color:var(--red); background:rgba(231,76,60,0.1); color:var(--red); }
 </style>
 </head>
 <body>
@@ -331,6 +495,7 @@
   <!-- TABS -->
   <div class="tabs" id="main-tabs" style="display:none">
     <button class="tab-btn active" onclick="switchTab('matches')">المباريات</button>
+    <button class="tab-btn" onclick="switchTab('knockout')">الإقصائية</button>
     <button class="tab-btn" onclick="switchTab('leaderboard')">الترتيب</button>
     <button class="tab-btn" onclick="switchTab('admin')" id="admin-tab-btn">⚙️ إدارة</button>
   </div>
@@ -371,6 +536,12 @@
     <div id="leaderboard-list"></div>
   </div>
 
+  <!-- KNOCKOUT TAB -->
+  <div id="tab-knockout" style="display:none">
+    <div class="section-title">مرحلة خروج المغلوب</div>
+    <div id="knockout-list"></div>
+  </div>
+
   <!-- ADMIN TAB -->
   <div id="tab-admin" style="display:none">
     <div class="admin-card">
@@ -380,9 +551,14 @@
         <button class="btn-gold" onclick="adminLogin()" style="width:100%">دخول</button>
       </div>
       <div id="admin-panel" style="display:none">
-        <h3 style="margin-bottom:14px">إدخال نتائج المباريات</h3>
+        <h3 style="margin-bottom:14px">إدخال نتائج الجولات الثلاث</h3>
         <p style="font-size:13px;color:var(--muted);margin-bottom:14px">النقاط تُحسب تلقائياً (3 نقاط للتوقع الصحيح)</p>
         <div id="results-admin"></div>
+
+        <hr style="border-color:var(--border);margin:22px 0;">
+        <h3 style="margin-bottom:6px">🏆 مرحلة خروج المغلوب</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">أدخل الفرق المتأهلة وحدّث النتائج</p>
+        <div id="knockout-admin"></div>
       </div>
     </div>
   </div>
@@ -500,6 +676,12 @@ const MATCHES = (function(){
 })();
 
 // ============================================================
+// KNOCKOUT — fully dynamic, loaded from Sheets
+// remoteData.koMatches = [ {id, round, team1, team2, date, result}, ... ]
+// remoteData.knockoutPreds = { matchId: { user: '1'|'2' } }
+// ============================================================
+
+// ============================================================
 // STATE
 // ============================================================
 let API_URL = localStorage.getItem('wc_api_url') || 'https://script.google.com/macros/s/AKfycbyOFat3cggNYmR00MVm3aJL8gpZROpzOSQ1WB_cgrwgMsOM-PWRjpyQp9Wt-ygt3xZS/exec';
@@ -546,6 +728,55 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
   }
 
+  if (action === 'addKOMatch') {
+    let sh = ss.getSheetByName('KOMatches') || ss.insertSheet('KOMatches');
+    if (sh.getLastRow() === 0) sh.appendRow(['id','round','team1','team2','date','kickoff','result','timestamp']);
+    // Update if exists, else append
+    const rows = sh.getDataRange().getValues();
+    let found = false;
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][0] === data.id) {
+        sh.getRange(i+1,1,1,8).setValues([[data.id, data.round, data.team1, data.team2, data.date, data.kickoff||'', rows[i][6]||'', new Date().toISOString()]]);
+        found = true; break;
+      }
+    }
+    if (!found) sh.appendRow([data.id, data.round, data.team1, data.team2, data.date, data.kickoff||'', '', new Date().toISOString()]);
+    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === 'setKOResult') {
+    let sh = ss.getSheetByName('KOMatches') || ss.insertSheet('KOMatches');
+    const rows = sh.getDataRange().getValues();
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][0] === data.matchId) {
+        sh.getRange(i+1,7).setValue(data.result);
+        break;
+      }
+    }
+    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === 'deleteKOMatch') {
+    let sh = ss.getSheetByName('KOMatches');
+    if (!sh) return ContentService.createTextOutput(JSON.stringify({ok:false})).setMimeType(ContentService.MimeType.JSON);
+    const rows = sh.getDataRange().getValues();
+    for (let i = rows.length - 1; i >= 1; i--) {
+      if (rows[i][0] === data.matchId) { sh.deleteRow(i+1); break; }
+    }
+    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === 'predictKnockout') {
+    let sh = ss.getSheetByName('KnockoutPreds') || ss.insertSheet('KnockoutPreds');
+    if (sh.getLastRow() === 0) sh.appendRow(['matchId','user','prediction','timestamp']);
+    const rows = sh.getDataRange().getValues();
+    for (let i = rows.length - 1; i >= 1; i--) {
+      if (rows[i][0] === data.matchId && rows[i][1] === data.user) sh.deleteRow(i + 1);
+    }
+    sh.appendRow([data.matchId, data.user, data.prediction, new Date().toISOString()]);
+    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+  }
+
   return ContentService.createTextOutput(JSON.stringify({ok:false,error:'unknown action'})).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -569,7 +800,26 @@ function doGet(e) {
     rows.forEach(r => { results[r[0]] = r[1]; });
   }
 
-  const json = JSON.stringify({predictions, results});
+  // Knockout matches list
+  const koMatches = [];
+  const kmSh = ss.getSheetByName('KOMatches');
+  if (kmSh && kmSh.getLastRow() > 1) {
+    const rows = kmSh.getDataRange().getValues().slice(1);
+    rows.forEach(r => {
+      if (r[0]) koMatches.push({id:r[0], round:r[1], team1:r[2], team2:r[3], date:r[4], kickoff:r[5]||'', result:r[6]||''});
+    });
+  }
+  // Knockout predictions
+  const knockoutPreds = {};
+  const kpSh = ss.getSheetByName('KnockoutPreds');
+  if (kpSh && kpSh.getLastRow() > 1) {
+    const rows = kpSh.getDataRange().getValues().slice(1);
+    rows.forEach(r => {
+      if (!knockoutPreds[r[0]]) knockoutPreds[r[0]] = {};
+      knockoutPreds[r[0]][r[1]] = r[2];
+    });
+  }
+  const json = JSON.stringify({predictions, results, koMatches, knockoutPreds});
   const cb = e && e.parameter && e.parameter.callback;
   if (cb) {
     return ContentService.createTextOutput(cb + '(' + json + ')').setMimeType(ContentService.MimeType.JAVASCRIPT);
@@ -846,6 +1096,12 @@ function calcPoints(userName) {
     const pred = (remoteData.predictions[m.id] || {})[userName];
     if (pred && pred === m.result) pts += 3;
   });
+  // Knockout predictions: 3 pts each
+  (remoteData.koMatches || []).forEach(m => {
+    if (!m.result) return;
+    const pred = (remoteData.knockoutPreds||{})[m.id]?.[userName];
+    if (pred && pred === m.result) pts += 3;
+  });
   return pts;
 }
 
@@ -892,6 +1148,367 @@ function updatePointsBadge() {
 }
 
 // ============================================================
+// KNOCKOUT RENDER (user view)
+// ============================================================
+const KO_ROUND_LABELS = {
+  'r32':'دور الـ 32', 'r16':'دور الـ 16',
+  'qf':'ربع النهائي', 'sf':'نصف النهائي',
+  'tp':'مباراة الثالث', 'f':'النهائي 🏆'
+};
+const KO_ROUND_ORDER = ['r32','r16','qf','sf','tp','f'];
+
+let activeKOMatch = null; // currently expanded match id
+
+function renderKnockout() {
+  const container = document.getElementById('knockout-list');
+  if (!container) return;
+  const matches = remoteData.koMatches || [];
+  if (!matches.length) {
+    container.innerHTML = `<div class="empty-state"><div class="emoji">⏳</div>لم تُحدد مباريات الإقصاء بعد</div>`;
+    return;
+  }
+
+  // Group by round
+  const byRound = {};
+  matches.forEach(m => { if(!byRound[m.round]) byRound[m.round]=[]; byRound[m.round].push(m); });
+
+  // ── Build bracket ──────────────────────────────────────────
+  const rounds = KO_ROUND_ORDER.filter(r => byRound[r]);
+
+  // Calculate row heights per round so slots align
+  // Each match needs height = (slotHeight) * 2^(roundIdx) relative to first round
+  // We use flex with spacer divs
+
+  let bracketHTML = '<div class="bracket-wrap"><div class="bracket">';
+
+  // Final/Trophy column (rightmost in RTL)
+  // We build right-to-left visually (Final → R32)
+  const orderedRounds = [...rounds].reverse(); // Final first in RTL display
+
+  orderedRounds.forEach((rId, rIdx) => {
+    const rMatches = byRound[rId];
+    const isFinal = rId === 'f';
+    const isThird = rId === 'tp';
+
+    // connector before (to the left = next round)
+    if (rIdx < orderedRounds.length - 1) {
+      // connector lines
+    }
+
+    bracketHTML += `<div class="bracket-round">
+      <div class="bracket-round-title">${KO_ROUND_LABELS[rId]||rId}</div>
+      <div class="bracket-matches">`;
+
+    rMatches.forEach((m, mIdx) => {
+      const isOpen = getKOStatus(m.kickoff || m.date);
+      const kPreds = (remoteData.knockoutPreds||{})[m.id] || {};
+      const userPred = currentUser ? (kPreds[currentUser]||null) : null;
+      const winner = m.result ? (m.result==='1'?m.team1:m.team2) : null;
+      const loser  = m.result ? (m.result==='1'?m.team2:m.team1) : null;
+
+      const t1cls = winner ? (m.team1===winner?'winner':'loser') : (userPred==='1'?'my-pick':'');
+      const t2cls = winner ? (m.team2===winner?'winner':'loser') : (userPred==='2'?'my-pick':'');
+      const t1dot = winner&&m.team1===winner ? 'win' : (userPred==='1'?'my':'');
+      const t2dot = winner&&m.team2===winner ? 'win' : (userPred==='2'?'my':'');
+
+      const isActive = activeKOMatch === m.id;
+      const matchCls = `bm${isOpen?' open':''}${isFinal?' final-match':''}`;
+
+      // Calculate spacer for alignment
+      // Each match in r32 gets height ~70px. Each subsequent round doubles spacing.
+      const roundIdx = rounds.indexOf(rId);
+      const firstRoundCount = byRound[rounds[0]]?.length || 1;
+      const thisRoundCount = rMatches.length;
+      // Add spacer above/below each match to center them between their feeders
+      const spacerH = thisRoundCount < firstRoundCount
+        ? Math.floor((firstRoundCount / thisRoundCount - 1) * 39) + 'px'
+        : '4px';
+
+      bracketHTML += `
+        <div class="bracket-slot" style="padding:${spacerH} 0">
+          <div class="${matchCls}" onclick="toggleKODetail('${m.id}')">
+            <div class="bm-team ${t1cls}${!m.team1?' tbd':''}">
+              <div class="bm-dot ${t1dot}"></div>
+              <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.team1||'؟'}</span>
+              ${isOpen?`<span class="bm-badge open">مفتوح</span>`:(m.result?'':'')}
+            </div>
+            <div class="bm-team ${t2cls}${!m.team2?' tbd':''}">
+              <div class="bm-dot ${t2dot}"></div>
+              <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.team2||'؟'}</span>
+            </div>
+          </div>
+        </div>`;
+    });
+
+    bracketHTML += `</div></div>`;
+
+    // Add connector between rounds
+    if (rIdx < orderedRounds.length - 1) {
+      const nextRound = orderedRounds[rIdx+1];
+      const nextCount = byRound[nextRound]?.length || 1;
+      const thisCount = rMatches.length;
+      bracketHTML += `<div class="bracket-connector" style="height:${Math.max(thisCount,nextCount)*78}px"></div>`;
+    }
+  });
+
+  bracketHTML += '</div></div>';
+
+  // ── Detail panel for active match ─────────────────────────
+  let detailHTML = '';
+  if (activeKOMatch) {
+    const m = matches.find(x=>x.id===activeKOMatch);
+    if (m) {
+      const isOpen = getKOStatus(m.kickoff || m.date);
+      const kPreds = (remoteData.knockoutPreds||{})[m.id] || {};
+      const userPred = currentUser ? (kPreds[currentUser]||null) : null;
+      const team1names = Object.entries(kPreds).filter(([,p])=>p==='1').map(([n])=>n);
+      const team2names = Object.entries(kPreds).filter(([,p])=>p==='2').map(([n])=>n);
+      const total = team1names.length + team2names.length;
+      const winner = m.result ? (m.result==='1'?m.team1:m.team2) : null;
+
+      const dateLabel = m.kickoff
+        ? new Date(m.kickoff).toLocaleString('ar-SA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
+        : (m.date ? new Date(m.date+'T12:00:00').toLocaleDateString('ar-SA',{month:'short',day:'numeric'}) : '');
+
+      const cd = isOpen && m.kickoff ? formatKOCountdown(m.kickoff) : '';
+
+      detailHTML = `<div class="ko-detail-panel">
+        <div class="ko-detail-title">${KO_ROUND_LABELS[m.round]||m.round} &nbsp;·&nbsp; <span style="color:var(--muted);font-size:13px;font-weight:400">${dateLabel}</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-around;margin-bottom:14px;">
+          <div style="text-align:center;flex:1">
+            <div style="font-size:20px;font-weight:900;${m.result==='1'?'color:var(--green)':''}">${m.team1||'؟'}</div>
+            ${m.result==='1'?'<div style="font-size:10px;color:var(--green);margin-top:2px">✓ فاز</div>':''}
+          </div>
+          <div style="text-align:center;color:var(--muted);font-size:13px">
+            VS
+            ${cd?`<div class="countdown-box" id="kocd_${m.id}" style="margin-top:4px">يغلق بعد ${cd}</div>`:''}
+          </div>
+          <div style="text-align:center;flex:1">
+            <div style="font-size:20px;font-weight:900;${m.result==='2'?'color:var(--green)':''}">${m.team2||'؟'}</div>
+            ${m.result==='2'?'<div style="font-size:10px;color:var(--green);margin-top:2px">✓ فاز</div>':''}
+          </div>
+        </div>
+        ${isOpen && !winner ? `<div class="ko-pred-row">
+          <button class="ko-pred-btn ${userPred==='1'?'sel-1':''}" ${!currentUser?'disabled':''} onclick="predictKO('${m.id}','1')">
+            ${m.team1||'؟'}<span class="label">يفوز</span>
+          </button>
+          <button class="ko-pred-btn ${userPred==='2'?'sel-2':''}" ${!currentUser?'disabled':''} onclick="predictKO('${m.id}','2')">
+            ${m.team2||'؟'}<span class="label">يفوز</span>
+          </button>
+        </div>` : (!isOpen && !winner && !currentUser ? '' : '')}
+        ${total > 0 && !isOpen ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px;">
+          ${team1names.length>0?`<span class="pred-chip chip-home">${m.team1}: ${team1names.join('، ')}</span>`:''}
+          ${team2names.length>0?`<span class="pred-chip chip-away">${m.team2}: ${team2names.join('، ')}</span>`:''}
+        </div>` : (total > 0 && isOpen ? `<div style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">توقعات: ${total} (مخفية حتى القفل)</div>` : '')}
+      </div>`;
+    }
+  }
+
+  container.innerHTML = bracketHTML + detailHTML;
+}
+
+function toggleKODetail(matchId) {
+  activeKOMatch = activeKOMatch === matchId ? null : matchId;
+  renderKnockout();
+  // Scroll to detail panel
+  if (activeKOMatch) {
+    setTimeout(() => {
+      const panel = document.querySelector('.ko-detail-panel');
+      if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }, 50);
+  }
+}
+
+function getKOStatus(kickoffOrDate) {
+  if (!kickoffOrDate) return 'open';
+  const t = new Date(kickoffOrDate).getTime();
+  const hour = 60*60*1000;
+  return (t - Date.now()) > hour ? 'open' : 'closed';
+}
+
+function formatKOCountdown(kickoffISO) {
+  const lockout = new Date(kickoffISO).getTime() - 60*60*1000;
+  const diff = lockout - Date.now();
+  if (diff <= 0) return '';
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+async function predictKO(matchId, choice) {
+  if (!currentUser) { showToast('سجل اسمك أول', 'error'); return; }
+  if (!remoteData.knockoutPreds) remoteData.knockoutPreds = {};
+  if (!remoteData.knockoutPreds[matchId]) remoteData.knockoutPreds[matchId] = {};
+  remoteData.knockoutPreds[matchId][currentUser] = choice;
+  renderKnockout();
+  const ok = await apiPost({ action:'predictKnockout', matchId, user:currentUser, prediction:choice });
+  if (ok) showToast('تم حفظ توقعك ✓', 'success');
+  else { showToast('خطأ في الحفظ', 'error'); }
+}
+
+// ============================================================
+// KNOCKOUT ADMIN — fixed bracket with dropdowns
+// ============================================================
+
+// All 48 WC 2026 teams for dropdown
+const ALL_TEAMS = ['أستراليا', 'ألمانيا', 'أمريكا', 'أوروغواي', 'أوزبكستان', 'إسبانيا', 'إنجلترا', 'إيران', 'اسكتلندا', 'الأرجنتين', 'الأردن', 'الإكوادور', 'البرازيل', 'البرتغال', 'البوسنة والهرسك', 'التشيك', 'الجزائر', 'الرأس الأخضر', 'السعودية', 'السنغال', 'السويد', 'العراق', 'الكونغو الديمقراطية', 'المغرب', 'المكسيك', 'النرويج', 'النمسا', 'اليابان', 'باراغواي', 'بلجيكا', 'بنما', 'تركيا', 'تونس', 'جنوب أفريقيا', 'ساحل العاج', 'سويسرا', 'غانا', 'فرنسا', 'قطر', 'كرواتيا', 'كندا', 'كوراساو', 'كوريا الجنوبية', 'كولومبيا', 'مصر', 'نيوزيلندا', 'هايتي', 'هولندا'];
+
+// Fixed bracket slots from the wall chart
+const BRACKET_SLOTS = {
+  r32: [
+    'R32-M73','R32-M74','R32-M75','R32-M77','R32-M78','R32-M79',
+    'R32-M80','R32-M81','R32-M82','R32-M83','R32-M84','R32-M85',
+    'R32-M86','R32-M87','R32-M88','R32-M89','R32-M90','R32-M91',
+    'R32-M92','R32-M93','R32-M94','R32-M95','R32-M96',
+  ],
+  r16: ['R16-1','R16-2','R16-3','R16-4','R16-5','R16-6','R16-7','R16-8'],
+  qf:  ['QF1','QF2','QF3','QF4'],
+  sf:  ['SF1','SF2'],
+  tp:  ['3RD'],
+  f:   ['FINAL'],
+};
+
+function teamsDropdown(selectedVal, inputId) {
+  const opts = ALL_TEAMS.map(t =>
+    `<option value="${t}" ${t===selectedVal?'selected':''}>${t}</option>`
+  ).join('');
+  return `<select id="${inputId}" class="ko-result-select" style="flex:1;font-size:13px">
+    <option value="">-- اختر فريق --</option>${opts}
+  </select>`;
+}
+
+function renderKnockoutAdmin() {
+  const container = document.getElementById('knockout-admin');
+  if (!container) return;
+
+  // Build lookup: slotId → existing match data
+  const slotMap = {};
+  (remoteData.koMatches||[]).forEach(m => { slotMap[m.id] = m; });
+
+  const roundInfo = [
+    {id:'r32', label:'دور الـ 32', cols:2},
+    {id:'r16', label:'دور الـ 16', cols:2},
+    {id:'qf',  label:'ربع النهائي', cols:2},
+    {id:'sf',  label:'نصف النهائي', cols:2},
+    {id:'tp',  label:'مباراة الثالث', cols:1},
+    {id:'f',   label:'النهائي 🏆', cols:1},
+  ];
+
+  let html = '';
+
+  roundInfo.forEach(round => {
+    const slots = BRACKET_SLOTS[round.id] || [];
+    html += `<div class="ko-round-title">${round.label}</div>`;
+    html += `<div style="display:grid;grid-template-columns:repeat(${round.cols},1fr);gap:10px;margin-bottom:18px;">`;
+
+    slots.forEach(slotId => {
+      const m = slotMap[slotId] || {};
+      const t1 = m.team1||'';
+      const t2 = m.team2||'';
+      const result = m.result||'';
+      const kickoff = m.kickoff||'';
+
+      // winner options depend on selected teams
+      const w1label = t1 || 'الفريق 1';
+      const w2label = t2 || 'الفريق 2';
+
+      html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px">${slotId}</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <select id="adm_t1_${slotId}" class="ko-result-select" style="flex:1;font-size:12px" onchange="adminKOPreview('${slotId}')">
+            <option value="">-- الفريق 1 --</option>
+            ${ALL_TEAMS.map(t=>`<option value="${t}" ${t===t1?'selected':''}>${t}</option>`).join('')}
+          </select>
+          <span style="color:var(--muted);font-size:11px">vs</span>
+          <select id="adm_t2_${slotId}" class="ko-result-select" style="flex:1;font-size:12px" onchange="adminKOPreview('${slotId}')">
+            <option value="">-- الفريق 2 --</option>
+            ${ALL_TEAMS.map(t=>`<option value="${t}" ${t===t2?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <input id="adm_ko_${slotId}" type="datetime-local" class="ko-team-input" style="flex:1;font-size:12px" value="${kickoff ? new Date(kickoff).toISOString().slice(0,16) : ''}">
+          <select id="adm_res_${slotId}" class="ko-result-select" style="flex:1;font-size:12px">
+            <option value="" ${!result?'selected':''}>-- الفائز --</option>
+            <option value="1" ${result==='1'?'selected':''}>✅ ${w1label}</option>
+            <option value="2" ${result==='2'?'selected':''}>✅ ${w2label}</option>
+          </select>
+        </div>
+        <button class="ko-save-btn" onclick="saveKOSlot('${slotId}')" style="width:100%;text-align:center">💾 حفظ</button>
+      </div>`;
+    });
+
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function adminKOPreview(slotId) {
+  // Update winner dropdown labels when teams change
+  const t1 = document.getElementById('adm_t1_'+slotId)?.value || 'الفريق 1';
+  const t2 = document.getElementById('adm_t2_'+slotId)?.value || 'الفريق 2';
+  const res = document.getElementById('adm_res_'+slotId);
+  if (!res) return;
+  const curVal = res.value;
+  res.innerHTML = `
+    <option value="" ${!curVal?'selected':''}>-- الفائز --</option>
+    <option value="1" ${curVal==='1'?'selected':''}>✅ ${t1}</option>
+    <option value="2" ${curVal==='2'?'selected':''}>✅ ${t2}</option>`;
+}
+
+async function saveKOSlot(slotId) {
+  const t1 = document.getElementById('adm_t1_'+slotId)?.value.trim() || '';
+  const t2 = document.getElementById('adm_t2_'+slotId)?.value.trim() || '';
+  const kickoffRaw = document.getElementById('adm_ko_'+slotId)?.value || '';
+  const result = document.getElementById('adm_res_'+slotId)?.value || '';
+
+  if (!t1 && !t2) { showToast('اختر فريقاً على الأقل', 'error'); return; }
+
+  const kickoff = kickoffRaw ? new Date(kickoffRaw).toISOString() : '';
+  const date = kickoffRaw ? kickoffRaw.split('T')[0] : '';
+
+  // Determine round from slot
+  let round = 'r32';
+  Object.entries(BRACKET_SLOTS).forEach(([r, slots]) => { if(slots.includes(slotId)) round = r; });
+
+  if (!remoteData.koMatches) remoteData.koMatches = [];
+  const existing = remoteData.koMatches.find(m => m.id === slotId);
+  if (existing) {
+    existing.team1 = t1; existing.team2 = t2;
+    existing.kickoff = kickoff; existing.date = date; existing.result = result;
+  } else {
+    remoteData.koMatches.push({id:slotId, round, team1:t1, team2:t2, date, kickoff, result});
+  }
+
+  const ok = await apiPost({action:'addKOMatch', id:slotId, round, team1:t1, team2:t2, date, kickoff});
+  if (ok) {
+    if (result) await apiPost({action:'setKOResult', matchId:slotId, result});
+    showToast('تم الحفظ ✓', 'success');
+    renderKnockout();
+    renderLeaderboard();
+    updatePointsBadge();
+  } else showToast('خطأ في الحفظ', 'error');
+}
+
+async function setKOResult(matchId, result) {
+  if (!result) return;
+  const m = (remoteData.koMatches||[]).find(x=>x.id===matchId);  if (m) m.result = result;
+  const ok = await apiPost({action:'setKOResult', matchId, result});
+  if (ok) {
+    showToast('تم تسجيل الفائز ✓', 'success');
+    renderKnockout(); renderLeaderboard(); updatePointsBadge();
+  } else showToast('خطأ في الحفظ', 'error');
+}
+
+async function deleteKOMatch(matchId) {
+  remoteData.koMatches = (remoteData.koMatches||[]).filter(m=>m.id!==matchId);
+  const ok = await apiPost({action:'deleteKOMatch', matchId});
+  if (ok) { showToast('تم الحذف', 'info'); renderKnockoutAdmin(); renderKnockout(); }
+  else showToast('خطأ في الحذف', 'error');
+}
+
+// ============================================================
 // ADMIN
 // ============================================================
 function adminLogin() {
@@ -901,6 +1518,7 @@ function adminLogin() {
     document.getElementById('admin-login-area').style.display = 'none';
     document.getElementById('admin-panel').style.display = 'block';
     renderResultsAdmin();
+    renderKnockoutAdmin();
     showToast('أهلاً بك 👑', 'success');
   } else {
     showToast('كلمة سر خاطئة', 'error');
@@ -947,11 +1565,23 @@ async function setResult(matchId, result) {
 // ============================================================
 function updateUI() {
   const hasApi = !!API_URL;
+  const loggedIn = hasApi && currentUser;
+
   document.getElementById('setup-screen').style.display = hasApi ? 'none' : 'block';
   document.getElementById('register-section').style.display = (!hasApi || currentUser) ? 'none' : 'block';
-  document.getElementById('welcome-badge').style.display = (hasApi && currentUser) ? 'flex' : 'none';
-  document.getElementById('main-tabs').style.display = (hasApi && currentUser) ? 'flex' : 'none';
-  document.getElementById('tab-matches').style.display = (hasApi && currentUser) ? 'block' : 'none';
+  document.getElementById('welcome-badge').style.display = loggedIn ? 'flex' : 'none';
+  document.getElementById('main-tabs').style.display = loggedIn ? 'flex' : 'none';
+
+  // Show matches tab by default, hide all others
+  document.getElementById('tab-matches').style.display = loggedIn ? 'block' : 'none';
+  document.getElementById('tab-knockout').style.display = 'none';
+  document.getElementById('tab-leaderboard').style.display = 'none';
+  document.getElementById('tab-admin').style.display = 'none';
+
+  // Reset active tab to matches
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === 0);
+  });
 
   if (currentUser) {
     document.getElementById('display-name').textContent = currentUser;
@@ -961,14 +1591,15 @@ function updateUI() {
 }
 
 function switchTab(tab) {
-  ['matches','leaderboard','admin'].forEach(t => {
+  ['matches','knockout','leaderboard','admin'].forEach(t => {
     document.getElementById('tab-'+t).style.display = t===tab ? 'block' : 'none';
   });
   document.querySelectorAll('.tab-btn').forEach((btn,i) => {
-    btn.classList.toggle('active', ['matches','leaderboard','admin'][i]===tab);
+    btn.classList.toggle('active', ['matches','knockout','leaderboard','admin'][i]===tab);
   });
   if (tab==='leaderboard') { renderLeaderboard(); fetchData(); }
-  if (tab==='admin') renderResultsAdmin();
+  if (tab==='knockout') { renderKnockout(); fetchData(); }
+  if (tab==='admin') { renderResultsAdmin(); if(isAdmin) renderKnockoutAdmin(); }
 }
 
 // ============================================================
@@ -1001,6 +1632,13 @@ function tickCountdowns() {
     const st = getMatchStatus(m.kickoff);
     if (prevStatuses[m.id] && prevStatuses[m.id] !== st) renderMatches();
     prevStatuses[m.id] = st;
+  });
+  // KO countdowns
+  (remoteData.koMatches||[]).forEach(m => {
+    const el = document.getElementById('kocd_'+m.id);
+    if (!el) return;
+    const cd = m.kickoff ? formatKOCountdown(m.kickoff) : '';
+    el.textContent = cd ? 'يغلق بعد ' + cd : '';
   });
 }
 
