@@ -110,7 +110,7 @@
   .ko-save-btn { background:rgba(201,168,76,0.15); border:1px solid var(--border); border-radius:8px; padding:7px 12px; color:var(--gold); font-weight:700; cursor:pointer; transition:all 0.2s; }
   .ko-save-btn:hover { background:rgba(201,168,76,0.3); }
 
-  /* BRACKET */
+  /* BRACKET AND HIGHLIGHTING */
   .bracket-wrap { overflow-x: auto; padding: 0 0 20px; direction: ltr; }
   .bracket { display: flex; padding: 12px 8px; }
   .bracket-round-col { display: flex; flex-direction: column; min-width: 175px; }
@@ -125,6 +125,10 @@
   .bm.open { border-color: rgba(46,204,113,0.5); }
   .bm.final-match { border-color: var(--gold); box-shadow: 0 0 16px rgba(201,168,76,0.3); }
   
+  /* إضافة التمييز البصري والمباريات غير المكتملة */
+  .bm.active-match { border-color: var(--gold) !important; box-shadow: 0 0 15px rgba(201,168,76,0.4) !important; transform: scale(1.03); z-index: 2; position: relative; }
+  .bm.not-ready { opacity: 0.5; cursor: not-allowed; filter: grayscale(100%); pointer-events: none; border-color: rgba(255,255,255,0.05) !important; }
+
   .bm-date { display:flex; justify-content:space-between; align-items:center; font-size: 10px; color: var(--muted); padding: 4px 8px 2px; border-bottom: 1px solid rgba(255,255,255,0.04); direction: ltr; }
   .mini-cd { color: var(--draw); font-family: monospace; font-weight: bold; }
   
@@ -201,11 +205,7 @@
 <script>
 const ALL_TEAMS = ['أستراليا', 'ألمانيا', 'أمريكا', 'أوروغواي', 'أوزبكستان', 'إسبانيا', 'إنجلترا', 'إيران', 'اسكتلندا', 'الأرجنتين', 'الأردن', 'الإكوادور', 'البرازيل', 'البرتغال', 'البوسنة والهرسك', 'التشيك', 'الجزائر', 'الرأس الأخضر', 'السعودية', 'السنغال', 'السويد', 'العراق', 'الكونغو الديمقراطية', 'المغرب', 'المكسيك', 'النرويج', 'النمسا', 'اليابان', 'باراغواي', 'بلجيكا', 'بنما', 'تركيا', 'تونس', 'جنوب أفريقيا', 'ساحل العاج', 'سويسرا', 'غانا', 'فرنسا', 'قطر', 'كرواتيا', 'كندا', 'كوراساو', 'كوريا الجنوبية', 'كولومبيا', 'مصر', 'نيوزيلندا', 'هايتي', 'هولندا'];
 
-// ============================================================
-// شجرة CBS Golazo المعاد هندستها بالكامل لتطابق الترتيب والتوقيتات
-// ============================================================
 const BRACKET = [
-  // النصف الأيمن من الشجرة 
   {id:'M74', round:'r32', t1:'أول E',    t2:'ثالث ABCDF', date:'2026-06-29T23:30:00+03:00', feeds:'M89'},
   {id:'M77', round:'r32', t1:'أول I',    t2:'ثالث CDFGH', date:'2026-07-01T00:00:00+03:00', feeds:'M89'},
   {id:'M73', round:'r32', t1:'وصيف A',   t2:'وصيف B',    date:'2026-06-28T22:00:00+03:00', feeds:'M90'},
@@ -214,8 +214,6 @@ const BRACKET = [
   {id:'M84', round:'r32', t1:'أول H',    t2:'وصيف J',    date:'2026-07-02T22:00:00+03:00', feeds:'M93'},
   {id:'M81', round:'r32', t1:'أول D',    t2:'ثالث BEFIJ', date:'2026-07-02T03:00:00+03:00', feeds:'M94'},
   {id:'M82', round:'r32', t1:'أول G',    t2:'ثالث AEHIJ', date:'2026-07-01T23:00:00+03:00', feeds:'M94'},
-
-  // النصف الأيسر من الشجرة 
   {id:'M76', round:'r32', t1:'أول C',    t2:'وصيف F',    date:'2026-06-29T20:00:00+03:00', feeds:'M91'},
   {id:'M78', round:'r32', t1:'وصيف E',   t2:'وصيف I',    date:'2026-06-30T20:00:00+03:00', feeds:'M91'},
   {id:'M79', round:'r32', t1:'أول A',    t2:'ثالث CEFHI', date:'2026-07-01T04:00:00+03:00', feeds:'M92'},
@@ -224,8 +222,6 @@ const BRACKET = [
   {id:'M88', round:'r32', t1:'وصيف D',   t2:'وصيف G',    date:'2026-07-03T21:00:00+03:00', feeds:'M95'},
   {id:'M85', round:'r32', t1:'أول B',    t2:'ثالث EFGIJ', date:'2026-07-03T06:00:00+03:00', feeds:'M96'},
   {id:'M87', round:'r32', t1:'أول K',    t2:'ثالث DEIJL', date:'2026-07-04T04:00:00+03:00', feeds:'M96'},
-
-  // دور الـ 16
   {id:'M89', round:'r16', t1:'الفائز M74', t2:'الفائز M77', date:'2026-07-05T00:00:00+03:00', feeds:'M97'},
   {id:'M90', round:'r16', t1:'الفائز M73', t2:'الفائز M75', date:'2026-07-04T20:00:00+03:00', feeds:'M97'},
   {id:'M93', round:'r16', t1:'الفائز M83', t2:'الفائز M84', date:'2026-07-07T03:00:00+03:00', feeds:'M98'},
@@ -234,18 +230,12 @@ const BRACKET = [
   {id:'M92', round:'r16', t1:'الفائز M79', t2:'الفائز M80', date:'2026-07-07T19:00:00+03:00', feeds:'M99'},
   {id:'M95', round:'r16', t1:'الفائز M86', t2:'الفائز M88', date:'2026-07-07T23:00:00+03:00', feeds:'M100'},
   {id:'M96', round:'r16', t1:'الفائز M85', t2:'الفائز M87', date:'2026-07-06T03:00:00+03:00', feeds:'M100'},
-
-  // ربع النهائي
   {id:'M97',  round:'qf', t1:'الفائز M89', t2:'الفائز M90', date:'2026-07-09T23:00:00+03:00', feeds:'M101'},
   {id:'M98',  round:'qf', t1:'الفائز M93', t2:'الفائز M94', date:'2026-07-10T22:00:00+03:00', feeds:'M101'},
   {id:'M99',  round:'qf', t1:'الفائز M91', t2:'الفائز M92', date:'2026-07-12T00:00:00+03:00', feeds:'M102'},
   {id:'M100', round:'qf', t1:'الفائز M95', t2:'الفائز M96', date:'2026-07-12T04:00:00+03:00', feeds:'M102'},
-
-  // نصف النهائي
   {id:'M101', round:'sf', t1:'الفائز M97', t2:'الفائز M98', date:'2026-07-14T22:00:00+03:00', feeds:'M104'},
   {id:'M102', round:'sf', t1:'الفائز M99', t2:'الفائز M100',date:'2026-07-15T22:00:00+03:00', feeds:'M104'},
-
-  // المركز الثالث والنهائي
   {id:'M103', round:'tp', t1:'الخاسر M101',t2:'الخاسر M102',date:'2026-07-19T00:00:00+03:00', feeds:null},
   {id:'M104', round:'f',  t1:'الفائز M101',t2:'الفائز M102',date:'2026-07-19T22:00:00+03:00', feeds:null}
 ];
@@ -448,27 +438,49 @@ function renderMatches() {
 }
 
 let activeKOMatch = null;
+window.selectKOMatch = function(mid) {
+  activeKOMatch = activeKOMatch === mid ? null : mid;
+  renderKnockout();
+  if (activeKOMatch) {
+    setTimeout(() => {
+      const p = document.getElementById('ko-detail-mount');
+      if(p) p.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }, 50);
+  }
+}
+
 function renderKnockout() {
   const c = document.getElementById('knockout-list'); if(!c) return;
   const byId = Object.fromEntries((remoteData.koMatches||[]).map(m => [m.id, m]));
   const ROUNDS = [{id:'r32',label:'دور الـ32',ids:BRACKET_SLOTS.r32},{id:'r16',label:'دور الـ16',ids:BRACKET_SLOTS.r16},{id:'qf',label:'ربع النهائي',ids:BRACKET_SLOTS.qf},{id:'sf',label:'نصف النهائي',ids:BRACKET_SLOTS.sf},{id:'tp',label:'مباراة الثالث 🥉',ids:['M103']},{id:'f',label:'النهائي الكبير 🏆',ids:['M104']}];
 
   c.innerHTML = '<div class="bracket-wrap"><div class="bracket">' + ROUNDS.map(r => `<div class="bracket-round-col"><div class="bracket-round-header">${r.label}</div><div class="bracket-round-matches">` + r.ids.map(mid => {
-    const bm = BRACKET_BY_ID[mid]; const m = byId[mid] || {}; const res = String(m.result||''); const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open'; const cd = isOpen ? formatCountdown(kickoff) : '';
+    const bm = BRACKET_BY_ID[mid]; const m = byId[mid] || {}; const res = String(m.result||''); const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open';
+    
+    // التحقق من أن الفريقين معروفين (وليسوا أسماء وهمية) لتمكين التوقع
+    const t1Name = m.team1 || bm.t1;
+    const t2Name = m.team2 || bm.t2;
+    const isReady = ALL_TEAMS.includes(t1Name) && ALL_TEAMS.includes(t2Name);
+    const cd = (isOpen && isReady) ? formatCountdown(kickoff) : '';
+
     const kPreds = (remoteData.knockoutPreds||{})[mid] || {}; const uPick = currentUser ? String(kPreds[currentUser]||'') : '';
     const win1 = res==='1' ? 'winner' : uPick==='1' ? 'my-pick' : ''; const win2 = res==='2' ? 'winner' : uPick==='2' ? 'my-pick' : '';
 
-    return `<div class="bm ${isOpen&&!res?'open':''}${mid==='M104'?' final-match':''}" onclick="activeKOMatch='${mid}';renderKODetail()">
-      <div class="bm-date"><span>${fmtArabicDate(kickoff)}</span>${cd ? `<span class="mini-cd" id="kocd_${mid}">${cd}</span>` : (!isOpen ? '<span style="color:#E74C3C">🔒</span>' : '')}</div>
-      <div class="bm-team ${win1}"><div class="bm-dot ${res==='1'?'win':uPick==='1'?'my':''}"></div><span class="bm-name">${m.team1||bm.t1}</span></div>
-      <div class="bm-team ${win2}"><div class="bm-dot ${res==='2'?'win':uPick==='2'?'my':''}"></div><span class="bm-name">${m.team2||bm.t2}</span></div>
+    const disabledCls = !isReady ? ' not-ready' : '';
+    const activeCls = activeKOMatch === mid ? ' active-match' : '';
+    const clickEvt = isReady ? `onclick="selectKOMatch('${mid}')"` : '';
+
+    return `<div class="bm ${isOpen&&!res&&isReady?'open':''}${mid==='M104'?' final-match':''}${disabledCls}${activeCls}" ${clickEvt}>
+      <div class="bm-date"><span>${fmtArabicDate(kickoff)}</span>${!isReady ? '<span style="color:var(--muted);font-size:10px;font-weight:bold">لم تكتمل ⌛</span>' : (cd ? `<span class="mini-cd" id="kocd_${mid}">${cd}</span>` : (!isOpen ? '<span style="color:#E74C3C">🔒</span>' : ''))}</div>
+      <div class="bm-team ${win1}"><div class="bm-dot ${res==='1'?'win':uPick==='1'?'my':''}"></div><span class="bm-name">${t1Name}</span></div>
+      <div class="bm-team ${win2}"><div class="bm-dot ${res==='2'?'win':uPick==='2'?'my':''}"></div><span class="bm-name">${t2Name}</span></div>
     </div>`;
   }).join('') + '</div></div>').join('') + '</div></div><div id="ko-detail-mount"></div>';
   renderKODetail();
 }
 
 function renderKODetail() {
-  const mount = document.getElementById('ko-detail-mount'); if(!mount||!activeKOMatch) return;
+  const mount = document.getElementById('ko-detail-mount'); if(!mount||!activeKOMatch) { if (mount) mount.innerHTML = ''; return; }
   const bm = BRACKET_BY_ID[activeKOMatch]; const m = (remoteData.koMatches||[]).find(x => x.id === activeKOMatch) || {}; 
   const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open'; const cd = isOpen ? formatCountdown(kickoff) : ''; const res = String(m.result||'');
   const t1 = m.team1 || bm.t1, t2 = m.team2 || bm.t2;
@@ -572,9 +584,14 @@ let prevStats = {};
 setInterval(() => {
   BRACKET.forEach(bm => {
     const m = (remoteData.koMatches||[]).find(x => x.id === bm.id) || {}; const koTime = m.kickoff || bm.date;
-    const cd = getMatchStatus(koTime)==='open' ? formatCountdown(koTime) : '';
+    const t1Name = m.team1 || bm.t1;
+    const t2Name = m.team2 || bm.t2;
+    const isReady = ALL_TEAMS.includes(t1Name) && ALL_TEAMS.includes(t2Name);
+    
+    const cd = (getMatchStatus(koTime)==='open' && isReady) ? formatCountdown(koTime) : '';
     const mini = document.getElementById('kocd_'+bm.id); if(mini) mini.textContent = cd;
     if(activeKOMatch === bm.id) { const big = document.getElementById('kodet_'+bm.id); if(big) big.textContent = cd; }
+    
     const st = getMatchStatus(koTime); if(prevStats[bm.id] && prevStats[bm.id] !== st) { renderMatches(); renderKnockout(); } prevStats[bm.id] = st;
   });
 }, 1000);
