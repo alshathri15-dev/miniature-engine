@@ -110,7 +110,7 @@
   .ko-save-btn { background:rgba(201,168,76,0.15); border:1px solid var(--border); border-radius:8px; padding:7px 12px; color:var(--gold); font-weight:700; cursor:pointer; transition:all 0.2s; }
   .ko-save-btn:hover { background:rgba(201,168,76,0.3); }
 
-  /* BRACKET AND HIGHLIGHTING */
+  /* BRACKET */
   .bracket-wrap { overflow-x: auto; padding: 0 0 20px; direction: ltr; }
   .bracket { display: flex; padding: 12px 8px; }
   .bracket-round-col { display: flex; flex-direction: column; min-width: 175px; }
@@ -205,38 +205,38 @@
 const ALL_TEAMS = ['أستراليا', 'ألمانيا', 'أمريكا', 'أوروغواي', 'أوزبكستان', 'إسبانيا', 'إنجلترا', 'إيران', 'اسكتلندا', 'الأرجنتين', 'الأردن', 'الإكوادور', 'البرازيل', 'البرتغال', 'البوسنة والهرسك', 'التشيك', 'الجزائر', 'الرأس الأخضر', 'السعودية', 'السنغال', 'السويد', 'العراق', 'الكونغو الديمقراطية', 'المغرب', 'المكسيك', 'النرويج', 'النمسا', 'اليابان', 'باراغواي', 'بلجيكا', 'بنما', 'تركيا', 'تونس', 'جنوب أفريقيا', 'ساحل العاج', 'سويسرا', 'غانا', 'فرنسا', 'قطر', 'كرواتيا', 'كندا', 'كوراساو', 'كوريا الجنوبية', 'كولومبيا', 'مصر', 'نيوزيلندا', 'هايتي', 'هولندا'];
 
 // ============================================================
-// شجرة CBS Golazo (تم تدقيق المعرفات لتجنب أي تضارب بين الأرقام)
+// شجرة CBS Golazo الدقيقة (تمت إضافة الجزائر مع سويسرا وتأمين الأسماء)
 // ============================================================
 const BRACKET = [
-  // جهة اليسار
-  {id:'M74', round:'r32', t1:'أول E',    t2:'ثالث ABCDF', date:'2026-06-30T04:00:00+03:00', feeds:'M89'},
-  {id:'M77', round:'r32', t1:'أول I',    t2:'ثالث CDFGH', date:'2026-07-01T23:00:00+03:00', feeds:'M89'},
-  {id:'M73', round:'r32', t1:'وصيف A',   t2:'وصيف B',    date:'2026-06-28T22:00:00+03:00', feeds:'M90'},
-  {id:'M75', round:'r32', t1:'أول F',    t2:'وصيف C',    date:'2026-06-29T23:30:00+03:00', feeds:'M90'},
-  {id:'M83', round:'r32', t1:'وصيف K',   t2:'وصيف L',    date:'2026-07-01T04:00:00+03:00', feeds:'M93'},
-  {id:'M84', round:'r32', t1:'أول H',    t2:'وصيف J',    date:'2026-07-01T19:00:00+03:00', feeds:'M93'},
-  {id:'M81', round:'r32', t1:'أول D',    t2:'ثالث BEFIJ', date:'2026-06-29T20:00:00+03:00', feeds:'M94'},
-  {id:'M82', round:'r32', t1:'أول G',    t2:'ثالث AEHIJ', date:'2026-06-30T20:00:00+03:00', feeds:'M94'},
+  // النصف الأيمن 
+  {id:'M74', round:'r32', t1:'ألمانيا',     t2:'متأهل 1',  date:'2026-06-29T23:30:00+03:00', feeds:'M89'},
+  {id:'M77', round:'r32', t1:'فرنسا',       t2:'متأهل 2',  date:'2026-07-01T00:00:00+03:00', feeds:'M89'},
+  {id:'M73', round:'r32', t1:'جنوب أفريقيا', t2:'كندا',     date:'2026-06-28T22:00:00+03:00', feeds:'M90'},
+  {id:'M75', round:'r32', t1:'هولندا',      t2:'المغرب',   date:'2026-06-30T04:00:00+03:00', feeds:'M90'},
+  {id:'M83', round:'r32', t1:'البرتغال',    t2:'متأهل 3',  date:'2026-07-03T02:00:00+03:00', feeds:'M93'},
+  {id:'M84', round:'r32', t1:'إسبانيا',      t2:'متأهل 4',  date:'2026-07-02T22:00:00+03:00', feeds:'M93'},
+  {id:'M81', round:'r32', t1:'أمريكا',       t2:'متأهل 5',  date:'2026-07-02T03:00:00+03:00', feeds:'M94'},
+  {id:'M82', round:'r32', t1:'بلجيكا',      t2:'متأهل 6',  date:'2026-07-01T23:00:00+03:00', feeds:'M94'},
 
-  // جهة اليمين
-  {id:'M76', round:'r32', t1:'أول C',    t2:'وصيف F',    date:'2026-07-01T00:00:00+03:00', feeds:'M91'},
-  {id:'M78', round:'r32', t1:'وصيف E',   t2:'وصيف I',    date:'2026-07-02T03:00:00+03:00', feeds:'M91'},
-  {id:'M79', round:'r32', t1:'أول A',    t2:'ثالث CEFHI', date:'2026-07-02T22:00:00+03:00', feeds:'M92'},
-  {id:'M80', round:'r32', t1:'أول L',    t2:'ثالث EHIJK', date:'2026-07-03T02:00:00+03:00', feeds:'M92'},
-  {id:'M86', round:'r32', t1:'أول B',    t2:'ثالث EFGIJ', date:'2026-07-04T04:30:00+03:00', feeds:'M95'},
-  {id:'M88', round:'r32', t1:'وصيف D',   t2:'وصيف G',    date:'2026-07-04T01:00:00+03:00', feeds:'M95'},
-  {id:'M85', round:'r32', t1:'أول J',    t2:'وصيف H',    date:'2026-07-03T06:00:00+03:00', feeds:'M96'},
-  {id:'M87', round:'r32', t1:'أول K',    t2:'ثالث DEIJL', date:'2026-07-03T21:00:00+03:00', feeds:'M96'},
+  // النصف الأيسر 
+  {id:'M76', round:'r32', t1:'البرازيل',    t2:'متأهل 7',  date:'2026-06-29T20:00:00+03:00', feeds:'M91'},
+  {id:'M78', round:'r32', t1:'أوروغواي',    t2:'متأهل 8',  date:'2026-06-30T20:00:00+03:00', feeds:'M91'},
+  {id:'M79', round:'r32', t1:'المكسيك',     t2:'متأهل 9',  date:'2026-07-01T04:00:00+03:00', feeds:'M92'},
+  {id:'M80', round:'r32', t1:'إنجلترا',     t2:'متأهل 10', date:'2026-07-01T19:00:00+03:00', feeds:'M92'},
+  {id:'M86', round:'r32', t1:'الأرجنتين',   t2:'متأهل 11', date:'2026-07-04T01:00:00+03:00', feeds:'M95'},
+  {id:'M88', round:'r32', t1:'كولومبيا',    t2:'متأهل 12', date:'2026-07-03T21:00:00+03:00', feeds:'M95'},
+  {id:'M85', round:'r32', t1:'سويسرا',      t2:'الجزائر',  date:'2026-07-03T06:00:00+03:00', feeds:'M96'},
+  {id:'M87', round:'r32', t1:'كرواتيا',     t2:'متأهل 13', date:'2026-07-04T04:00:00+03:00', feeds:'M96'},
 
-  // دور الـ 16 (تصحيح المعرفات إلى M91, M92, M95, M96 الفعليين)
-  {id:'M89', round:'r16', t1:'الفائز M74', t2:'الفائز M77', date:'2026-07-04T20:00:00+03:00', feeds:'M97'},
-  {id:'M90', round:'r16', t1:'الفائز M73', t2:'الفائز M75', date:'2026-07-05T00:00:00+03:00', feeds:'M97'},
-  {id:'M93', round:'r16', t1:'الفائز M83', t2:'الفائز M84', date:'2026-07-05T23:00:00+03:00', feeds:'M98'},
-  {id:'M94', round:'r16', t1:'الفائز M81', t2:'الفائز M82', date:'2026-07-06T03:00:00+03:00', feeds:'M98'},
-  {id:'M91', round:'r16', t1:'الفائز M76', t2:'الفائز M78', date:'2026-07-07T03:00:00+03:00', feeds:'M99'},
-  {id:'M92', round:'r16', t1:'الفائز M79', t2:'الفائز M80', date:'2026-07-06T22:00:00+03:00', feeds:'M99'},
+  // دور الـ 16
+  {id:'M89', round:'r16', t1:'الفائز M74', t2:'الفائز M77', date:'2026-07-05T00:00:00+03:00', feeds:'M97'},
+  {id:'M90', round:'r16', t1:'الفائز M73', t2:'الفائز M75', date:'2026-07-04T20:00:00+03:00', feeds:'M97'},
+  {id:'M93', round:'r16', t1:'الفائز M83', t2:'الفائز M84', date:'2026-07-07T03:00:00+03:00', feeds:'M98'},
+  {id:'M94', round:'r16', t1:'الفائز M81', t2:'الفائز M82', date:'2026-07-06T22:00:00+03:00', feeds:'M98'},
+  {id:'M91', round:'r16', t1:'الفائز M76', t2:'الفائز M78', date:'2026-07-05T23:00:00+03:00', feeds:'M99'},
+  {id:'M92', round:'r16', t1:'الفائز M79', t2:'الفائز M80', date:'2026-07-07T19:00:00+03:00', feeds:'M99'},
   {id:'M95', round:'r16', t1:'الفائز M86', t2:'الفائز M88', date:'2026-07-07T23:00:00+03:00', feeds:'M100'},
-  {id:'M96', round:'r16', t1:'الفائز M85', t2:'الفائز M87', date:'2026-07-07T19:00:00+03:00', feeds:'M100'},
+  {id:'M96', round:'r16', t1:'الفائز M85', t2:'الفائز M87', date:'2026-07-06T03:00:00+03:00', feeds:'M100'},
 
   // ربع النهائي
   {id:'M97',  round:'qf', t1:'الفائز M89', t2:'الفائز M90', date:'2026-07-09T23:00:00+03:00', feeds:'M101'},
@@ -462,6 +462,9 @@ window.selectKOMatch = function(mid) {
   }
 }
 
+// ============================================================
+// رسم الإقصاء (تأمين قراءة الخلايا وتجاهل الفارغ القادم من السيرفر)
+// ============================================================
 function renderKnockout() {
   const c = document.getElementById('knockout-list'); if(!c) return;
   const byId = Object.fromEntries((remoteData.koMatches||[]).map(m => [m.id, m]));
@@ -469,8 +472,10 @@ function renderKnockout() {
 
   c.innerHTML = '<div class="bracket-wrap"><div class="bracket">' + ROUNDS.map(r => `<div class="bracket-round-col"><div class="bracket-round-header">${r.label}</div><div class="bracket-round-matches">` + r.ids.map(mid => {
     const bm = BRACKET_BY_ID[mid]; const m = byId[mid] || {}; const res = String(m.result||''); const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open';
-    const t1Name = m.team1 || bm.t1;
-    const t2Name = m.team2 || bm.t2;
+    
+    // درع الحماية ضد الفراغات الوهمية
+    const t1Name = (m.team1 && m.team1.trim() !== '') ? m.team1 : bm.t1;
+    const t2Name = (m.team2 && m.team2.trim() !== '') ? m.team2 : bm.t2;
     const isReady = ALL_TEAMS.includes(t1Name) && ALL_TEAMS.includes(t2Name);
     const cd = (isOpen && isReady) ? formatCountdown(kickoff) : '';
 
@@ -494,7 +499,10 @@ function renderKODetail() {
   const mount = document.getElementById('ko-detail-mount'); if(!mount||!activeKOMatch) { if (mount) mount.innerHTML = ''; return; }
   const bm = BRACKET_BY_ID[activeKOMatch]; const m = (remoteData.koMatches||[]).find(x => x.id === activeKOMatch) || {}; 
   const kickoff = m.kickoff || bm.date; const isOpen = getMatchStatus(kickoff) === 'open'; const cd = isOpen ? formatCountdown(kickoff) : ''; const res = String(m.result||'');
-  const t1 = m.team1 || bm.t1, t2 = m.team2 || bm.t2;
+  
+  const t1 = (m.team1 && m.team1.trim() !== '') ? m.team1 : bm.t1;
+  const t2 = (m.team2 && m.team2.trim() !== '') ? m.team2 : bm.t2;
+
   const kPreds = (remoteData.knockoutPreds||{})[activeKOMatch] || {}; const uPick = currentUser ? String(kPreds[currentUser]||'') : '';
   const team1names = Object.entries(kPreds).filter(([,p])=>String(p)==='1').map(([n])=>n);
   const team2names = Object.entries(kPreds).filter(([,p])=>String(p)==='2').map(([n])=>n);
@@ -542,10 +550,15 @@ function renderKnockoutAdmin() {
 
   c.innerHTML = ROUNDS.map(r => `<div class="ko-round-title">${r.label}</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:15px">` + (BRACKET_SLOTS[r.id]||[]).map(slotId => {
     const m = byId[slotId] || {}; const bm = BRACKET_BY_ID[slotId];
+    
+    // تأمين قراءة أسماء القوائم في الإدارة
+    const curT1 = (m.team1 && m.team1.trim() !== '') ? m.team1 : bm.t1;
+    const curT2 = (m.team2 && m.team2.trim() !== '') ? m.team2 : bm.t2;
+
     return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px">
       <span style="font-size:11px;color:var(--gold);font-weight:bold">${slotId}</span>
-      <select id="at1_${slotId}" class="ko-result-select"><option value="">-- الفريـق 1 --</option>${ALL_TEAMS.map(t=>`<option value="${t}" ${t===(m.team1||bm.t1)?'selected':''}>${t}</option>`).join('')}</select>
-      <select id="at2_${slotId}" class="ko-result-select"><option value="">-- الفريـق 2 --</option>${ALL_TEAMS.map(t=>`<option value="${t}" ${t===(m.team2||bm.t2)?'selected':''}>${t}</option>`).join('')}</select>
+      <select id="at1_${slotId}" class="ko-result-select"><option value="">-- الفريـق 1 --</option>${ALL_TEAMS.map(t=>`<option value="${t}" ${t===curT1?'selected':''}>${t}</option>`).join('')}</select>
+      <select id="at2_${slotId}" class="ko-result-select"><option value="">-- الفريـق 2 --</option>${ALL_TEAMS.map(t=>`<option value="${t}" ${t===curT2?'selected':''}>${t}</option>`).join('')}</select>
       <select id="ares_${slotId}" class="ko-result-select"><option value="">-- الفائز؟ --</option><option value="1" ${String(m.result)==='1'?'selected':''}>الفريق 1</option><option value="2" ${String(m.result)==='2'?'selected':''}>الفريق 2</option></select>
       <button class="ko-save-btn" onclick="saveKOSlot('${slotId}')">💾 حفظ النتيجة</button>
     </div>`;
@@ -595,8 +608,8 @@ let prevStats = {};
 setInterval(() => {
   BRACKET.forEach(bm => {
     const m = (remoteData.koMatches||[]).find(x => x.id === bm.id) || {}; const koTime = m.kickoff || bm.date;
-    const t1Name = m.team1 || bm.t1;
-    const t2Name = m.team2 || bm.t2;
+    const t1Name = (m.team1 && m.team1.trim() !== '') ? m.team1 : bm.t1;
+    const t2Name = (m.team2 && m.team2.trim() !== '') ? m.team2 : bm.t2;
     const isReady = ALL_TEAMS.includes(t1Name) && ALL_TEAMS.includes(t2Name);
     
     const cd = (getMatchStatus(koTime)==='open' && isReady) ? formatCountdown(koTime) : '';
